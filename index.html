@@ -25,7 +25,7 @@
     }
 
     .container {
-      max-width: 560px;
+      max-width: 620px;
       margin: 0 auto;
     }
 
@@ -154,6 +154,99 @@
       cursor: not-allowed;
     }
 
+    .secondary-button {
+      margin-top: 10px;
+      background: #667085;
+    }
+
+    .submit-button {
+      margin-top: 18px;
+      background: #00101A;
+    }
+
+    .queue-section {
+      display: none;
+      margin-top: 22px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 20px;
+    }
+
+    .queue-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .queue-count {
+      color: #667085;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .queue-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 11px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .queue-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #e5e7eb;
+      flex-shrink: 0;
+    }
+
+    .queue-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .queue-category {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .queue-area {
+      color: #667085;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .queue-file {
+      color: #98a2b3;
+      font-size: 11px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .remove-button {
+      width: auto;
+      padding: 8px 10px;
+      font-size: 13px;
+      background: #b42318;
+      flex-shrink: 0;
+    }
+
+    .selection-message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #e8f5e9;
+      color: #256029;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.4;
+    }
+
     .progress {
       display: none;
       margin-top: 18px;
@@ -187,6 +280,21 @@
 
     .hidden-frame {
       display: none;
+    }
+
+    @media (max-width: 520px) {
+      .queue-thumb {
+        width: 60px;
+        height: 60px;
+      }
+
+      .queue-item {
+        gap: 9px;
+      }
+
+      .remove-button {
+        padding: 8px;
+      }
     }
   </style>
 </head>
@@ -239,10 +347,9 @@
 
 
       <div id="backupNote" class="backup-note">
-        For your backup copy, take the photos with your phone's normal
-        Camera app first. Then select those saved photos here for upload.
-        Keep the phone copies until the job is finished and the Drive
-        photo record has been verified.
+        Take photos with your phone's normal Camera app first, then add them
+        to the queue below. Keep the phone copies until the job is finished
+        and the Drive photo record has been verified.
       </div>
 
 
@@ -305,8 +412,7 @@
           </select>
 
           <div class="help">
-            Area is optional. Leave it blank for general or miscellaneous
-            photos.
+            Leave this blank for general or miscellaneous photos.
           </div>
 
         </div>
@@ -315,7 +421,7 @@
         <div class="field">
 
           <label for="photos">
-            Photos
+            Select Photo(s)
           </label>
 
           <input
@@ -326,7 +432,7 @@
           >
 
           <div class="help">
-            Select multiple saved photos from your phone at once.
+            You can select one photo or several photos at once.
             Maximum 8 MB per photo.
           </div>
 
@@ -334,12 +440,49 @@
 
 
         <button
-          id="uploadButton"
+          id="addButton"
           type="button"
-          onclick="prepareBatch()"
+          onclick="addPhotosToQueue()"
         >
-          Upload Photos
+          Add Photo(s) to Queue
         </button>
+
+
+        <div
+          id="selectionMessage"
+          class="selection-message"
+        ></div>
+
+
+        <div
+          id="queueSection"
+          class="queue-section"
+        >
+
+          <div class="queue-title">
+            Pending Photos
+          </div>
+
+          <div
+            id="queueCount"
+            class="queue-count"
+          >
+            0 photos ready to upload
+          </div>
+
+          <div id="queueList"></div>
+
+
+          <button
+            id="submitButton"
+            type="button"
+            class="submit-button"
+            onclick="submitQueue()"
+          >
+            Submit All Photos
+          </button>
+
+        </div>
 
       </div>
 
@@ -434,15 +577,13 @@
 
 
     const ACK_TIMEOUT_MS =
-      12000;
+      20000;
 
 
-    /*
-     * AREA OPTIONS
-     *
-     * These options change depending on
-     * the selected photo category.
-     */
+    const MAX_RETRIES =
+      1;
+
+
     const AREA_OPTIONS = {
 
       'Exterior': [
@@ -576,11 +717,11 @@
       null;
 
 
-    let uploadQueue =
+    let photoQueue =
       [];
 
 
-    let currentIndex =
+    let uploadIndex =
       0;
 
 
@@ -624,8 +765,28 @@
       document.getElementById('photos');
 
 
-    const uploadButton =
-      document.getElementById('uploadButton');
+    const addButton =
+      document.getElementById('addButton');
+
+
+    const submitButton =
+      document.getElementById('submitButton');
+
+
+    const queueSection =
+      document.getElementById('queueSection');
+
+
+    const queueList =
+      document.getElementById('queueList');
+
+
+    const queueCount =
+      document.getElementById('queueCount');
+
+
+    const selectionMessage =
+      document.getElementById('selectionMessage');
 
 
     const progressBox =
@@ -637,10 +798,6 @@
 
 
 
-    /*
-     * Changes the Area dropdown whenever
-     * the photo category changes.
-     */
     function updateAreaOptions() {
 
       const category =
@@ -680,11 +837,7 @@
       }
 
 
-      const options =
-        AREA_OPTIONS[category];
-
-
-      options.forEach(
+      AREA_OPTIONS[category].forEach(
         function(area) {
 
           const option =
@@ -719,19 +872,6 @@
 
         showFatalError(
           'This photo link is missing its Job ID.'
-        );
-
-        return;
-      }
-
-
-      if (
-        !BACKEND ||
-        BACKEND.indexOf('PASTE_') === 0
-      ) {
-
-        showFatalError(
-          'The photo portal backend has not been configured yet.'
         );
 
         return;
@@ -895,12 +1035,7 @@
 
 
 
-    function prepareBatch() {
-
-      if (uploadInProgress) {
-        return;
-      }
-
+    function addPhotosToQueue() {
 
       hideMessage();
 
@@ -922,7 +1057,7 @@
       if (!category) {
 
         showMessage(
-          'Select a photo category.',
+          'Select a photo category first.',
           false
         );
 
@@ -933,7 +1068,7 @@
       if (files.length === 0) {
 
         showMessage(
-          'Select at least one saved photo.',
+          'Select at least one photo.',
           false
         );
 
@@ -950,7 +1085,7 @@
 
           showMessage(
             file.name +
-            ' is larger than 8 MB. Remove it or use a smaller copy.',
+            ' is larger than 8 MB.',
             false
           );
 
@@ -959,29 +1094,314 @@
       }
 
 
-      uploadQueue =
-        files.map(
-          function(file) {
+      files.forEach(
+        function(file) {
 
-            return {
+          photoQueue.push({
 
-              file: file,
+            id:
+              makeUploadId(),
 
-              category:
-                category,
+            file:
+              file,
 
-              area:
-                area,
+            category:
+              category,
 
-              uploadId:
-                makeUploadId()
+            area:
+              area,
 
+            previewUrl:
+              URL.createObjectURL(
+                file
+              ),
+
+            retryCount:
+              0,
+
+            status:
+              'pending'
+
+          });
+
+        }
+      );
+
+
+      photosInput.value =
+        '';
+
+
+      renderQueue();
+
+
+      const added =
+        files.length;
+
+
+      selectionMessage.textContent =
+        added === 1
+          ? 'Photo added. Add another, or submit when finished.'
+          : (
+              added +
+              ' photos added. Add more, or submit when finished.'
+            );
+
+
+      selectionMessage.style.display =
+        'block';
+    }
+
+
+
+    function renderQueue() {
+
+      queueList.innerHTML =
+        '';
+
+
+      if (
+        photoQueue.length === 0
+      ) {
+
+        queueSection.style.display =
+          'none';
+
+        return;
+      }
+
+
+      queueSection.style.display =
+        'block';
+
+
+      queueCount.textContent =
+        photoQueue.length +
+        ' photo' +
+        (
+          photoQueue.length === 1
+            ? ''
+            : 's'
+        ) +
+        ' ready to upload';
+
+
+      photoQueue.forEach(
+        function(item, index) {
+
+          const row =
+            document.createElement(
+              'div'
+            );
+
+
+          row.className =
+            'queue-item';
+
+
+          const img =
+            document.createElement(
+              'img'
+            );
+
+
+          img.src =
+            item.previewUrl;
+
+
+          img.className =
+            'queue-thumb';
+
+
+          const info =
+            document.createElement(
+              'div'
+            );
+
+
+          info.className =
+            'queue-info';
+
+
+          const category =
+            document.createElement(
+              'div'
+            );
+
+
+          category.className =
+            'queue-category';
+
+
+          category.textContent =
+            item.category;
+
+
+          const area =
+            document.createElement(
+              'div'
+            );
+
+
+          area.className =
+            'queue-area';
+
+
+          area.textContent =
+            item.area ||
+            'No specific area';
+
+
+          const fileName =
+            document.createElement(
+              'div'
+            );
+
+
+          fileName.className =
+            'queue-file';
+
+
+          fileName.textContent =
+            item.file.name;
+
+
+          info.appendChild(
+            category
+          );
+
+
+          info.appendChild(
+            area
+          );
+
+
+          info.appendChild(
+            fileName
+          );
+
+
+          const remove =
+            document.createElement(
+              'button'
+            );
+
+
+          remove.type =
+            'button';
+
+
+          remove.className =
+            'remove-button';
+
+
+          remove.textContent =
+            'Remove';
+
+
+          remove.onclick =
+            function() {
+
+              removeQueuedPhoto(
+                index
+              );
             };
-          }
+
+
+          row.appendChild(
+            img
+          );
+
+
+          row.appendChild(
+            info
+          );
+
+
+          row.appendChild(
+            remove
+          );
+
+
+          queueList.appendChild(
+            row
+          );
+
+        }
+      );
+    }
+
+
+
+    function removeQueuedPhoto(index) {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+      }
+
+
+      const item =
+        photoQueue[index];
+
+
+      if (
+        item &&
+        item.previewUrl
+      ) {
+
+        URL.revokeObjectURL(
+          item.previewUrl
+        );
+      }
+
+
+      photoQueue.splice(
+        index,
+        1
+      );
+
+
+      renderQueue();
+
+
+      if (
+        photoQueue.length === 0
+      ) {
+
+        selectionMessage.style.display =
+          'none';
+      }
+    }
+
+
+
+    function submitQueue() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+      }
+
+
+      if (
+        photoQueue.length === 0
+      ) {
+
+        showMessage(
+          'Add at least one photo before submitting.',
+          false
         );
 
+        return;
+      }
 
-      currentIndex =
+
+      uploadIndex =
         0;
 
 
@@ -989,44 +1409,69 @@
         true;
 
 
-      uploadButton.disabled =
+      addButton.disabled =
         true;
 
 
-      uploadButton.textContent =
-        'Uploading...';
+      submitButton.disabled =
+        true;
+
+
+      categoryInput.disabled =
+        true;
+
+
+      areaInput.disabled =
+        true;
+
+
+      photosInput.disabled =
+        true;
+
+
+      selectionMessage.style.display =
+        'none';
+
+
+      hideMessage();
 
 
       progressBox.style.display =
         'block';
 
 
-      uploadCurrentFile();
+      uploadCurrentQueueItem();
     }
 
 
 
-    function uploadCurrentFile() {
+    function uploadCurrentQueueItem() {
 
       if (
-        !uploadInProgress ||
-        currentIndex >=
-          uploadQueue.length
+        uploadIndex >=
+        photoQueue.length
       ) {
 
-        finishBatch();
+        finishUploadBatch();
 
         return;
       }
 
 
       const item =
-        uploadQueue[currentIndex];
+        photoQueue[
+          uploadIndex
+        ];
 
 
-      updateProgress(
-        'Preparing'
-      );
+      progressBox.textContent =
+        'Uploading photo ' +
+        (
+          uploadIndex + 1
+        ) +
+        ' of ' +
+        photoQueue.length +
+        '...';
 
 
       const reader =
@@ -1091,7 +1536,7 @@
               'formUploadId'
             )
             .value =
-              item.uploadId;
+              item.id;
 
 
           const form =
@@ -1104,11 +1549,6 @@
             BACKEND;
 
 
-          updateProgress(
-            'Uploading'
-          );
-
-
           form.submit();
 
 
@@ -1119,8 +1559,8 @@
       reader.onerror =
         function() {
 
-          stopBatchWithError(
-            'A selected photo could not be read. The remaining photos were not sent.'
+          failUploadBatch(
+            'A selected photo could not be read.'
           );
         };
 
@@ -1141,16 +1581,50 @@
         window.setTimeout(
           function() {
 
+            const item =
+              photoQueue[
+                uploadIndex
+              ];
+
+
             if (
-              !uploadInProgress
+              !item
             ) {
 
               return;
             }
 
 
-            stopBatchWithError(
-              'The portal could not confirm the current photo. Keep the phone copies and check the Drive folder before trying again.'
+            if (
+              item.retryCount <
+              MAX_RETRIES
+            ) {
+
+              item.retryCount++;
+
+
+              progressBox.textContent =
+                'Confirming photo ' +
+                (
+                  uploadIndex + 1
+                ) +
+                ' of ' +
+                photoQueue.length +
+                '...';
+
+
+              uploadCurrentQueueItem();
+
+              return;
+            }
+
+
+            failUploadBatch(
+              'The portal could not confirm photo ' +
+              (
+                uploadIndex + 1
+              ) +
+              '. Check the Drive folder before submitting again.'
             );
 
           },
@@ -1217,7 +1691,7 @@
           !result.success
         ) {
 
-          stopBatchWithError(
+          failUploadBatch(
             result &&
             result.message
               ? result.message
@@ -1235,16 +1709,31 @@
           );
 
 
-        currentIndex++;
+        const item =
+          photoQueue[
+            uploadIndex
+          ];
 
 
-        uploadCurrentFile();
+        if (
+          item
+        ) {
+
+          item.status =
+            'uploaded';
+        }
+
+
+        uploadIndex++;
+
+
+        uploadCurrentQueueItem();
       }
     );
 
 
 
-    function finishBatch() {
+    function finishUploadBatch() {
 
       clearAcknowledgementTimer();
 
@@ -1253,31 +1742,61 @@
         false;
 
 
-      uploadButton.disabled =
-        false;
-
-
-      uploadButton.textContent =
-        'Upload Photos';
-
-
-      const uploadedCount =
-        uploadQueue.length;
-
-
       progressBox.style.display =
         'none';
 
 
-      photosInput.value =
-        '';
+      const uploaded =
+        photoQueue.length;
+
+
+      photoQueue.forEach(
+        function(item) {
+
+          if (
+            item.previewUrl
+          ) {
+
+            URL.revokeObjectURL(
+              item.previewUrl
+            );
+          }
+
+        }
+      );
+
+
+      photoQueue =
+        [];
+
+
+      renderQueue();
+
+
+      addButton.disabled =
+        false;
+
+
+      submitButton.disabled =
+        false;
+
+
+      categoryInput.disabled =
+        false;
+
+
+      updateAreaOptions();
+
+
+      photosInput.disabled =
+        false;
 
 
       showMessage(
-        uploadedCount +
+        uploaded +
         ' photo' +
         (
-          uploadedCount === 1
+          uploaded === 1
             ? ''
             : 's'
         ) +
@@ -1307,7 +1826,7 @@
 
 
 
-    function stopBatchWithError(
+    function failUploadBatch(
       text
     ) {
 
@@ -1318,48 +1837,33 @@
         false;
 
 
-      uploadButton.disabled =
+      progressBox.style.display =
+        'none';
+
+
+      addButton.disabled =
         false;
 
 
-      uploadButton.textContent =
-        'Try Again';
+      submitButton.disabled =
+        false;
 
 
-      progressBox.style.display =
-        'none';
+      categoryInput.disabled =
+        false;
+
+
+      updateAreaOptions();
+
+
+      photosInput.disabled =
+        false;
 
 
       showMessage(
         text,
         false
       );
-    }
-
-
-
-    function updateProgress(
-      stage
-    ) {
-
-      const total =
-        uploadQueue.length;
-
-
-      const number =
-        Math.min(
-          currentIndex + 1,
-          total
-        );
-
-
-      progressBox.textContent =
-        stage +
-        ' photo ' +
-        number +
-        ' of ' +
-        total +
-        '...';
     }
 
 
