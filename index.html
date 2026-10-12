@@ -111,14 +111,12 @@
     }
 
     select,
-    input[type="text"],
     input[type="file"] {
       width: 100%;
       font-size: 16px;
     }
 
-    select,
-    input[type="text"] {
+    select {
       padding: 12px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -154,11 +152,6 @@
     button:disabled {
       opacity: .55;
       cursor: not-allowed;
-    }
-
-    .secondary {
-      margin-top: 10px;
-      background: #667085;
     }
 
     .progress {
@@ -256,40 +249,74 @@
       <div id="formSection" class="form-section">
 
         <div class="field">
-          <label for="category">Photo Category</label>
 
-          <select id="category">
-            <option value="">Select category</option>
-            <option>Exterior</option>
-            <option>Interior</option>
-            <option>Wheels & Tires</option>
-            <option>Existing Damage</option>
-            <option>Engine Bay</option>
-            <option>During Service</option>
-            <option>Finished / After</option>
-            <option>Other</option>
-          </select>
-        </div>
+          <label for="category">
+            Photo Category
+          </label>
 
-
-        <div class="field">
-          <label for="area">Area / Description (Optional)</label>
-
-          <input
-            type="text"
-            id="area"
-            placeholder="Example: Front, Driver Side, Dash, Rear Seat"
+          <select
+            id="category"
+            onchange="updateAreaOptions()"
           >
 
-          <div class="help">
-            This is added to the photo filename. Example:
-            Exterior + Front becomes "Exterior Front".
-          </div>
+            <option value="">
+              Select category
+            </option>
+
+            <option>Exterior</option>
+
+            <option>Interior</option>
+
+            <option>Wheels & Tires</option>
+
+            <option>Existing Damage</option>
+
+            <option>Engine Bay</option>
+
+            <option>During Service</option>
+
+            <option>Finished / After</option>
+
+            <option>Other</option>
+
+          </select>
+
         </div>
 
 
         <div class="field">
-          <label for="photos">Photos</label>
+
+          <label for="area">
+            Area
+            <span style="font-weight:normal;">
+              (Optional)
+            </span>
+          </label>
+
+          <select
+            id="area"
+            disabled
+          >
+
+            <option value="">
+              Select a category first
+            </option>
+
+          </select>
+
+          <div class="help">
+            Area is optional. Leave it blank for general or miscellaneous
+            photos.
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="photos">
+            Photos
+          </label>
 
           <input
             type="file"
@@ -302,6 +329,7 @@
             Select multiple saved photos from your phone at once.
             Maximum 8 MB per photo.
           </div>
+
         </div>
 
 
@@ -316,9 +344,15 @@
       </div>
 
 
-      <div id="progress" class="progress"></div>
+      <div
+        id="progress"
+        class="progress"
+      ></div>
 
-      <div id="message" class="message"></div>
+      <div
+        id="message"
+        class="message"
+      ></div>
 
     </div>
   </div>
@@ -331,14 +365,53 @@
     style="display:none;"
   >
 
-    <input type="hidden" name="action" value="uploadPhoto">
-    <input type="hidden" name="job" id="formJob">
-    <input type="hidden" name="category" id="formCategory">
-    <input type="hidden" name="area" id="formArea">
-    <input type="hidden" name="fileName" id="formFileName">
-    <input type="hidden" name="mimeType" id="formMimeType">
-    <input type="hidden" name="fileData" id="formFileData">
-    <input type="hidden" name="uploadId" id="formUploadId">
+    <input
+      type="hidden"
+      name="action"
+      value="uploadPhoto"
+    >
+
+    <input
+      type="hidden"
+      name="job"
+      id="formJob"
+    >
+
+    <input
+      type="hidden"
+      name="category"
+      id="formCategory"
+    >
+
+    <input
+      type="hidden"
+      name="area"
+      id="formArea"
+    >
+
+    <input
+      type="hidden"
+      name="fileName"
+      id="formFileName"
+    >
+
+    <input
+      type="hidden"
+      name="mimeType"
+      id="formMimeType"
+    >
+
+    <input
+      type="hidden"
+      name="fileData"
+      id="formFileData"
+    >
+
+    <input
+      type="hidden"
+      name="uploadId"
+      id="formUploadId"
+    >
 
   </form>
 
@@ -362,6 +435,131 @@
 
     const ACK_TIMEOUT_MS =
       12000;
+
+
+    /*
+     * AREA OPTIONS
+     *
+     * These options change depending on
+     * the selected photo category.
+     */
+    const AREA_OPTIONS = {
+
+      'Exterior': [
+        'Driver Side',
+        'Front',
+        'Passenger Side',
+        'Rear',
+        'Hood',
+        'Roof',
+        'Bed',
+        'Tailgate',
+        'Driver Mirror',
+        'Passenger Mirror'
+      ],
+
+      'Interior': [
+        'Driver Seat',
+        'Passenger Seat',
+        'Rear Driver Seat',
+        'Rear Passenger Seat',
+        'Third Row / Far Back',
+        'Dash',
+        'Center Console',
+        'Driver Floor',
+        'Passenger Floor',
+        'Rear Floor',
+        'Trunk / Cargo Area',
+        'Headliner',
+        'Driver Door Panel',
+        'Passenger Door Panel',
+        'Rear Driver Door Panel',
+        'Rear Passenger Door Panel'
+      ],
+
+      'Wheels & Tires': [
+        'Front Driver Tire',
+        'Rear Driver Tire',
+        'Front Passenger Tire',
+        'Rear Passenger Tire',
+        'Spare Tire'
+      ],
+
+      'Existing Damage': [
+        'Front Driver Area',
+        'Front Passenger Area',
+        'Rear Driver Area',
+        'Rear Passenger Area',
+        'Front Center',
+        'Rear Center',
+        'Driver Side',
+        'Passenger Side',
+        'Hood',
+        'Roof',
+        'Windshield / Glass',
+        'Front Driver Tire',
+        'Rear Driver Tire',
+        'Front Passenger Tire',
+        'Rear Passenger Tire',
+        'Driver Interior',
+        'Passenger Interior',
+        'Rear Interior',
+        'Trunk / Cargo Area',
+        'Bed',
+        'Tailgate'
+      ],
+
+      'Engine Bay': [
+        'Full Engine Bay',
+        'Driver Side',
+        'Passenger Side',
+        'Front / Radiator Area',
+        'Battery Area'
+      ],
+
+      'During Service': [
+        'Exterior',
+        'Interior',
+        'Driver Seat',
+        'Passenger Seat',
+        'Rear Seats',
+        'Dash',
+        'Center Console',
+        'Trunk / Cargo Area',
+        'Wheels & Tires',
+        'Engine Bay',
+        'Bed',
+        'Other Area'
+      ],
+
+      'Finished / After': [
+        'Full Vehicle',
+        'Driver Side',
+        'Front',
+        'Passenger Side',
+        'Rear',
+        'Driver Seat',
+        'Passenger Seat',
+        'Rear Seats',
+        'Dash',
+        'Center Console',
+        'Trunk / Cargo Area',
+        'Wheels & Tires',
+        'Engine Bay',
+        'Bed',
+        'Tailgate'
+      ],
+
+      'Other': [
+        'General / Miscellaneous',
+        'Customer Concern',
+        'Detail Shot',
+        'Product / Equipment',
+        'Before / After Comparison',
+        'Other Area'
+      ]
+
+    };
 
 
     const params =
@@ -401,37 +599,124 @@
     const statusBox =
       document.getElementById('status');
 
+
     const details =
       document.getElementById('details');
+
 
     const backupNote =
       document.getElementById('backupNote');
 
+
     const formSection =
       document.getElementById('formSection');
+
 
     const categoryInput =
       document.getElementById('category');
 
+
     const areaInput =
       document.getElementById('area');
+
 
     const photosInput =
       document.getElementById('photos');
 
+
     const uploadButton =
       document.getElementById('uploadButton');
 
+
     const progressBox =
       document.getElementById('progress');
+
 
     const messageBox =
       document.getElementById('message');
 
 
+
+    /*
+     * Changes the Area dropdown whenever
+     * the photo category changes.
+     */
+    function updateAreaOptions() {
+
+      const category =
+        categoryInput.value;
+
+
+      areaInput.innerHTML =
+        '';
+
+
+      const blankOption =
+        document.createElement('option');
+
+
+      blankOption.value =
+        '';
+
+
+      blankOption.textContent =
+        'No specific area / Miscellaneous';
+
+
+      areaInput.appendChild(
+        blankOption
+      );
+
+
+      if (
+        !category ||
+        !AREA_OPTIONS[category]
+      ) {
+
+        areaInput.disabled =
+          true;
+
+        return;
+      }
+
+
+      const options =
+        AREA_OPTIONS[category];
+
+
+      options.forEach(
+        function(area) {
+
+          const option =
+            document.createElement('option');
+
+
+          option.value =
+            area;
+
+
+          option.textContent =
+            area;
+
+
+          areaInput.appendChild(
+            option
+          );
+
+        }
+      );
+
+
+      areaInput.disabled =
+        false;
+    }
+
+
+
     function loadJob() {
 
       if (!jobId) {
+
         showFatalError(
           'This photo link is missing its Job ID.'
         );
@@ -444,6 +729,7 @@
         !BACKEND ||
         BACKEND.indexOf('PASTE_') === 0
       ) {
+
         showFatalError(
           'The photo portal backend has not been configured yet.'
         );
@@ -461,9 +747,14 @@
         function(result) {
 
           try {
+
             delete window[callback];
-          } catch (error) {
-            window[callback] = undefined;
+
+          }
+          catch (error) {
+
+            window[callback] =
+              undefined;
           }
 
 
@@ -471,6 +762,7 @@
             !result ||
             !result.success
           ) {
+
             showFatalError(
               result && result.message
                 ? result.message
@@ -488,11 +780,14 @@
 
 
       const script =
-        document.createElement('script');
+        document.createElement(
+          'script'
+        );
 
 
       script.onerror =
         function() {
+
           showFatalError(
             'The job could not be loaded. Check your connection and try again.'
           );
@@ -510,8 +805,11 @@
         Date.now();
 
 
-      document.body.appendChild(script);
+      document.body.appendChild(
+        script
+      );
     }
+
 
 
     function showJob(info) {
@@ -521,37 +819,50 @@
 
 
       document
-        .getElementById('customerIdDisplay')
+        .getElementById(
+          'customerIdDisplay'
+        )
         .textContent =
           info.customerId || '—';
 
 
       document
-        .getElementById('customerNameDisplay')
+        .getElementById(
+          'customerNameDisplay'
+        )
         .textContent =
           info.customerName || '—';
 
 
       document
-        .getElementById('jobDisplay')
+        .getElementById(
+          'jobDisplay'
+        )
         .textContent =
           info.jobId || jobId;
 
 
       document
-        .getElementById('vehicleDisplay')
+        .getElementById(
+          'vehicleDisplay'
+        )
         .textContent =
-          info.vehicle || 'Vehicle not assigned';
+          info.vehicle ||
+          'Vehicle not assigned';
 
 
       document
-        .getElementById('serviceDisplay')
+        .getElementById(
+          'serviceDisplay'
+        )
         .textContent =
           info.serviceCode || '—';
 
 
       lastPhotoCount =
-        Number(info.photoCount || 0);
+        Number(
+          info.photoCount || 0
+        );
 
 
       statusBox.textContent =
@@ -560,7 +871,11 @@
               'Job found. ' +
               lastPhotoCount +
               ' photo' +
-              (lastPhotoCount === 1 ? '' : 's') +
+              (
+                lastPhotoCount === 1
+                  ? ''
+                  : 's'
+              ) +
               ' currently on file.'
             )
           : 'Job found. Ready for photo upload.';
@@ -577,6 +892,7 @@
       formSection.style.display =
         'block';
     }
+
 
 
     function prepareBatch() {
@@ -604,6 +920,7 @@
 
 
       if (!category) {
+
         showMessage(
           'Select a photo category.',
           false
@@ -614,6 +931,7 @@
 
 
       if (files.length === 0) {
+
         showMessage(
           'Select at least one saved photo.',
           false
@@ -625,7 +943,11 @@
 
       for (const file of files) {
 
-        if (file.size > MAX_FILE_BYTES) {
+        if (
+          file.size >
+          MAX_FILE_BYTES
+        ) {
+
           showMessage(
             file.name +
             ' is larger than 8 MB. Remove it or use a smaller copy.',
@@ -640,11 +962,20 @@
       uploadQueue =
         files.map(
           function(file) {
+
             return {
+
               file: file,
-              category: category,
-              area: area,
-              uploadId: makeUploadId()
+
+              category:
+                category,
+
+              area:
+                area,
+
+              uploadId:
+                makeUploadId()
+
             };
           }
         );
@@ -674,13 +1005,17 @@
     }
 
 
+
     function uploadCurrentFile() {
 
       if (
         !uploadInProgress ||
-        currentIndex >= uploadQueue.length
+        currentIndex >=
+          uploadQueue.length
       ) {
+
         finishBatch();
+
         return;
       }
 
@@ -702,49 +1037,67 @@
         function(event) {
 
           document
-            .getElementById('formJob')
+            .getElementById(
+              'formJob'
+            )
             .value =
               jobId;
 
 
           document
-            .getElementById('formCategory')
+            .getElementById(
+              'formCategory'
+            )
             .value =
               item.category;
 
 
           document
-            .getElementById('formArea')
+            .getElementById(
+              'formArea'
+            )
             .value =
               item.area;
 
 
           document
-            .getElementById('formFileName')
+            .getElementById(
+              'formFileName'
+            )
             .value =
-              item.file.name || 'Photo';
+              item.file.name ||
+              'Photo';
 
 
           document
-            .getElementById('formMimeType')
+            .getElementById(
+              'formMimeType'
+            )
             .value =
-              item.file.type || 'application/octet-stream';
+              item.file.type ||
+              'application/octet-stream';
 
 
           document
-            .getElementById('formFileData')
+            .getElementById(
+              'formFileData'
+            )
             .value =
               event.target.result;
 
 
           document
-            .getElementById('formUploadId')
+            .getElementById(
+              'formUploadId'
+            )
             .value =
               item.uploadId;
 
 
           const form =
-            document.getElementById('uploadForm');
+            document.getElementById(
+              'uploadForm'
+            );
 
 
           form.action =
@@ -765,6 +1118,7 @@
 
       reader.onerror =
         function() {
+
           stopBatchWithError(
             'A selected photo could not be read. The remaining photos were not sent.'
           );
@@ -777,6 +1131,7 @@
     }
 
 
+
     function startAcknowledgementTimer() {
 
       clearAcknowledgementTimer();
@@ -786,7 +1141,10 @@
         window.setTimeout(
           function() {
 
-            if (!uploadInProgress) {
+            if (
+              !uploadInProgress
+            ) {
+
               return;
             }
 
@@ -801,17 +1159,24 @@
     }
 
 
+
     function clearAcknowledgementTimer() {
 
-      if (acknowledgementTimer !== null) {
+      if (
+        acknowledgementTimer !==
+        null
+      ) {
+
         window.clearTimeout(
           acknowledgementTimer
         );
+
 
         acknowledgementTimer =
           null;
       }
     }
+
 
 
     window.addEventListener(
@@ -824,13 +1189,18 @@
 
         if (
           !data ||
-          data.type !== 'genIIIPhotoUpload'
+          data.type !==
+            'genIIIPhotoUpload'
         ) {
+
           return;
         }
 
 
-        if (!uploadInProgress) {
+        if (
+          !uploadInProgress
+        ) {
+
           return;
         }
 
@@ -846,8 +1216,10 @@
           !result ||
           !result.success
         ) {
+
           stopBatchWithError(
-            result && result.message
+            result &&
+            result.message
               ? result.message
               : 'The current photo could not be uploaded.'
           );
@@ -869,6 +1241,7 @@
         uploadCurrentFile();
       }
     );
+
 
 
     function finishBatch() {
@@ -903,11 +1276,19 @@
       showMessage(
         uploadedCount +
         ' photo' +
-        (uploadedCount === 1 ? '' : 's') +
+        (
+          uploadedCount === 1
+            ? ''
+            : 's'
+        ) +
         ' uploaded successfully. ' +
         lastPhotoCount +
         ' total photo' +
-        (lastPhotoCount === 1 ? '' : 's') +
+        (
+          lastPhotoCount === 1
+            ? ''
+            : 's'
+        ) +
         ' are now on file for this job.',
         true
       );
@@ -916,12 +1297,19 @@
       statusBox.textContent =
         lastPhotoCount +
         ' photo' +
-        (lastPhotoCount === 1 ? '' : 's') +
+        (
+          lastPhotoCount === 1
+            ? ''
+            : 's'
+        ) +
         ' currently on file.';
     }
 
 
-    function stopBatchWithError(text) {
+
+    function stopBatchWithError(
+      text
+    ) {
 
       clearAcknowledgementTimer();
 
@@ -949,7 +1337,10 @@
     }
 
 
-    function updateProgress(stage) {
+
+    function updateProgress(
+      stage
+    ) {
 
       const total =
         uploadQueue.length;
@@ -972,25 +1363,36 @@
     }
 
 
+
     function makeUploadId() {
 
       if (
         window.crypto &&
-        typeof window.crypto.randomUUID === 'function'
+        typeof
+          window.crypto.randomUUID ===
+          'function'
       ) {
-        return window.crypto.randomUUID();
+
+        return (
+          window.crypto.randomUUID()
+        );
       }
 
 
       return (
         Date.now().toString(36) +
         '-' +
-        Math.random().toString(36).slice(2)
+        Math.random()
+          .toString(36)
+          .slice(2)
       );
     }
 
 
-    function showFatalError(text) {
+
+    function showFatalError(
+      text
+    ) {
 
       statusBox.textContent =
         'Unable to load job.';
@@ -1013,6 +1415,7 @@
         false
       );
     }
+
 
 
     function showMessage(
@@ -1038,11 +1441,13 @@
     }
 
 
+
     function hideMessage() {
 
       messageBox.style.display =
         'none';
     }
+
 
 
     loadJob();
