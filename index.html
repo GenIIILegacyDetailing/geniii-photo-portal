@@ -556,26 +556,21 @@
 
   <script>
 
-   const BACKEND =
-  'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
+    /*
+     * MAIN TRACKER BACKEND
+     */
+    const BACKEND =
+      'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
 
 
     const MAX_FILE_BYTES =
       8 * 1024 * 1024;
 
 
-    /*
-     * How long we will keep checking Drive
-     * before we stop and show an error.
-     */
     const VERIFY_TIMEOUT_MS =
       20000;
 
 
-    /*
-     * How often to check the backend
-     * while waiting for an upload.
-     */
     const VERIFY_INTERVAL_MS =
       1500;
 
@@ -805,7 +800,9 @@
 
 
       const blankOption =
-        document.createElement('option');
+        document.createElement(
+          'option'
+        );
 
 
       blankOption.value =
@@ -833,11 +830,15 @@
       }
 
 
-      AREA_OPTIONS[category].forEach(
+      AREA_OPTIONS[
+        category
+      ].forEach(
         function(area) {
 
           const option =
-            document.createElement('option');
+            document.createElement(
+              'option'
+            );
 
 
           option.value =
@@ -884,7 +885,8 @@
             ) {
 
               showFatalError(
-                result && result.message
+                result &&
+                result.message
                   ? result.message
                   : 'The job could not be loaded.'
               );
@@ -913,7 +915,10 @@
     function getJobInfo() {
 
       return new Promise(
-        function(resolve, reject) {
+        function(
+          resolve,
+          reject
+        ) {
 
           const callbackName =
             'genIIIJobLookup_' +
@@ -1300,7 +1305,10 @@
 
 
       photoQueue.forEach(
-        function(item, index) {
+        function(
+          item,
+          index
+        ) {
 
           const row =
             document.createElement(
@@ -1446,7 +1454,9 @@
 
 
 
-    function removeQueuedPhoto(index) {
+    function removeQueuedPhoto(
+      index
+    ) {
 
       if (
         uploadInProgress
@@ -1457,7 +1467,9 @@
 
 
       const item =
-        photoQueue[index];
+        photoQueue[
+          index
+        ];
 
 
       if (
@@ -1540,10 +1552,6 @@
         'Checking current photo count...';
 
 
-      /*
-       * Before uploading anything, ask the backend
-       * for the current number of photos.
-       */
       getJobInfo()
         .then(
           function(result) {
@@ -1688,19 +1696,9 @@
             BACKEND;
 
 
-          /*
-           * Submit the photo.
-           *
-           * We deliberately DO NOT wait for a
-           * postMessage acknowledgement anymore.
-           */
           form.submit();
 
 
-          /*
-           * Now verify success by watching the
-           * backend photo count.
-           */
           verifyCurrentPhoto();
         };
 
@@ -1773,11 +1771,6 @@
                 );
 
 
-              /*
-               * If the job now has more photos
-               * than it had before this upload,
-               * this photo made it to Drive.
-               */
               if (
                 count >
                 startingCount
@@ -1838,10 +1831,6 @@
       }
 
 
-      /*
-       * Give Apps Script a short head start
-       * before the first verification check.
-       */
       window.setTimeout(
         checkAgain,
         1200
@@ -1924,7 +1913,9 @@
 
 
 
-    function failUploadBatch(text) {
+    function failUploadBatch(
+      text
+    ) {
 
       uploadInProgress =
         false;
@@ -2008,7 +1999,8 @@
 
 
       return (
-        Date.now().toString(36) +
+        Date.now()
+          .toString(36) +
         '-' +
         Math.random()
           .toString(36)
@@ -2018,7 +2010,9 @@
 
 
 
-    function showFatalError(text) {
+    function showFatalError(
+      text
+    ) {
 
       statusBox.textContent =
         'Unable to load job.';
