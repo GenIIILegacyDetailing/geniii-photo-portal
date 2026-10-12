@@ -352,12 +352,8 @@
 
   <script>
 
-    /*
-     * TODO:
-     * Paste the deployed Apps Script /exec URL below.
-     */
     const BACKEND =
-      'PASTE_APPS_SCRIPT_WEB_APP_EXEC_URL_HERE';
+      'https://script.google.com/macros/s/AKfycbwWoObwZAZqcLvA0Hs2E9BUQRBZr88MFCPPE4K2ZaPLpY4vBFv1LrCoJb1l7iTMAy1C/exec';
 
 
     const MAX_FILE_BYTES =
@@ -795,14 +791,8 @@
             }
 
 
-            /*
-             * Do not automatically send the same photo again.
-             * The backend has a per-photo upload ID, so the user can
-             * choose Retry without creating a duplicate if the first
-             * upload actually succeeded but the acknowledgement was lost.
-             */
             stopBatchWithError(
-              'The portal could not confirm the current photo. Keep the phone copies. You can retry this batch without intentionally creating a duplicate.'
+              'The portal could not confirm the current photo. Keep the phone copies and check the Drive folder before trying again.'
             );
 
           },
@@ -945,7 +935,7 @@
 
 
       uploadButton.textContent =
-        'Retry Upload';
+        'Try Again';
 
 
       progressBox.style.display =
