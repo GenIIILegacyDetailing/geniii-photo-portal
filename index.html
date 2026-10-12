@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Gen III Legacy Detailing - Vehicle Photos</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #f3f5f7;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2933;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .09);
+    }
+
+    h1 {
+      margin: 0 0 5px;
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 22px;
+      font-size: 14px;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 18px;
+      background: #eef2f6;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    .details {
+      display: none;
+      margin-bottom: 20px;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 9px 0;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 7px 0;
+      font-size: 14px;
+    }
+
+    .label {
+      color: #667085;
+    }
+
+    .value {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    .backup-note {
+      display: none;
+      margin-bottom: 20px;
+      padding: 13px;
+      border-radius: 9px;
+      background: #fff8e6;
+      color: #6b4a00;
+      border: 1px solid #f2d38a;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    select,
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    select,
+    input[type="text"] {
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+    }
+
+    input[type="file"] {
+      padding: 12px;
+      border: 1px dashed #98a2b3;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .help {
+      margin-top: 6px;
+      color: #667085;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #00101A;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      margin-top: 10px;
+      background: #667085;
+    }
+
+    .progress {
+      display: none;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 8px;
+      background: #eef2f6;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.45;
+    }
+
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.45;
+    }
+
+    .success {
+      background: #e8f5e9;
+      color: #256029;
+    }
+
+    .error {
+      background: #fdecec;
+      color: #b42318;
+    }
+
+    .hidden-frame {
+      display: none;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="container">
+    <div class="card">
+
+      <h1>Vehicle Photo Upload</h1>
+
+      <div class="subtitle">
+        Gen III Legacy Detailing
+      </div>
+
+      <div id="status" class="status">
+        Loading job...
+      </div>
+
+
+      <div id="details" class="details">
+
+        <div class="detail-row">
+          <span class="label">Customer ID</span>
+          <span id="customerIdDisplay" class="value"></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Customer</span>
+          <span id="customerNameDisplay" class="value"></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Job ID</span>
+          <span id="jobDisplay" class="value"></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Vehicle</span>
+          <span id="vehicleDisplay" class="value"></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Service</span>
+          <span id="serviceDisplay" class="value"></span>
+        </div>
+
+      </div>
+
+
+      <div id="backupNote" class="backup-note">
+        For your backup copy, take the photos with your phone's normal
+        Camera app first. Then select those saved photos here for upload.
+        Keep the phone copies until the job is finished and the Drive
+        photo record has been verified.
+      </div>
+
+
+      <div id="formSection" class="form-section">
+
+        <div class="field">
+          <label for="category">Photo Category</label>
+
+          <select id="category">
+            <option value="">Select category</option>
+            <option>Exterior</option>
+            <option>Interior</option>
+            <option>Wheels & Tires</option>
+            <option>Existing Damage</option>
+            <option>Engine Bay</option>
+            <option>During Service</option>
+            <option>Finished / After</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+
+        <div class="field">
+          <label for="area">Area / Description (Optional)</label>
+
+          <input
+            type="text"
+            id="area"
+            placeholder="Example: Front, Driver Side, Dash, Rear Seat"
+          >
+
+          <div class="help">
+            This is added to the photo filename. Example:
+            Exterior + Front becomes "Exterior Front".
+          </div>
+        </div>
+
+
+        <div class="field">
+          <label for="photos">Photos</label>
+
+          <input
+            type="file"
+            id="photos"
+            accept="image/*"
+            multiple
+          >
+
+          <div class="help">
+            Select multiple saved photos from your phone at once.
+            Maximum 8 MB per photo.
+          </div>
+        </div>
+
+
+        <button
+          id="uploadButton"
+          type="button"
+          onclick="prepareBatch()"
+        >
+          Upload Photos
+        </button>
+
+      </div>
+
+
+      <div id="progress" class="progress"></div>
+
+      <div id="message" class="message"></div>
+
+    </div>
+  </div>
+
+
+  <form
+    id="uploadForm"
+    method="POST"
+    target="uploadFrame"
+    style="display:none;"
+  >
+
+    <input type="hidden" name="action" value="uploadPhoto">
+    <input type="hidden" name="job" id="formJob">
+    <input type="hidden" name="category" id="formCategory">
+    <input type="hidden" name="area" id="formArea">
+    <input type="hidden" name="fileName" id="formFileName">
+    <input type="hidden" name="mimeType" id="formMimeType">
+    <input type="hidden" name="fileData" id="formFileData">
+    <input type="hidden" name="uploadId" id="formUploadId">
+
+  </form>
+
+
+  <iframe
+    name="uploadFrame"
+    id="uploadFrame"
+    class="hidden-frame"
+  ></iframe>
+
+
+  <script>
+
+    /*
+     * TODO:
+     * Paste the deployed Apps Script /exec URL below.
+     */
+    const BACKEND =
+      'PASTE_APPS_SCRIPT_WEB_APP_EXEC_URL_HERE';
+
+
+    const MAX_FILE_BYTES =
+      8 * 1024 * 1024;
+
+
+    const ACK_TIMEOUT_MS =
+      12000;
+
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const jobId =
+      params.get('job') || '';
+
+
+    let jobInfo =
+      null;
+
+
+    let uploadQueue =
+      [];
+
+
+    let currentIndex =
+      0;
+
+
+    let uploadInProgress =
+      false;
+
+
+    let acknowledgementTimer =
+      null;
+
+
+    let lastPhotoCount =
+      0;
+
+
+    const statusBox =
+      document.getElementById('status');
+
+    const details =
+      document.getElementById('details');
+
+    const backupNote =
+      document.getElementById('backupNote');
+
+    const formSection =
+      document.getElementById('formSection');
+
+    const categoryInput =
+      document.getElementById('category');
+
+    const areaInput =
+      document.getElementById('area');
+
+    const photosInput =
+      document.getElementById('photos');
+
+    const uploadButton =
+      document.getElementById('uploadButton');
+
+    const progressBox =
+      document.getElementById('progress');
+
+    const messageBox =
+      document.getElementById('message');
+
+
+    function loadJob() {
+
+      if (!jobId) {
+        showFatalError(
+          'This photo link is missing its Job ID.'
+        );
+
+        return;
+      }
+
+
+      if (
+        !BACKEND ||
+        BACKEND.indexOf('PASTE_') === 0
+      ) {
+        showFatalError(
+          'The photo portal backend has not been configured yet.'
+        );
+
+        return;
+      }
+
+
+      const callback =
+        'genIIILoadJob_' +
+        Date.now();
+
+
+      window[callback] =
+        function(result) {
+
+          try {
+            delete window[callback];
+          } catch (error) {
+            window[callback] = undefined;
+          }
+
+
+          if (
+            !result ||
+            !result.success
+          ) {
+            showFatalError(
+              result && result.message
+                ? result.message
+                : 'The job could not be loaded.'
+            );
+
+            return;
+          }
+
+
+          showJob(
+            result.job
+          );
+        };
+
+
+      const script =
+        document.createElement('script');
+
+
+      script.onerror =
+        function() {
+          showFatalError(
+            'The job could not be loaded. Check your connection and try again.'
+          );
+        };
+
+
+      script.src =
+        BACKEND +
+        '?action=lookup' +
+        '&job=' +
+        encodeURIComponent(jobId) +
+        '&callback=' +
+        encodeURIComponent(callback) +
+        '&_=' +
+        Date.now();
+
+
+      document.body.appendChild(script);
+    }
+
+
+    function showJob(info) {
+
+      jobInfo =
+        info;
+
+
+      document
+        .getElementById('customerIdDisplay')
+        .textContent =
+          info.customerId || '—';
+
+
+      document
+        .getElementById('customerNameDisplay')
+        .textContent =
+          info.customerName || '—';
+
+
+      document
+        .getElementById('jobDisplay')
+        .textContent =
+          info.jobId || jobId;
+
+
+      document
+        .getElementById('vehicleDisplay')
+        .textContent =
+          info.vehicle || 'Vehicle not assigned';
+
+
+      document
+        .getElementById('serviceDisplay')
+        .textContent =
+          info.serviceCode || '—';
+
+
+      lastPhotoCount =
+        Number(info.photoCount || 0);
+
+
+      statusBox.textContent =
+        lastPhotoCount > 0
+          ? (
+              'Job found. ' +
+              lastPhotoCount +
+              ' photo' +
+              (lastPhotoCount === 1 ? '' : 's') +
+              ' currently on file.'
+            )
+          : 'Job found. Ready for photo upload.';
+
+
+      details.style.display =
+        'block';
+
+
+      backupNote.style.display =
+        'block';
+
+
+      formSection.style.display =
+        'block';
+    }
+
+
+    function prepareBatch() {
+
+      if (uploadInProgress) {
+        return;
+      }
+
+
+      hideMessage();
+
+
+      const category =
+        categoryInput.value.trim();
+
+
+      const area =
+        areaInput.value.trim();
+
+
+      const files =
+        Array.from(
+          photosInput.files || []
+        );
+
+
+      if (!category) {
+        showMessage(
+          'Select a photo category.',
+          false
+        );
+
+        return;
+      }
+
+
+      if (files.length === 0) {
+        showMessage(
+          'Select at least one saved photo.',
+          false
+        );
+
+        return;
+      }
+
+
+      for (const file of files) {
+
+        if (file.size > MAX_FILE_BYTES) {
+          showMessage(
+            file.name +
+            ' is larger than 8 MB. Remove it or use a smaller copy.',
+            false
+          );
+
+          return;
+        }
+      }
+
+
+      uploadQueue =
+        files.map(
+          function(file) {
+            return {
+              file: file,
+              category: category,
+              area: area,
+              uploadId: makeUploadId()
+            };
+          }
+        );
+
+
+      currentIndex =
+        0;
+
+
+      uploadInProgress =
+        true;
+
+
+      uploadButton.disabled =
+        true;
+
+
+      uploadButton.textContent =
+        'Uploading...';
+
+
+      progressBox.style.display =
+        'block';
+
+
+      uploadCurrentFile();
+    }
+
+
+    function uploadCurrentFile() {
+
+      if (
+        !uploadInProgress ||
+        currentIndex >= uploadQueue.length
+      ) {
+        finishBatch();
+        return;
+      }
+
+
+      const item =
+        uploadQueue[currentIndex];
+
+
+      updateProgress(
+        'Preparing'
+      );
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event) {
+
+          document
+            .getElementById('formJob')
+            .value =
+              jobId;
+
+
+          document
+            .getElementById('formCategory')
+            .value =
+              item.category;
+
+
+          document
+            .getElementById('formArea')
+            .value =
+              item.area;
+
+
+          document
+            .getElementById('formFileName')
+            .value =
+              item.file.name || 'Photo';
+
+
+          document
+            .getElementById('formMimeType')
+            .value =
+              item.file.type || 'application/octet-stream';
+
+
+          document
+            .getElementById('formFileData')
+            .value =
+              event.target.result;
+
+
+          document
+            .getElementById('formUploadId')
+            .value =
+              item.uploadId;
+
+
+          const form =
+            document.getElementById('uploadForm');
+
+
+          form.action =
+            BACKEND;
+
+
+          updateProgress(
+            'Uploading'
+          );
+
+
+          form.submit();
+
+
+          startAcknowledgementTimer();
+        };
+
+
+      reader.onerror =
+        function() {
+          stopBatchWithError(
+            'A selected photo could not be read. The remaining photos were not sent.'
+          );
+        };
+
+
+      reader.readAsDataURL(
+        item.file
+      );
+    }
+
+
+    function startAcknowledgementTimer() {
+
+      clearAcknowledgementTimer();
+
+
+      acknowledgementTimer =
+        window.setTimeout(
+          function() {
+
+            if (!uploadInProgress) {
+              return;
+            }
+
+
+            /*
+             * Do not automatically send the same photo again.
+             * The backend has a per-photo upload ID, so the user can
+             * choose Retry without creating a duplicate if the first
+             * upload actually succeeded but the acknowledgement was lost.
+             */
+            stopBatchWithError(
+              'The portal could not confirm the current photo. Keep the phone copies. You can retry this batch without intentionally creating a duplicate.'
+            );
+
+          },
+          ACK_TIMEOUT_MS
+        );
+    }
+
+
+    function clearAcknowledgementTimer() {
+
+      if (acknowledgementTimer !== null) {
+        window.clearTimeout(
+          acknowledgementTimer
+        );
+
+        acknowledgementTimer =
+          null;
+      }
+    }
+
+
+    window.addEventListener(
+      'message',
+      function(event) {
+
+        const data =
+          event.data;
+
+
+        if (
+          !data ||
+          data.type !== 'genIIIPhotoUpload'
+        ) {
+          return;
+        }
+
+
+        if (!uploadInProgress) {
+          return;
+        }
+
+
+        clearAcknowledgementTimer();
+
+
+        const result =
+          data.result;
+
+
+        if (
+          !result ||
+          !result.success
+        ) {
+          stopBatchWithError(
+            result && result.message
+              ? result.message
+              : 'The current photo could not be uploaded.'
+          );
+
+          return;
+        }
+
+
+        lastPhotoCount =
+          Number(
+            result.photoCount ||
+            lastPhotoCount
+          );
+
+
+        currentIndex++;
+
+
+        uploadCurrentFile();
+      }
+    );
+
+
+    function finishBatch() {
+
+      clearAcknowledgementTimer();
+
+
+      uploadInProgress =
+        false;
+
+
+      uploadButton.disabled =
+        false;
+
+
+      uploadButton.textContent =
+        'Upload Photos';
+
+
+      const uploadedCount =
+        uploadQueue.length;
+
+
+      progressBox.style.display =
+        'none';
+
+
+      photosInput.value =
+        '';
+
+
+      showMessage(
+        uploadedCount +
+        ' photo' +
+        (uploadedCount === 1 ? '' : 's') +
+        ' uploaded successfully. ' +
+        lastPhotoCount +
+        ' total photo' +
+        (lastPhotoCount === 1 ? '' : 's') +
+        ' are now on file for this job.',
+        true
+      );
+
+
+      statusBox.textContent =
+        lastPhotoCount +
+        ' photo' +
+        (lastPhotoCount === 1 ? '' : 's') +
+        ' currently on file.';
+    }
+
+
+    function stopBatchWithError(text) {
+
+      clearAcknowledgementTimer();
+
+
+      uploadInProgress =
+        false;
+
+
+      uploadButton.disabled =
+        false;
+
+
+      uploadButton.textContent =
+        'Retry Upload';
+
+
+      progressBox.style.display =
+        'none';
+
+
+      showMessage(
+        text,
+        false
+      );
+    }
+
+
+    function updateProgress(stage) {
+
+      const total =
+        uploadQueue.length;
+
+
+      const number =
+        Math.min(
+          currentIndex + 1,
+          total
+        );
+
+
+      progressBox.textContent =
+        stage +
+        ' photo ' +
+        number +
+        ' of ' +
+        total +
+        '...';
+    }
+
+
+    function makeUploadId() {
+
+      if (
+        window.crypto &&
+        typeof window.crypto.randomUUID === 'function'
+      ) {
+        return window.crypto.randomUUID();
+      }
+
+
+      return (
+        Date.now().toString(36) +
+        '-' +
+        Math.random().toString(36).slice(2)
+      );
+    }
+
+
+    function showFatalError(text) {
+
+      statusBox.textContent =
+        'Unable to load job.';
+
+
+      details.style.display =
+        'none';
+
+
+      backupNote.style.display =
+        'none';
+
+
+      formSection.style.display =
+        'none';
+
+
+      showMessage(
+        text,
+        false
+      );
+    }
+
+
+    function showMessage(
+      text,
+      success
+    ) {
+
+      messageBox.textContent =
+        text;
+
+
+      messageBox.className =
+        'message ' +
+        (
+          success
+            ? 'success'
+            : 'error'
+        );
+
+
+      messageBox.style.display =
+        'block';
+    }
+
+
+    function hideMessage() {
+
+      messageBox.style.display =
+        'none';
+    }
+
+
+    loadJob();
+
+  </script>
+
+</body>
+</html>
