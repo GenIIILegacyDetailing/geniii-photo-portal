@@ -154,11 +154,6 @@
       cursor: not-allowed;
     }
 
-    .secondary-button {
-      margin-top: 10px;
-      background: #667085;
-    }
-
     .submit-button {
       margin-top: 18px;
       background: #00101A;
@@ -371,19 +366,12 @@
             </option>
 
             <option>Exterior</option>
-
             <option>Interior</option>
-
             <option>Wheels & Tires</option>
-
             <option>Existing Damage</option>
-
             <option>Engine Bay</option>
-
             <option>During Service</option>
-
             <option>Finished / After</option>
-
             <option>Other</option>
 
           </select>
@@ -432,7 +420,7 @@
           >
 
           <div class="help">
-            You can select one photo or several photos at once.
+            Select one photo or several photos at once.
             Maximum 8 MB per photo.
           </div>
 
@@ -576,12 +564,20 @@
       8 * 1024 * 1024;
 
 
-    const ACK_TIMEOUT_MS =
+    /*
+     * How long we will keep checking Drive
+     * before we stop and show an error.
+     */
+    const VERIFY_TIMEOUT_MS =
       20000;
 
 
-    const MAX_RETRIES =
-      1;
+    /*
+     * How often to check the backend
+     * while waiting for an upload.
+     */
+    const VERIFY_INTERVAL_MS =
+      1500;
 
 
     const AREA_OPTIONS = {
@@ -729,11 +725,11 @@
       false;
 
 
-    let acknowledgementTimer =
-      null;
-
-
     let lastPhotoCount =
+      0;
+
+
+    let currentExpectedCount =
       0;
 
 
@@ -878,75 +874,194 @@
       }
 
 
-      const callback =
-        'genIIILoadJob_' +
-        Date.now();
+      getJobInfo()
+        .then(
+          function(result) {
+
+            if (
+              !result ||
+              !result.success
+            ) {
+
+              showFatalError(
+                result && result.message
+                  ? result.message
+                  : 'The job could not be loaded.'
+              );
+
+              return;
+            }
 
 
-      window[callback] =
-        function(result) {
-
-          try {
-
-            delete window[callback];
-
+            showJob(
+              result.job
+            );
           }
-          catch (error) {
-
-            window[callback] =
-              undefined;
-          }
-
-
-          if (
-            !result ||
-            !result.success
-          ) {
+        )
+        .catch(
+          function() {
 
             showFatalError(
-              result && result.message
-                ? result.message
-                : 'The job could not be loaded.'
+              'The job could not be loaded. Check your connection and try again.'
+            );
+          }
+        );
+    }
+
+
+
+    function getJobInfo() {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          const callbackName =
+            'genIIIJobLookup_' +
+            Date.now() +
+            '_' +
+            Math.random()
+              .toString(36)
+              .slice(2);
+
+
+          const script =
+            document.createElement(
+              'script'
             );
 
-            return;
+
+          let finished =
+            false;
+
+
+          const timeout =
+            window.setTimeout(
+              function() {
+
+                if (finished) {
+                  return;
+                }
+
+
+                finished =
+                  true;
+
+
+                cleanup();
+
+
+                reject(
+                  new Error(
+                    'Lookup timed out.'
+                  )
+                );
+
+              },
+              10000
+            );
+
+
+          function cleanup() {
+
+            window.clearTimeout(
+              timeout
+            );
+
+
+            try {
+
+              delete window[
+                callbackName
+              ];
+
+            }
+            catch (error) {
+
+              window[
+                callbackName
+              ] =
+                undefined;
+            }
+
+
+            if (
+              script.parentNode
+            ) {
+
+              script.parentNode
+                .removeChild(
+                  script
+                );
+            }
           }
 
 
-          showJob(
-            result.job
-          );
-        };
+          window[
+            callbackName
+          ] =
+            function(result) {
+
+              if (finished) {
+                return;
+              }
 
 
-      const script =
-        document.createElement(
-          'script'
-        );
+              finished =
+                true;
 
 
-      script.onerror =
-        function() {
-
-          showFatalError(
-            'The job could not be loaded. Check your connection and try again.'
-          );
-        };
+              cleanup();
 
 
-      script.src =
-        BACKEND +
-        '?action=lookup' +
-        '&job=' +
-        encodeURIComponent(jobId) +
-        '&callback=' +
-        encodeURIComponent(callback) +
-        '&_=' +
-        Date.now();
+              resolve(
+                result
+              );
+            };
 
 
-      document.body.appendChild(
-        script
+          script.onerror =
+            function() {
+
+              if (finished) {
+                return;
+              }
+
+
+              finished =
+                true;
+
+
+              cleanup();
+
+
+              reject(
+                new Error(
+                  'Lookup failed.'
+                )
+              );
+            };
+
+
+          script.src =
+            BACKEND +
+            '?action=lookup' +
+            '&job=' +
+            encodeURIComponent(
+              jobId
+            ) +
+            '&callback=' +
+            encodeURIComponent(
+              callbackName
+            ) +
+            '&_=' +
+            Date.now();
+
+
+          document.body
+            .appendChild(
+              script
+            );
+        }
       );
     }
 
@@ -1065,7 +1180,9 @@
       }
 
 
-      if (files.length === 0) {
+      if (
+        files.length === 0
+      ) {
 
         showMessage(
           'Select at least one photo.',
@@ -1076,7 +1193,9 @@
       }
 
 
-      for (const file of files) {
+      for (
+        const file of files
+      ) {
 
         if (
           file.size >
@@ -1114,13 +1233,7 @@
             previewUrl:
               URL.createObjectURL(
                 file
-              ),
-
-            retryCount:
-              0,
-
-            status:
-              'pending'
+              )
 
           });
 
@@ -1401,32 +1514,15 @@
       }
 
 
-      uploadIndex =
-        0;
-
-
       uploadInProgress =
         true;
 
 
-      addButton.disabled =
-        true;
+      uploadIndex =
+        0;
 
 
-      submitButton.disabled =
-        true;
-
-
-      categoryInput.disabled =
-        true;
-
-
-      areaInput.disabled =
-        true;
-
-
-      photosInput.disabled =
-        true;
+      lockForm();
 
 
       selectionMessage.style.display =
@@ -1440,12 +1536,55 @@
         'block';
 
 
-      uploadCurrentQueueItem();
+      progressBox.textContent =
+        'Checking current photo count...';
+
+
+      /*
+       * Before uploading anything, ask the backend
+       * for the current number of photos.
+       */
+      getJobInfo()
+        .then(
+          function(result) {
+
+            if (
+              !result ||
+              !result.success
+            ) {
+
+              throw new Error(
+                'Could not verify the current job.'
+              );
+            }
+
+
+            lastPhotoCount =
+              Number(
+                result.job.photoCount || 0
+              );
+
+
+            currentExpectedCount =
+              lastPhotoCount;
+
+
+            uploadCurrentPhoto();
+          }
+        )
+        .catch(
+          function() {
+
+            failUploadBatch(
+              'The portal could not verify the job before uploading. Please try again.'
+            );
+          }
+        );
     }
 
 
 
-    function uploadCurrentQueueItem() {
+    function uploadCurrentPhoto() {
 
       if (
         uploadIndex >=
@@ -1549,10 +1688,20 @@
             BACKEND;
 
 
+          /*
+           * Submit the photo.
+           *
+           * We deliberately DO NOT wait for a
+           * postMessage acknowledgement anymore.
+           */
           form.submit();
 
 
-          startAcknowledgementTimer();
+          /*
+           * Now verify success by watching the
+           * backend photo count.
+           */
+          verifyCurrentPhoto();
         };
 
 
@@ -1572,104 +1721,28 @@
 
 
 
-    function startAcknowledgementTimer() {
+    function verifyCurrentPhoto() {
 
-      clearAcknowledgementTimer();
-
-
-      acknowledgementTimer =
-        window.setTimeout(
-          function() {
-
-            const item =
-              photoQueue[
-                uploadIndex
-              ];
+      const startingCount =
+        currentExpectedCount;
 
 
-            if (
-              !item
-            ) {
-
-              return;
-            }
+      const deadline =
+        Date.now() +
+        VERIFY_TIMEOUT_MS;
 
 
-            if (
-              item.retryCount <
-              MAX_RETRIES
-            ) {
-
-              item.retryCount++;
-
-
-              progressBox.textContent =
-                'Confirming photo ' +
-                (
-                  uploadIndex + 1
-                ) +
-                ' of ' +
-                photoQueue.length +
-                '...';
+      progressBox.textContent =
+        'Confirming photo ' +
+        (
+          uploadIndex + 1
+        ) +
+        ' of ' +
+        photoQueue.length +
+        '...';
 
 
-              uploadCurrentQueueItem();
-
-              return;
-            }
-
-
-            failUploadBatch(
-              'The portal could not confirm photo ' +
-              (
-                uploadIndex + 1
-              ) +
-              '. Check the Drive folder before submitting again.'
-            );
-
-          },
-          ACK_TIMEOUT_MS
-        );
-    }
-
-
-
-    function clearAcknowledgementTimer() {
-
-      if (
-        acknowledgementTimer !==
-        null
-      ) {
-
-        window.clearTimeout(
-          acknowledgementTimer
-        );
-
-
-        acknowledgementTimer =
-          null;
-      }
-    }
-
-
-
-    window.addEventListener(
-      'message',
-      function(event) {
-
-        const data =
-          event.data;
-
-
-        if (
-          !data ||
-          data.type !==
-            'genIIIPhotoUpload'
-        ) {
-
-          return;
-        }
-
+      function checkAgain() {
 
         if (
           !uploadInProgress
@@ -1679,64 +1752,105 @@
         }
 
 
-        clearAcknowledgementTimer();
+        getJobInfo()
+          .then(
+            function(result) {
+
+              if (
+                !result ||
+                !result.success
+              ) {
+
+                scheduleNextCheck();
+
+                return;
+              }
 
 
-        const result =
-          data.result;
+              const count =
+                Number(
+                  result.job.photoCount || 0
+                );
 
+
+              /*
+               * If the job now has more photos
+               * than it had before this upload,
+               * this photo made it to Drive.
+               */
+              if (
+                count >
+                startingCount
+              ) {
+
+                lastPhotoCount =
+                  count;
+
+
+                currentExpectedCount =
+                  count;
+
+
+                uploadIndex++;
+
+
+                uploadCurrentPhoto();
+
+                return;
+              }
+
+
+              scheduleNextCheck();
+            }
+          )
+          .catch(
+            function() {
+
+              scheduleNextCheck();
+            }
+          );
+      }
+
+
+      function scheduleNextCheck() {
 
         if (
-          !result ||
-          !result.success
+          Date.now() >=
+          deadline
         ) {
 
           failUploadBatch(
-            result &&
-            result.message
-              ? result.message
-              : 'The current photo could not be uploaded.'
+            'The portal could not verify photo ' +
+            (
+              uploadIndex + 1
+            ) +
+            ' within 20 seconds. Check the Drive folder before submitting again.'
           );
 
           return;
         }
 
 
-        lastPhotoCount =
-          Number(
-            result.photoCount ||
-            lastPhotoCount
-          );
-
-
-        const item =
-          photoQueue[
-            uploadIndex
-          ];
-
-
-        if (
-          item
-        ) {
-
-          item.status =
-            'uploaded';
-        }
-
-
-        uploadIndex++;
-
-
-        uploadCurrentQueueItem();
+        window.setTimeout(
+          checkAgain,
+          VERIFY_INTERVAL_MS
+        );
       }
-    );
+
+
+      /*
+       * Give Apps Script a short head start
+       * before the first verification check.
+       */
+      window.setTimeout(
+        checkAgain,
+        1200
+      );
+    }
 
 
 
     function finishUploadBatch() {
-
-      clearAcknowledgementTimer();
-
 
       uploadInProgress =
         false;
@@ -1773,23 +1887,7 @@
       renderQueue();
 
 
-      addButton.disabled =
-        false;
-
-
-      submitButton.disabled =
-        false;
-
-
-      categoryInput.disabled =
-        false;
-
-
-      updateAreaOptions();
-
-
-      photosInput.disabled =
-        false;
+      unlockForm();
 
 
       showMessage(
@@ -1826,12 +1924,7 @@
 
 
 
-    function failUploadBatch(
-      text
-    ) {
-
-      clearAcknowledgementTimer();
-
+    function failUploadBatch(text) {
 
       uploadInProgress =
         false;
@@ -1840,6 +1933,43 @@
       progressBox.style.display =
         'none';
 
+
+      unlockForm();
+
+
+      showMessage(
+        text,
+        false
+      );
+    }
+
+
+
+    function lockForm() {
+
+      addButton.disabled =
+        true;
+
+
+      submitButton.disabled =
+        true;
+
+
+      categoryInput.disabled =
+        true;
+
+
+      areaInput.disabled =
+        true;
+
+
+      photosInput.disabled =
+        true;
+    }
+
+
+
+    function unlockForm() {
 
       addButton.disabled =
         false;
@@ -1858,12 +1988,6 @@
 
       photosInput.disabled =
         false;
-
-
-      showMessage(
-        text,
-        false
-      );
     }
 
 
@@ -1894,9 +2018,7 @@
 
 
 
-    function showFatalError(
-      text
-    ) {
+    function showFatalError(text) {
 
       statusBox.textContent =
         'Unable to load job.';
