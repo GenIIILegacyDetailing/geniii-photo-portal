@@ -1,386 +1,1223 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    http-equiv="Cache-Control"
-    content="no-cache, no-store, must-revalidate"
-  >
-
-  <meta
-    http-equiv="Pragma"
-    content="no-cache"
-  >
-
-  <meta
-    http-equiv="Expires"
-    content="0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <title>
-    Gen III Legacy Detailing - Vehicle Photos
+    Gen III Legacy Detailing - Vehicle Photo Upload
   </title>
+
 
   <style>
 
-    * {
-      box-sizing: border-box;
+    :root {
+
+      --navy:
+        #00101a;
+
+      --navy-2:
+        #0d2430;
+
+      --paper:
+        #ffffff;
+
+      --page:
+        #f3f5f7;
+
+      --line:
+        #d8dde3;
+
+      --muted:
+        #667085;
+
+      --text:
+        #17212b;
+
+      --success-bg:
+        #e8f5e9;
+
+      --success-text:
+        #256029;
+
+      --error-bg:
+        #fdecec;
+
+      --error-text:
+        #b42318;
+
+      --warn-bg:
+        #fff4df;
+
+      --warn-text:
+        #8a5a00;
+
+      --info-bg:
+        #eef4f8;
+
+      --info-text:
+        #264653;
+
+      --shadow:
+        0 10px 30px
+        rgba(
+          0,
+          16,
+          26,
+          0.12
+        );
+
     }
+
+
+    * {
+
+      box-sizing:
+        border-box;
+
+    }
+
 
     body {
-      margin: 0;
-      padding: 18px;
-      background: #f3f5f7;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #1f2933;
+
+      margin:
+        0;
+
+      min-height:
+        100vh;
+
+      background:
+        var(--page);
+
+      color:
+        var(--text);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+
     }
+
 
     .container {
-      max-width: 640px;
-      margin: 0 auto;
+
+      width:
+        min(
+          760px,
+          100%
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        18px
+        14px
+        42px;
+
     }
+
 
     .card {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, .09);
+
+      background:
+        var(--paper);
+
+      border-radius:
+        14px;
+
+      box-shadow:
+        var(--shadow);
+
+      overflow:
+        hidden;
+
     }
+
+
+    .header {
+
+      background:
+        var(--navy);
+
+      color:
+        #ffffff;
+
+      padding:
+        22px
+        18px
+        20px;
+
+      text-align:
+        center;
+
+    }
+
 
     h1 {
-      margin: 0 0 5px;
-      text-align: center;
-      font-size: 25px;
+
+      margin:
+        0;
+
+      font-size:
+        25px;
+
+      line-height:
+        1.2;
+
     }
+
 
     .subtitle {
-      text-align: center;
-      color: #667085;
-      margin-bottom: 22px;
-      font-size: 14px;
+
+      margin-top:
+        6px;
+
+      font-size:
+        14px;
+
+      opacity:
+        0.84;
+
+      letter-spacing:
+        0.3px;
+
     }
+
+
+    .content {
+
+      padding:
+        18px;
+
+    }
+
+
+    .status,
+    .message,
+    .progress,
+    .backup-note,
+    .summary-box {
+
+      border-radius:
+        9px;
+
+      padding:
+        13px;
+
+      line-height:
+        1.45;
+
+    }
+
 
     .status {
-      padding: 12px;
-      border-radius: 9px;
-      margin-bottom: 18px;
-      background: #eef2f6;
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.4;
+
+      background:
+        var(--info-bg);
+
+      color:
+        var(--info-text);
+
+      font-weight:
+        700;
+
+      text-align:
+        center;
+
     }
+
 
     .details {
-      display: none;
-      margin-bottom: 20px;
-      border-top: 1px solid #e5e7eb;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 9px 0;
+
+      display:
+        none;
+
+      margin-top:
+        16px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius:
+        10px;
+
+      overflow:
+        hidden;
+
     }
+
 
     .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 7px 0;
-      font-size: 14px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        16px;
+
+      padding:
+        11px
+        12px;
+
+      border-bottom:
+        1px
+        solid
+        var(--line);
+
     }
+
+
+    .detail-row:last-child {
+
+      border-bottom:
+        0;
+
+    }
+
 
     .label {
-      color: #667085;
+
+      color:
+        var(--muted);
+
+      font-weight:
+        700;
+
+      flex:
+        0 0 110px;
+
     }
+
 
     .value {
-      text-align: right;
-      font-weight: 600;
+
+      text-align:
+        right;
+
+      font-weight:
+        700;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .backup-note {
-      display: none;
-      margin-bottom: 20px;
-      padding: 13px;
-      border-radius: 9px;
-      background: #fff8e6;
-      color: #6b4a00;
-      border: 1px solid #f2d38a;
-      font-size: 13px;
-      line-height: 1.45;
+
+      display:
+        none;
+
+      margin-top:
+        16px;
+
+      background:
+        #f7f8fa;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      color:
+        #475467;
+
+      font-size:
+        14px;
+
     }
+
 
     .form-section {
-      display: none;
+
+      display:
+        none;
+
+      margin-top:
+        18px;
+
     }
+
 
     .field {
-      margin-bottom: 18px;
+
+      margin-bottom:
+        15px;
+
     }
 
+
     label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
+
+      display:
+        block;
+
+      margin-bottom:
+        7px;
+
+      font-weight:
+        700;
+
     }
+
 
     select,
     input[type="file"] {
-      width: 100%;
-      font-size: 16px;
+
+      width:
+        100%;
+
+      min-height:
+        46px;
+
+      border:
+        1px
+        solid
+        #b9c2cc;
+
+      border-radius:
+        9px;
+
+      background:
+        #ffffff;
+
+      color:
+        var(--text);
+
+      padding:
+        10px
+        11px;
+
+      font-size:
+        16px;
+
     }
 
-    select {
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: white;
+
+    select:focus,
+    input[type="file"]:focus,
+    button:focus-visible {
+
+      outline:
+        3px
+        solid
+        rgba(
+          0,
+          90,
+          140,
+          0.22
+        );
+
+      outline-offset:
+        2px;
+
     }
 
-    input[type="file"] {
-      padding: 12px;
-      border: 1px dashed #98a2b3;
-      border-radius: 8px;
-      background: #fafafa;
-    }
 
     .help {
-      margin-top: 6px;
-      color: #667085;
-      font-size: 12px;
-      line-height: 1.4;
+
+      margin-top:
+        6px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
     }
+
+
+    .capture-actions,
+    .batch-actions,
+    .end-actions {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr;
+
+      gap:
+        10px;
+
+    }
+
+
+    .capture-actions {
+
+      margin:
+        4px
+        0
+        16px;
+
+    }
+
 
     button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #00101A;
-      color: white;
+
+      width:
+        100%;
+
+      min-height:
+        48px;
+
+      border:
+        0;
+
+      border-radius:
+        9px;
+
+      padding:
+        11px
+        14px;
+
+      background:
+        var(--navy);
+
+      color:
+        #ffffff;
+
+      font-size:
+        16px;
+
+      font-weight:
+        800;
+
+      cursor:
+        pointer;
+
+      touch-action:
+        manipulation;
+
     }
+
+
+    button.secondary {
+
+      background:
+        #5a6772;
+
+    }
+
+
+    button.ghost {
+
+      background:
+        #eef2f5;
+
+      color:
+        var(--navy);
+
+      border:
+        1px
+        solid
+        #cfd6dd;
+
+    }
+
 
     button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+
+      opacity:
+        0.5;
+
+      cursor:
+        not-allowed;
+
     }
 
-    .submit-button {
-      margin-top: 18px;
-      background: #00101A;
+
+    .camera-panel {
+
+      display:
+        none;
+
+      margin:
+        8px
+        0
+        18px;
+
+      padding:
+        12px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius:
+        12px;
+
+      background:
+        #0c1115;
+
     }
 
-    .queue-section {
-      display: none;
-      margin-top: 22px;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 20px;
+
+    .camera-panel.open {
+
+      display:
+        block;
+
     }
 
-    .queue-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 5px;
+
+    .camera-frame {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      overflow:
+        hidden;
+
+      border-radius:
+        10px;
+
+      background:
+        #000000;
+
+      aspect-ratio:
+        3 / 4;
+
     }
+
+
+    #cameraVideo {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        cover;
+
+      display:
+        block;
+
+    }
+
+
+    .camera-caption {
+
+      color:
+        #ffffff;
+
+      font-size:
+        13px;
+
+      text-align:
+        center;
+
+      padding:
+        9px
+        4px
+        3px;
+
+      opacity:
+        0.9;
+
+    }
+
+
+    .camera-buttons {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        2fr 1fr;
+
+      gap:
+        9px;
+
+      margin-top:
+        10px;
+
+    }
+
+
+    .camera-buttons button {
+
+      min-height:
+        52px;
+
+    }
+
+
+    .camera-buttons .close-camera {
+
+      background:
+        #4b5560;
+
+    }
+
+
+    .camera-flash {
+
+      position:
+        absolute;
+
+      inset:
+        0;
+
+      background:
+        #ffffff;
+
+      opacity:
+        0;
+
+      pointer-events:
+        none;
+
+    }
+
+
+    .camera-flash.flash {
+
+      animation:
+        flash
+        180ms
+        ease-out;
+
+    }
+
+
+    @keyframes flash {
+
+      0% {
+
+        opacity:
+          0.75;
+
+      }
+
+      100% {
+
+        opacity:
+          0;
+
+      }
+
+    }
+
+
+    .existing-upload {
+
+      padding:
+        12px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius:
+        10px;
+
+      background:
+        #fafbfc;
+
+      margin-bottom:
+        16px;
+
+    }
+
+
+    .section-title {
+
+      margin:
+        0
+        0
+        9px;
+
+      font-size:
+        17px;
+
+      color:
+        var(--navy);
+
+    }
+
+
+    .queue-wrap {
+
+      display:
+        none;
+
+      margin-top:
+        18px;
+
+    }
+
+
+    .queue-title-row {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        10px;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .queue-title-row h2 {
+
+      margin:
+        0;
+
+      font-size:
+        19px;
+
+    }
+
 
     .queue-count {
-      color: #667085;
-      font-size: 13px;
-      margin-bottom: 14px;
-      line-height: 1.4;
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
     }
+
+
+    .queue-list {
+
+      display:
+        grid;
+
+      gap:
+        10px;
+
+    }
+
 
     .queue-item {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      padding: 11px;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      background: #fafafa;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        82px
+        1fr;
+
+      gap:
+        11px;
+
+      padding:
+        10px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius:
+        10px;
+
+      background:
+        #ffffff;
+
     }
 
-    .queue-item.uploaded {
-      border-color: #9ccca6;
-      background: #f3fbf5;
+
+    .thumb {
+
+      width:
+        82px;
+
+      height:
+        82px;
+
+      object-fit:
+        cover;
+
+      border-radius:
+        8px;
+
+      background:
+        #e5e7eb;
+
     }
 
-    .queue-item.failed {
-      border-color: #e7a19a;
-      background: #fff5f4;
+
+    .queue-main {
+
+      min-width:
+        0;
+
     }
 
-    .queue-thumb {
-      width: 72px;
-      height: 72px;
-      border-radius: 8px;
-      object-fit: cover;
-      background: #e5e7eb;
-      flex-shrink: 0;
+
+    .queue-meta {
+
+      font-size:
+        14px;
+
+      font-weight:
+        800;
+
+      line-height:
+        1.35;
+
+      overflow-wrap:
+        anywhere;
+
     }
 
-    .queue-info {
-      flex: 1;
-      min-width: 0;
+
+    .queue-sub {
+
+      margin-top:
+        4px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+      line-height:
+        1.35;
+
+      overflow-wrap:
+        anywhere;
+
     }
 
-    .queue-stage {
-      font-weight: bold;
-      margin-bottom: 3px;
-    }
-
-    .queue-category {
-      color: #344054;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    .queue-area {
-      color: #667085;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
-
-    .queue-size {
-      color: #667085;
-      font-size: 11px;
-      margin-bottom: 3px;
-    }
-
-    .queue-file {
-      color: #98a2b3;
-      font-size: 11px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
 
     .queue-status {
-      margin-top: 5px;
-      font-size: 12px;
-      font-weight: bold;
+
+      display:
+        inline-block;
+
+      margin-top:
+        7px;
+
+      padding:
+        4px
+        8px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
     }
+
 
     .queue-status.ready {
-      color: #667085;
+
+      background:
+        #eef2f5;
+
+      color:
+        #475467;
+
     }
+
+
+    .queue-status.uploading,
+    .queue-status.verifying {
+
+      background:
+        #e9f2ff;
+
+      color:
+        #175cd3;
+
+    }
+
 
     .queue-status.uploaded {
-      color: #256029;
+
+      background:
+        var(--success-bg);
+
+      color:
+        var(--success-text);
+
     }
+
 
     .queue-status.failed {
-      color: #b42318;
+
+      background:
+        var(--error-bg);
+
+      color:
+        var(--error-text);
+
     }
 
-    .queue-error {
-      margin-top: 4px;
-      font-size: 11px;
-      color: #b42318;
-      line-height: 1.35;
+
+    .failure-reason {
+
+      margin-top:
+        6px;
+
+      color:
+        var(--error-text);
+
+      font-size:
+        12px;
+
+      line-height:
+        1.35;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .remove-button {
-      width: auto;
-      padding: 8px 10px;
-      font-size: 13px;
-      background: #b42318;
-      flex-shrink: 0;
+
+      width:
+        auto;
+
+      min-height:
+        34px;
+
+      margin-top:
+        7px;
+
+      padding:
+        6px
+        10px;
+
+      background:
+        #eef2f5;
+
+      color:
+        #344054;
+
+      border:
+        1px
+        solid
+        #d0d5dd;
+
+      font-size:
+        12px;
+
     }
 
-    .selection-message {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #e8f5e9;
-      color: #256029;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.4;
+
+    .batch-actions {
+
+      margin-top:
+        14px;
+
     }
 
-    .preparing-message {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #eef2f6;
-      color: #344054;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.4;
-    }
 
     .progress {
-      display: none;
-      margin-top: 18px;
-      padding: 13px;
-      border-radius: 8px;
-      background: #eef2f6;
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.45;
+
+      display:
+        none;
+
+      margin-top:
+        18px;
+
+      background:
+        var(--info-bg);
+
+      color:
+        var(--info-text);
+
+      text-align:
+        center;
+
+      font-weight:
+        800;
+
     }
+
 
     .message {
-      display: none;
-      margin-top: 18px;
-      padding: 13px;
-      border-radius: 8px;
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.45;
+
+      display:
+        none;
+
+      margin-top:
+        18px;
+
+      text-align:
+        center;
+
+      font-weight:
+        800;
+
     }
 
-    .success {
-      background: #e8f5e9;
-      color: #256029;
+
+    .message.success {
+
+      background:
+        var(--success-bg);
+
+      color:
+        var(--success-text);
+
     }
 
-    .error {
-      background: #fdecec;
-      color: #b42318;
+
+    .message.error {
+
+      background:
+        var(--error-bg);
+
+      color:
+        var(--error-text);
+
     }
 
-    .hidden-frame {
-      display: none;
+
+    .message.warning {
+
+      background:
+        var(--warn-bg);
+
+      color:
+        var(--warn-text);
+
     }
 
-    .version {
-      margin-top: 22px;
-      text-align: center;
-      font-size: 10px;
-      color: #98a2b3;
+
+    .end-actions {
+
+      display:
+        none;
+
+      margin-top:
+        12px;
+
     }
 
-    @media (max-width: 520px) {
 
-      .queue-thumb {
-        width: 60px;
-        height: 60px;
+    .summary-box {
+
+      display:
+        none;
+
+      margin-top:
+        12px;
+
+      background:
+        #f7f8fa;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      font-size:
+        14px;
+
+    }
+
+
+    .footer {
+
+      padding:
+        14px
+        18px
+        18px;
+
+      color:
+        #7b8794;
+
+      text-align:
+        center;
+
+      font-size:
+        12px;
+
+    }
+
+
+    .hidden-frame,
+    #captureCanvas {
+
+      display:
+        none;
+
+    }
+
+
+    @media (
+      min-width:
+      560px
+    ) {
+
+      .capture-actions,
+      .end-actions {
+
+        grid-template-columns:
+          1fr
+          1fr;
+
       }
 
-      .queue-item {
-        gap: 9px;
+
+      .batch-actions {
+
+        grid-template-columns:
+          1fr;
+
       }
 
-      .remove-button {
-        padding: 8px;
+
+      .camera-frame {
+
+        aspect-ratio:
+          4 / 3;
+
       }
 
     }
 
   </style>
-
 </head>
 
 
@@ -390,323 +1227,443 @@
 
     <div class="card">
 
-      <h1>
-        Vehicle Photo Upload
-      </h1>
+      <div class="header">
 
-      <div class="subtitle">
-        Gen III Legacy Detailing
-      </div>
+        <h1>
+          Vehicle Photo Upload
+        </h1>
 
-
-      <div
-        id="status"
-        class="status"
-      >
-        Loading job...
-      </div>
-
-
-      <div
-        id="details"
-        class="details"
-      >
-
-        <div class="detail-row">
-
-          <span class="label">
-            Customer ID
-          </span>
-
-          <span
-            id="customerIdDisplay"
-            class="value"
-          ></span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <span class="label">
-            Customer
-          </span>
-
-          <span
-            id="customerNameDisplay"
-            class="value"
-          ></span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <span class="label">
-            Job ID
-          </span>
-
-          <span
-            id="jobDisplay"
-            class="value"
-          ></span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <span class="label">
-            Vehicle
-          </span>
-
-          <span
-            id="vehicleDisplay"
-            class="value"
-          ></span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <span class="label">
-            Service
-          </span>
-
-          <span
-            id="serviceDisplay"
-            class="value"
-          ></span>
-
+        <div class="subtitle">
+          Gen III Legacy Detailing
         </div>
 
       </div>
 
 
-      <div
-        id="backupNote"
-        class="backup-note"
-      >
+      <div class="content">
 
-        Take photos with your phone's normal Camera app first,
-        then select the saved photos here.
-
-        The portal creates a smaller upload copy only.
-        Your original phone photos are not changed.
-
-        Keep the originals until the job is complete and the
-        Drive photo record has been verified.
-
-      </div>
-
-
-      <div
-        id="formSection"
-        class="form-section"
-      >
-
-
-        <div class="field">
-
-          <label for="stage">
-            Before / After
-          </label>
-
-          <select id="stage">
-
-            <option value="">
-              Select Before or After
-            </option>
-
-            <option value="Before">
-              Before
-            </option>
-
-            <option value="After">
-              After
-            </option>
-
-          </select>
-
+        <div
+          id="status"
+          class="status"
+        >
+          Loading job...
         </div>
 
 
-        <div class="field">
+        <div
+          id="details"
+          class="details"
+        >
 
-          <label for="category">
-            Photo Category
-          </label>
+          <div class="detail-row">
 
-          <select
-            id="category"
-            onchange="updateAreaOptions()"
-          >
-
-            <option value="">
-              Select category
-            </option>
-
-            <option value="Exterior">
-              Exterior
-            </option>
-
-            <option value="Interior">
-              Interior
-            </option>
-
-            <option value="Wheels & Tires">
-              Wheels & Tires
-            </option>
-
-            <option value="Existing Damage">
-              Existing Damage
-            </option>
-
-            <option value="Engine Bay">
-              Engine Bay
-            </option>
-
-            <option value="Other">
-              Other
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="area">
-
-            Area
-
-            <span style="font-weight:normal;">
-              (Optional)
+            <span class="label">
+              Customer ID
             </span>
 
-          </label>
+            <span
+              id="customerIdDisplay"
+              class="value"
+            ></span>
 
-          <select
-            id="area"
-            disabled
-          >
+          </div>
 
-            <option value="">
-              Select a category first
-            </option>
 
-          </select>
+          <div class="detail-row">
 
-          <div class="help">
-            Leave this blank for a general or miscellaneous photo.
+            <span class="label">
+              Customer
+            </span>
+
+            <span
+              id="customerNameDisplay"
+              class="value"
+            ></span>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span class="label">
+              Job ID
+            </span>
+
+            <span
+              id="jobDisplay"
+              class="value"
+            ></span>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span class="label">
+              Vehicle
+            </span>
+
+            <span
+              id="vehicleDisplay"
+              class="value"
+            ></span>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span class="label">
+              Service
+            </span>
+
+            <span
+              id="serviceDisplay"
+              class="value"
+            ></span>
+
           </div>
 
         </div>
 
 
-        <div class="field">
+        <div
+          id="backupNote"
+          class="backup-note"
+        >
 
-          <label for="photos">
-            Select Photo(s)
-          </label>
-
-          <input
-            type="file"
-            id="photos"
-            accept="image/*"
-            multiple
-          >
-
-          <div class="help">
-            You can select several photos at once.
-            Upload copies are automatically resized and compressed.
-          </div>
+          Use the camera here for normal job photos,
+          or choose existing photos from your phone.
+          Each photo is uploaded and verified individually.
+          If any photo fails, you can retry it or save the
+          failed originals to your phone for manual upload.
 
         </div>
 
 
-        <button
-          id="addButton"
-          type="button"
-          onclick="addPhotosToQueue()"
-        >
-          Add Photo(s) to Queue
-        </button>
-
-
         <div
-          id="preparingMessage"
-          class="preparing-message"
-        ></div>
-
-
-        <div
-          id="selectionMessage"
-          class="selection-message"
-        ></div>
-
-
-        <div
-          id="queueSection"
-          class="queue-section"
+          id="formSection"
+          class="form-section"
         >
 
-          <div class="queue-title">
-            Pending Photos
+
+          <div class="field">
+
+            <label for="stage">
+              Before / After
+            </label>
+
+            <select id="stage">
+
+              <option value="">
+                Select stage
+              </option>
+
+              <option value="Before">
+                Before
+              </option>
+
+              <option value="After">
+                After
+              </option>
+
+            </select>
+
           </div>
+
+
+          <div class="field">
+
+            <label for="category">
+              Photo Category
+            </label>
+
+            <select id="category">
+
+              <option value="">
+                Select category
+              </option>
+
+              <option value="Exterior">
+                Exterior
+              </option>
+
+              <option value="Interior">
+                Interior
+              </option>
+
+              <option value="Wheels & Tires">
+                Wheels & Tires
+              </option>
+
+              <option value="Existing Damage">
+                Existing Damage
+              </option>
+
+              <option value="Engine Bay">
+                Engine Bay
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="area">
+              Area / Description
+            </label>
+
+            <select
+              id="area"
+              disabled
+            >
+
+              <option value="">
+                No specific area / Miscellaneous
+              </option>
+
+            </select>
+
+
+            <div class="help">
+
+              Stage, category, and area are saved
+              with each photo when it is added
+              to the queue.
+
+            </div>
+
+          </div>
+
+
+          <div class="capture-actions">
+
+            <button
+              id="openCameraButton"
+              type="button"
+            >
+              📷 Open Camera
+            </button>
+
+
+            <button
+              id="existingPhotosButton"
+              type="button"
+              class="secondary"
+            >
+              🖼️ Choose Existing Photos
+            </button>
+
+          </div>
+
 
           <div
-            id="queueCount"
-            class="queue-count"
+            id="cameraPanel"
+            class="camera-panel"
           >
-            0 photos ready to upload
+
+            <div class="camera-frame">
+
+              <video
+                id="cameraVideo"
+                autoplay
+                playsinline
+                muted
+              ></video>
+
+              <div
+                id="cameraFlash"
+                class="camera-flash"
+              ></div>
+
+            </div>
+
+
+            <div
+              id="cameraCaption"
+              class="camera-caption"
+            >
+
+              Rear camera ready.
+              Take as many photos as needed
+              for the selected stage/category/area.
+
+            </div>
+
+
+            <div class="camera-buttons">
+
+              <button
+                id="takePhotoButton"
+                type="button"
+              >
+                Take Photo
+              </button>
+
+
+              <button
+                id="closeCameraButton"
+                type="button"
+                class="close-camera"
+              >
+                Close
+              </button>
+
+            </div>
+
           </div>
 
 
-          <div id="queueList"></div>
+          <canvas id="captureCanvas"></canvas>
 
 
-          <button
-            id="submitButton"
-            type="button"
-            class="submit-button"
-            onclick="submitQueue()"
+          <div
+            id="existingUpload"
+            class="existing-upload"
+            style="display:none;"
           >
-            Submit All Photos
-          </button>
+
+            <h2 class="section-title">
+              Upload Existing Photos
+            </h2>
+
+
+            <input
+              type="file"
+              id="photos"
+              accept="image/*"
+              multiple
+            >
+
+
+            <div class="help">
+
+              Select one or more saved photos.
+              They will be compressed for upload
+              while the originals remain unchanged
+              on your phone.
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="queueWrap"
+            class="queue-wrap"
+          >
+
+            <div class="queue-title-row">
+
+              <h2>
+                Photo Queue
+              </h2>
+
+              <div
+                id="queueCount"
+                class="queue-count"
+              >
+                0 photos
+              </div>
+
+            </div>
+
+
+            <div
+              id="queueList"
+              class="queue-list"
+            ></div>
+
+
+            <div class="batch-actions">
+
+              <button
+                id="submitButton"
+                type="button"
+              >
+                Submit All Photos
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="progress"
+            class="progress"
+          ></div>
+
+
+          <div
+            id="message"
+            class="message"
+          ></div>
+
+
+          <div
+            id="summaryBox"
+            class="summary-box"
+          ></div>
+
+
+          <div
+            id="endActions"
+            class="end-actions"
+          >
+
+            <button
+              id="retryButton"
+              type="button"
+              style="display:none;"
+            >
+              Retry Remaining Photos
+            </button>
+
+
+            <button
+              id="downloadFailedButton"
+              type="button"
+              class="secondary"
+              style="display:none;"
+            >
+              Download Failed Photos
+            </button>
+
+
+            <button
+              id="downloadBatchButton"
+              type="button"
+              class="ghost"
+            >
+              Download Entire Batch Backup
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
 
-      <div
-        id="progress"
-        class="progress"
-      ></div>
+      <div class="footer">
 
+        Portal Version 5.0
+        •
+        Camera + Recovery Backup
 
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-
-      <div class="version">
-        Portal Version 4.0
       </div>
 
     </div>
 
   </div>
 
-
-
-  <!-- ================================================================ -->
-  <!-- HIDDEN UPLOAD FORM                                               -->
-  <!-- ================================================================ -->
 
   <form
     id="uploadForm"
@@ -779,58 +1736,35 @@
   ></iframe>
 
 
-
   <script>
-
-    /* ================================================================ */
-    /* MAIN APPS SCRIPT WEB APP                                         */
-    /* ================================================================ */
 
     const BACKEND =
       'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
 
 
-
-    /* ================================================================ */
-    /* PHOTO PREPARATION SETTINGS                                       */
-    /* ================================================================ */
-
-    const MAX_DIMENSION =
-      2048;
-
-
-    const JPEG_QUALITY =
-      0.82;
-
-
-    const MAX_UPLOAD_BYTES =
+    const MAX_FILE_BYTES =
       8 * 1024 * 1024;
 
 
+    const MAX_UPLOAD_DIMENSION =
+      2048;
 
-    /* ================================================================ */
-    /* UPLOAD STATUS SETTINGS                                           */
-    /* ================================================================ */
 
-    /*
-     * Maximum amount of time we will wait for Apps Script
-     * to report success or failure for ONE exact upload ID.
-     */
+    const UPLOAD_JPEG_QUALITY =
+      0.82;
+
+
+    const CAMERA_JPEG_QUALITY =
+      0.95;
+
+
     const STATUS_TIMEOUT_MS =
       45000;
 
 
-    /*
-     * How often we ask Apps Script for the upload status.
-     */
     const STATUS_INTERVAL_MS =
       1200;
 
-
-
-    /* ================================================================ */
-    /* AREA OPTIONS                                                     */
-    /* ================================================================ */
 
     const AREA_OPTIONS = {
 
@@ -935,11 +1869,6 @@
     };
 
 
-
-    /* ================================================================ */
-    /* PAGE STATE                                                       */
-    /* ================================================================ */
-
     const params =
       new URLSearchParams(
         window.location.search
@@ -958,15 +1887,7 @@
       [];
 
 
-    let uploadIndex =
-      -1;
-
-
     let uploadInProgress =
-      false;
-
-
-    let preparingPhotos =
       false;
 
 
@@ -974,10 +1895,13 @@
       0;
 
 
+    let cameraStream =
+      null;
 
-    /* ================================================================ */
-    /* DOM REFERENCES                                                   */
-    /* ================================================================ */
+
+    let currentBatchItems =
+      [];
+
 
     const statusBox =
       document.getElementById(
@@ -1027,21 +1951,63 @@
       );
 
 
-    const addButton =
+    const existingUpload =
       document.getElementById(
-        'addButton'
+        'existingUpload'
       );
 
 
-    const submitButton =
+    const cameraPanel =
       document.getElementById(
-        'submitButton'
+        'cameraPanel'
       );
 
 
-    const queueSection =
+    const cameraVideo =
       document.getElementById(
-        'queueSection'
+        'cameraVideo'
+      );
+
+
+    const cameraFlash =
+      document.getElementById(
+        'cameraFlash'
+      );
+
+
+    const captureCanvas =
+      document.getElementById(
+        'captureCanvas'
+      );
+
+
+    const openCameraButton =
+      document.getElementById(
+        'openCameraButton'
+      );
+
+
+    const existingPhotosButton =
+      document.getElementById(
+        'existingPhotosButton'
+      );
+
+
+    const takePhotoButton =
+      document.getElementById(
+        'takePhotoButton'
+      );
+
+
+    const closeCameraButton =
+      document.getElementById(
+        'closeCameraButton'
+      );
+
+
+    const queueWrap =
+      document.getElementById(
+        'queueWrap'
       );
 
 
@@ -1057,15 +2023,9 @@
       );
 
 
-    const selectionMessage =
+    const submitButton =
       document.getElementById(
-        'selectionMessage'
-      );
-
-
-    const preparingMessage =
-      document.getElementById(
-        'preparingMessage'
+        'submitButton'
       );
 
 
@@ -1081,88 +2041,35 @@
       );
 
 
-
-    /* ================================================================ */
-    /* AREA DROPDOWN                                                    */
-    /* ================================================================ */
-
-    function updateAreaOptions() {
-
-      const category =
-        categoryInput.value;
-
-
-      areaInput.innerHTML =
-        '';
-
-
-      const blankOption =
-        document.createElement(
-          'option'
-        );
-
-
-      blankOption.value =
-        '';
-
-
-      blankOption.textContent =
-        'No specific area / Miscellaneous';
-
-
-      areaInput.appendChild(
-        blankOption
+    const summaryBox =
+      document.getElementById(
+        'summaryBox'
       );
 
 
-      if (
-        !category ||
-        !AREA_OPTIONS[category]
-      ) {
-
-        areaInput.disabled =
-          true;
-
-        return;
-      }
-
-
-      AREA_OPTIONS[
-        category
-      ].forEach(
-        function(area) {
-
-          const option =
-            document.createElement(
-              'option'
-            );
-
-
-          option.value =
-            area;
-
-
-          option.textContent =
-            area;
-
-
-          areaInput.appendChild(
-            option
-          );
-
-        }
+    const endActions =
+      document.getElementById(
+        'endActions'
       );
 
 
-      areaInput.disabled =
-        false;
-    }
+    const retryButton =
+      document.getElementById(
+        'retryButton'
+      );
 
 
+    const downloadFailedButton =
+      document.getElementById(
+        'downloadFailedButton'
+      );
 
-    /* ================================================================ */
-    /* JOB LOOKUP                                                       */
-    /* ================================================================ */
+
+    const downloadBatchButton =
+      document.getElementById(
+        'downloadBatchButton'
+      );
+
 
     function loadJob() {
 
@@ -1173,63 +2080,80 @@
         );
 
         return;
+
       }
 
 
       getJobInfo()
+
         .then(
           function(result) {
 
             if (
               !result ||
-              !result.success
+              !result.success ||
+              !result.job
             ) {
 
-              showFatalError(
+              throw new Error(
                 result &&
                 result.message
                   ? result.message
                   : 'The job could not be loaded.'
               );
 
-              return;
             }
 
 
             showJob(
               result.job
             );
+
           }
         )
+
         .catch(
-          function() {
+          function(error) {
 
             showFatalError(
-              'The job could not be loaded. Check your connection and try again.'
+              error &&
+              error.message
+                ? error.message
+                : 'The job could not be loaded. Check your connection and try again.'
             );
+
           }
         );
-    }
 
+    }
 
 
     function getJobInfo() {
 
       return jsonpRequest(
-        {
-          action:
-            'lookup',
 
-          job:
-            jobId
-        },
-        12000
+        BACKEND +
+
+        '?action=lookup' +
+
+        '&job=' +
+        encodeURIComponent(
+          jobId
+        ) +
+
+        '&_=' +
+        Date.now(),
+
+        'genIIILoadJob'
+
       );
+
     }
 
 
-
-    function showJob(info) {
+    function showJob(
+      info
+    ) {
 
       jobInfo =
         info;
@@ -1282,32 +2206,34 @@
 
       lastPhotoCount =
         Number(
-          info.photoCount || 0
+          info.photoCount ||
+          0
         );
 
 
-      if (
+      statusBox.textContent =
+
         lastPhotoCount > 0
-      ) {
 
-        statusBox.textContent =
-          'Job found. ' +
-          lastPhotoCount +
-          ' photo' +
-          (
-            lastPhotoCount === 1
-              ? ''
-              : 's'
-          ) +
-          ' currently on file.';
+          ? (
 
-      }
-      else {
+              'Job found. ' +
 
-        statusBox.textContent =
-          'Job found. Ready for photo upload.';
+              lastPhotoCount +
 
-      }
+              ' photo' +
+
+              (
+                lastPhotoCount === 1
+                  ? ''
+                  : 's'
+              ) +
+
+              ' currently on file.'
+
+            )
+
+          : 'Job found. Ready for photo upload.';
 
 
       details.style.display =
@@ -1320,242 +2246,105 @@
 
       formSection.style.display =
         'block';
+
     }
 
 
+    function updateAreaOptions() {
 
-    /* ================================================================ */
-    /* JSONP                                                            */
-    /* ================================================================ */
-
-    function jsonpRequest(
-      requestParams,
-      timeoutMs
-    ) {
-
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
-
-          const callbackName =
-            'genIII_' +
-            Date.now() +
-            '_' +
-            Math.random()
-              .toString(36)
-              .slice(2);
+      const category =
+        categoryInput.value;
 
 
-          const script =
+      const choices =
+        AREA_OPTIONS[
+          category
+        ] ||
+        [];
+
+
+      areaInput.innerHTML =
+        '';
+
+
+      const blank =
+        document.createElement(
+          'option'
+        );
+
+
+      blank.value =
+        '';
+
+
+      blank.textContent =
+        'No specific area / Miscellaneous';
+
+
+      areaInput.appendChild(
+        blank
+      );
+
+
+      choices.forEach(
+        function(area) {
+
+          const option =
             document.createElement(
-              'script'
+              'option'
             );
 
 
-          let finished =
-            false;
+          option.value =
+            area;
 
 
-          const timeout =
-            window.setTimeout(
-              function() {
-
-                if (finished) {
-                  return;
-                }
+          option.textContent =
+            area;
 
 
-                finished =
-                  true;
-
-
-                cleanup();
-
-
-                reject(
-                  new Error(
-                    'Request timed out.'
-                  )
-                );
-
-              },
-              timeoutMs || 10000
-            );
-
-
-          function cleanup() {
-
-            window.clearTimeout(
-              timeout
-            );
-
-
-            try {
-
-              delete window[
-                callbackName
-              ];
-
-            }
-            catch (error) {
-
-              window[
-                callbackName
-              ] =
-                undefined;
-            }
-
-
-            if (
-              script.parentNode
-            ) {
-
-              script.parentNode
-                .removeChild(
-                  script
-                );
-            }
-          }
-
-
-          window[
-            callbackName
-          ] =
-            function(result) {
-
-              if (finished) {
-                return;
-              }
-
-
-              finished =
-                true;
-
-
-              cleanup();
-
-
-              resolve(
-                result
-              );
-            };
-
-
-          script.onerror =
-            function() {
-
-              if (finished) {
-                return;
-              }
-
-
-              finished =
-                true;
-
-
-              cleanup();
-
-
-              reject(
-                new Error(
-                  'Request failed.'
-                )
-              );
-            };
-
-
-          const search =
-            new URLSearchParams();
-
-
-          Object.keys(
-            requestParams || {}
-          ).forEach(
-            function(key) {
-
-              search.set(
-                key,
-                requestParams[key]
-              );
-
-            }
+          areaInput.appendChild(
+            option
           );
 
-
-          search.set(
-            'callback',
-            callbackName
-          );
-
-
-          search.set(
-            '_',
-            Date.now()
-          );
-
-
-          script.src =
-            BACKEND +
-            '?' +
-            search.toString();
-
-
-          document.body
-            .appendChild(
-              script
-            );
         }
       );
+
+
+      areaInput.disabled =
+        !category ||
+        uploadInProgress;
+
     }
 
 
-
-    /* ================================================================ */
-    /* ADD PHOTOS TO QUEUE                                              */
-    /* ================================================================ */
-
-    async function addPhotosToQueue() {
-
-      if (
-        preparingPhotos ||
-        uploadInProgress
-      ) {
-
-        return;
-      }
-
-
-      hideMessage();
-
+    function validateCaptureSelections() {
 
       const stage =
-        stageInput.value.trim();
+        stageInput
+          .value
+          .trim();
 
 
       const category =
-        categoryInput.value.trim();
-
-
-      const area =
-        areaInput.value.trim();
-
-
-      const files =
-        Array.from(
-          photosInput.files || []
-        );
+        categoryInput
+          .value
+          .trim();
 
 
       if (!stage) {
 
         showMessage(
           'Select Before or After first.',
-          false
+          'error'
         );
 
-        return;
+
+        stageInput.focus();
+
+
+        return false;
+
       }
 
 
@@ -1563,199 +2352,3371 @@
 
         showMessage(
           'Select a photo category first.',
-          false
+          'error'
         );
 
-        return;
+
+        categoryInput.focus();
+
+
+        return false;
+
       }
+
+
+      return true;
+
+    }
+
+
+    async function openCamera() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !validateCaptureSelections()
+      ) {
+
+        return;
+
+      }
+
+
+      hideMessage();
+
+
+      existingUpload.style.display =
+        'none';
+
+
+      if (
+        !navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia
+      ) {
+
+        showMessage(
+          'This browser does not support the in-page camera. Use Choose Existing Photos instead.',
+          'error'
+        );
+
+
+        return;
+
+      }
+
+
+      try {
+
+        stopCamera();
+
+
+        cameraStream =
+          await navigator
+            .mediaDevices
+            .getUserMedia({
+
+              audio:
+                false,
+
+
+              video: {
+
+                facingMode: {
+                  ideal:
+                    'environment'
+                },
+
+
+                width: {
+                  ideal:
+                    3840
+                },
+
+
+                height: {
+                  ideal:
+                    2160
+                }
+
+              }
+
+            });
+
+
+        cameraVideo.srcObject =
+          cameraStream;
+
+
+        cameraPanel
+          .classList
+          .add(
+            'open'
+          );
+
+
+        try {
+
+          await cameraVideo.play();
+
+        }
+        catch (error) {
+
+          /*
+           * Autoplay may already be satisfied
+           * because this came from a user tap.
+           */
+
+        }
+
+      }
+      catch (error) {
+
+        cameraPanel
+          .classList
+          .remove(
+            'open'
+          );
+
+
+        showMessage(
+          'The camera could not be opened. Check camera permission for this site, or use Choose Existing Photos.',
+          'error'
+        );
+
+      }
+
+    }
+
+
+    function stopCamera() {
+
+      if (
+        cameraStream
+      ) {
+
+        cameraStream
+          .getTracks()
+          .forEach(
+            function(track) {
+
+              track.stop();
+
+            }
+          );
+
+
+        cameraStream =
+          null;
+
+      }
+
+
+      cameraVideo.srcObject =
+        null;
+
+
+      cameraPanel
+        .classList
+        .remove(
+          'open'
+        );
+
+    }
+
+
+    async function takeCameraPhoto() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !validateCaptureSelections()
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !cameraStream ||
+        !cameraVideo.videoWidth ||
+        !cameraVideo.videoHeight
+      ) {
+
+        showMessage(
+          'The camera is not ready yet. Give it a second and try again.',
+          'error'
+        );
+
+
+        return;
+
+      }
+
+
+      takePhotoButton.disabled =
+        true;
+
+
+      takePhotoButton.textContent =
+        'Saving Photo...';
+
+
+      hideMessage();
+
+
+      try {
+
+        const width =
+          cameraVideo.videoWidth;
+
+
+        const height =
+          cameraVideo.videoHeight;
+
+
+        captureCanvas.width =
+          width;
+
+
+        captureCanvas.height =
+          height;
+
+
+        const context =
+          captureCanvas.getContext(
+            '2d',
+            {
+              alpha:
+                false
+            }
+          );
+
+
+        context.drawImage(
+          cameraVideo,
+          0,
+          0,
+          width,
+          height
+        );
+
+
+        const originalBlob =
+          await canvasToBlob(
+
+            captureCanvas,
+
+            'image/jpeg',
+
+            CAMERA_JPEG_QUALITY
+
+          );
+
+
+        const originalName =
+          makeCameraOriginalName();
+
+
+        const originalFile =
+          new File(
+
+            [
+              originalBlob
+            ],
+
+            originalName,
+
+            {
+              type:
+                'image/jpeg',
+
+              lastModified:
+                Date.now()
+            }
+
+          );
+
+
+        const preparedFile =
+          await compressImageFile(
+            originalFile
+          );
+
+
+        addQueueItem(
+
+          originalFile,
+
+          preparedFile,
+
+          'camera'
+
+        );
+
+
+        cameraFlash
+          .classList
+          .remove(
+            'flash'
+          );
+
+
+        void cameraFlash.offsetWidth;
+
+
+        cameraFlash
+          .classList
+          .add(
+            'flash'
+          );
+
+
+        showSelectionMessage(
+          'Photo added. Take another, change the area, or submit when finished.'
+        );
+
+      }
+      catch (error) {
+
+        showMessage(
+
+          error &&
+          error.message
+
+            ? error.message
+
+            : 'The camera photo could not be prepared.',
+
+          'error'
+
+        );
+
+      }
+      finally {
+
+        takePhotoButton.disabled =
+          false;
+
+
+        takePhotoButton.textContent =
+          'Take Photo';
+
+      }
+
+    }
+
+
+    function showExistingPhotos() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !validateCaptureSelections()
+      ) {
+
+        return;
+
+      }
+
+
+      stopCamera();
+
+
+      hideMessage();
+
+
+      existingUpload.style.display =
+        'block';
+
+
+      photosInput.click();
+
+    }
+
+
+    async function handleExistingPhotos() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !validateCaptureSelections()
+      ) {
+
+        photosInput.value =
+          '';
+
+
+        return;
+
+      }
+
+
+      const files =
+        Array.from(
+          photosInput.files ||
+          []
+        );
 
 
       if (
         files.length === 0
       ) {
 
-        showMessage(
-          'Select at least one photo.',
-          false
-        );
-
         return;
+
       }
 
 
-      preparingPhotos =
+      hideMessage();
+
+
+      existingPhotosButton.disabled =
         true;
 
 
-      lockPreparationControls();
+      existingPhotosButton.textContent =
+        'Preparing Photos...';
 
 
-      selectionMessage.style.display =
-        'none';
-
-
-      preparingMessage.style.display =
-        'block';
-
-
-      let addedCount =
+      let added =
         0;
 
 
-      try {
-
-        for (
-          let i = 0;
-          i < files.length;
-          i++
-        ) {
-
-          const originalFile =
-            files[i];
+      const errors =
+        [];
 
 
-          preparingMessage.textContent =
-            'Preparing photo ' +
-            (i + 1) +
-            ' of ' +
-            files.length +
-            '...';
+      for (
+        const file
+        of files
+      ) {
+
+        try {
+
+          const preparedFile =
+            await compressImageFile(
+              file
+            );
 
 
-          const prepared =
-            await prepareImageForUpload(
-              originalFile
+          addQueueItem(
+
+            file,
+
+            preparedFile,
+
+            'existing'
+
+          );
+
+
+          added++;
+
+        }
+        catch (error) {
+
+          errors.push(
+
+            (
+              file.name ||
+              'Photo'
+            ) +
+
+            ': ' +
+
+            (
+              error &&
+              error.message
+
+                ? error.message
+
+                : 'Could not prepare photo.'
+            )
+
+          );
+
+        }
+
+      }
+
+
+      photosInput.value =
+        '';
+
+
+      existingPhotosButton.disabled =
+        false;
+
+
+      existingPhotosButton.textContent =
+        '🖼️ Choose Existing Photos';
+
+
+      if (
+        added > 0
+      ) {
+
+        showSelectionMessage(
+
+          added +
+
+          ' photo' +
+
+          (
+            added === 1
+              ? ''
+              : 's'
+          ) +
+
+          ' added. Add more, or submit when finished.'
+
+        );
+
+      }
+
+
+      if (
+        errors.length > 0
+      ) {
+
+        showMessage(
+          errors.join(
+            ' | '
+          ),
+          'warning'
+        );
+
+      }
+
+    }
+
+
+    function addQueueItem(
+      originalFile,
+      preparedFile,
+      source
+    ) {
+
+      const item = {
+
+        id:
+          makeUploadId(),
+
+
+        originalFile:
+          originalFile,
+
+
+        preparedFile:
+          preparedFile,
+
+
+        source:
+          source,
+
+
+        stage:
+          stageInput
+            .value
+            .trim(),
+
+
+        category:
+          categoryInput
+            .value
+            .trim(),
+
+
+        area:
+          areaInput
+            .value
+            .trim(),
+
+
+        previewUrl:
+          URL.createObjectURL(
+            preparedFile
+          ),
+
+
+        status:
+          'ready',
+
+
+        error:
+          '',
+
+
+        lastResult:
+          null
+
+      };
+
+
+      photoQueue.push(
+        item
+      );
+
+
+      renderQueue();
+
+    }
+
+
+    function removeQueueItem(
+      id
+    ) {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      const index =
+        photoQueue.findIndex(
+          function(item) {
+
+            return (
+              item.id === id
+            );
+
+          }
+        );
+
+
+      if (
+        index < 0
+      ) {
+
+        return;
+
+      }
+
+
+      const item =
+        photoQueue[
+          index
+        ];
+
+
+      if (
+        item.status ===
+        'uploaded'
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        item.previewUrl
+      ) {
+
+        URL.revokeObjectURL(
+          item.previewUrl
+        );
+
+      }
+
+
+      photoQueue.splice(
+        index,
+        1
+      );
+
+
+      renderQueue();
+
+    }
+
+
+    function renderQueue() {
+
+      queueList.innerHTML =
+        '';
+
+
+      if (
+        photoQueue.length === 0
+      ) {
+
+        queueWrap.style.display =
+          'none';
+
+
+        endActions.style.display =
+          'none';
+
+
+        summaryBox.style.display =
+          'none';
+
+
+        return;
+
+      }
+
+
+      queueWrap.style.display =
+        'block';
+
+
+      queueCount.textContent =
+
+        photoQueue.length +
+
+        ' photo' +
+
+        (
+          photoQueue.length === 1
+            ? ''
+            : 's'
+        );
+
+
+      photoQueue.forEach(
+        function(item) {
+
+          const card =
+            document.createElement(
+              'div'
+            );
+
+
+          card.className =
+            'queue-item';
+
+
+          const img =
+            document.createElement(
+              'img'
+            );
+
+
+          img.className =
+            'thumb';
+
+
+          img.src =
+            item.previewUrl;
+
+
+          img.alt =
+            'Queued vehicle photo';
+
+
+          const main =
+            document.createElement(
+              'div'
+            );
+
+
+          main.className =
+            'queue-main';
+
+
+          const meta =
+            document.createElement(
+              'div'
+            );
+
+
+          meta.className =
+            'queue-meta';
+
+
+          meta.textContent = [
+
+            item.stage,
+
+            item.category,
+
+            item.area
+
+          ]
+            .filter(
+              Boolean
+            )
+            .join(
+              ' • '
+            );
+
+
+          const sub =
+            document.createElement(
+              'div'
+            );
+
+
+          sub.className =
+            'queue-sub';
+
+
+          sub.textContent =
+
+            (
+              item.source ===
+              'camera'
+
+                ? 'Camera'
+
+                : 'Existing photo'
+            ) +
+
+            ' • ' +
+
+            formatBytes(
+              item.originalFile.size
+            ) +
+
+            ' → ' +
+
+            formatBytes(
+              item.preparedFile.size
+            ) +
+
+            ' prepared';
+
+
+          const status =
+            document.createElement(
+              'div'
+            );
+
+
+          status.className =
+
+            'queue-status ' +
+
+            item.status;
+
+
+          status.textContent =
+            statusLabel(
+              item.status
+            );
+
+
+          main.appendChild(
+            meta
+          );
+
+
+          main.appendChild(
+            sub
+          );
+
+
+          main.appendChild(
+            status
+          );
+
+
+          if (
+            item.status ===
+              'failed' &&
+            item.error
+          ) {
+
+            const reason =
+              document.createElement(
+                'div'
+              );
+
+
+            reason.className =
+              'failure-reason';
+
+
+            reason.textContent =
+              item.error;
+
+
+            main.appendChild(
+              reason
+            );
+
+          }
+
+
+          if (
+            !uploadInProgress &&
+            item.status !==
+              'uploaded'
+          ) {
+
+            const remove =
+              document.createElement(
+                'button'
+              );
+
+
+            remove.type =
+              'button';
+
+
+            remove.className =
+              'remove-button';
+
+
+            remove.textContent =
+              'Remove';
+
+
+            remove.addEventListener(
+              'click',
+              function() {
+
+                removeQueueItem(
+                  item.id
+                );
+
+              }
+            );
+
+
+            main.appendChild(
+              remove
+            );
+
+          }
+
+
+          card.appendChild(
+            img
+          );
+
+
+          card.appendChild(
+            main
+          );
+
+
+          queueList.appendChild(
+            card
+          );
+
+        }
+      );
+
+
+      const remaining =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+              item.status !==
+              'uploaded'
+            );
+
+          }
+        ).length;
+
+
+      submitButton.disabled =
+
+        uploadInProgress ||
+
+        remaining === 0;
+
+
+      submitButton.textContent =
+
+        remaining ===
+        photoQueue.length
+
+          ? 'Submit All Photos'
+
+          : 'Submit Remaining Photos';
+
+    }
+
+
+    async function submitQueue() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      const items =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+
+              item.status ===
+                'ready' ||
+
+              item.status ===
+                'failed'
+
+            );
+
+          }
+        );
+
+
+      if (
+        items.length === 0
+      ) {
+
+        showMessage(
+          'There are no photos waiting to upload.',
+          'warning'
+        );
+
+
+        return;
+
+      }
+
+
+      await runBatch(
+        items
+      );
+
+    }
+
+
+    async function retryRemainingPhotos() {
+
+      if (
+        uploadInProgress
+      ) {
+
+        return;
+
+      }
+
+
+      const items =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+
+              item.status ===
+                'failed' ||
+
+              item.status ===
+                'ready'
+
+            );
+
+          }
+        );
+
+
+      if (
+        items.length === 0
+      ) {
+
+        showMessage(
+          'There are no failed or remaining photos to retry.',
+          'warning'
+        );
+
+
+        return;
+
+      }
+
+
+      items.forEach(
+        function(item) {
+
+          item.status =
+            'ready';
+
+
+          item.error =
+            '';
+
+        }
+      );
+
+
+      renderQueue();
+
+
+      await runBatch(
+        items
+      );
+
+    }
+
+
+    async function runBatch(
+      items
+    ) {
+
+      uploadInProgress =
+        true;
+
+
+      currentBatchItems =
+        items.slice();
+
+
+      hideMessage();
+
+
+      summaryBox.style.display =
+        'none';
+
+
+      endActions.style.display =
+        'none';
+
+
+      progressBox.style.display =
+        'block';
+
+
+      lockForm();
+
+
+      renderQueue();
+
+
+      let successCount =
+        0;
+
+
+      let failureCount =
+        0;
+
+
+      for (
+        let i = 0;
+        i < items.length;
+        i++
+      ) {
+
+        const item =
+          items[
+            i
+          ];
+
+
+        progressBox.textContent =
+
+          'Uploading photo ' +
+
+          (
+            i + 1
+          ) +
+
+          ' of ' +
+
+          items.length +
+
+          '...';
+
+
+        item.status =
+          'uploading';
+
+
+        item.error =
+          '';
+
+
+        renderQueue();
+
+
+        try {
+
+          const result =
+            await uploadAndVerifyItem(
+
+              item,
+
+              i + 1,
+
+              items.length
+
+            );
+
+
+          item.status =
+            'uploaded';
+
+
+          item.error =
+            '';
+
+
+          item.lastResult =
+            result;
+
+
+          successCount++;
+
+
+          const count =
+            extractPhotoCount(
+              result
             );
 
 
           if (
-            prepared.blob.size >
-            MAX_UPLOAD_BYTES
+            Number.isFinite(
+              count
+            ) &&
+            count >= 0
           ) {
 
-            throw new Error(
-              originalFile.name +
-              ' is still larger than 8 MB after preparation.'
-            );
+            lastPhotoCount =
+              count;
+
+          }
+          else {
+
+            lastPhotoCount =
+              Math.max(
+                lastPhotoCount + 1,
+                lastPhotoCount
+              );
+
           }
 
+        }
+        catch (error) {
 
-          const previewUrl =
-            URL.createObjectURL(
-              prepared.blob
-            );
-
-
-          photoQueue.push(
-            {
-
-              id:
-                makeUploadId(),
-
-              blob:
-                prepared.blob,
-
-              fileName:
-                prepared.fileName,
-
-              originalName:
-                originalFile.name,
-
-              originalSize:
-                originalFile.size,
-
-              preparedSize:
-                prepared.blob.size,
-
-              stage:
-                stage,
-
-              category:
-                category,
-
-              area:
-                area,
-
-              previewUrl:
-                previewUrl,
-
-              state:
-                'ready',
-
-              errorMessage:
-                ''
-
-            }
-          );
+          item.status =
+            'failed';
 
 
-          addedCount++;
+          item.error =
+
+            error &&
+            error.message
+
+              ? error.message
+
+              : 'The photo could not be uploaded.';
 
 
-          renderQueue();
+          failureCount++;
 
-
-          await yieldToBrowser();
         }
 
 
-        photosInput.value =
-          '';
+        renderQueue();
+
+      }
 
 
-        preparingMessage.style.display =
-          'none';
+      uploadInProgress =
+        false;
 
 
-        selectionMessage.textContent =
-          addedCount === 1
-            ? (
-                'Photo prepared and added. ' +
-                'Add another, or submit when finished.'
+      progressBox.style.display =
+        'none';
+
+
+      unlockForm();
+
+
+      renderQueue();
+
+
+      finishBatch(
+
+        successCount,
+
+        failureCount,
+
+        items.length
+
+      );
+
+    }
+
+
+    async function uploadAndVerifyItem(
+      item,
+      number,
+      total
+    ) {
+
+      const dataUrl =
+        await fileToDataUrl(
+          item.preparedFile
+        );
+
+
+      document
+        .getElementById(
+          'formJob'
+        )
+        .value =
+          jobId;
+
+
+      document
+        .getElementById(
+          'formStage'
+        )
+        .value =
+          item.stage;
+
+
+      document
+        .getElementById(
+          'formCategory'
+        )
+        .value =
+          item.category;
+
+
+      document
+        .getElementById(
+          'formArea'
+        )
+        .value =
+          item.area;
+
+
+      document
+        .getElementById(
+          'formFileName'
+        )
+        .value =
+
+          item.preparedFile.name ||
+
+          item.originalFile.name ||
+
+          'Photo.jpg';
+
+
+      document
+        .getElementById(
+          'formMimeType'
+        )
+        .value =
+
+          item.preparedFile.type ||
+
+          'image/jpeg';
+
+
+      document
+        .getElementById(
+          'formFileData'
+        )
+        .value =
+          dataUrl;
+
+
+      document
+        .getElementById(
+          'formUploadId'
+        )
+        .value =
+          item.id;
+
+
+      const form =
+        document.getElementById(
+          'uploadForm'
+        );
+
+
+      form.action =
+        BACKEND;
+
+
+      form.submit();
+
+
+      item.status =
+        'verifying';
+
+
+      renderQueue();
+
+
+      progressBox.textContent =
+
+        'Confirming photo ' +
+
+        number +
+
+        ' of ' +
+
+        total +
+
+        '...';
+
+
+      return waitForExactUploadStatus(
+        item.id
+      );
+
+    }
+
+
+    function waitForExactUploadStatus(
+      uploadId
+    ) {
+
+      const deadline =
+        Date.now() +
+        STATUS_TIMEOUT_MS;
+
+
+      return new Promise(
+        function(
+          resolve,
+          reject
+        ) {
+
+          function check() {
+
+            getExactUploadStatus(
+              uploadId
+            )
+
+              .then(
+                function(result) {
+
+                  const parsed =
+                    parseUploadStatus(
+                      result
+                    );
+
+
+                  if (
+                    parsed.status ===
+                    'success'
+                  ) {
+
+                    resolve(
+                      parsed.result ||
+                      result
+                    );
+
+
+                    return;
+
+                  }
+
+
+                  if (
+                    parsed.status ===
+                    'error'
+                  ) {
+
+                    reject(
+                      new Error(
+
+                        parsed.message ||
+
+                        'The backend reported an upload error.'
+
+                      )
+                    );
+
+
+                    return;
+
+                  }
+
+
+                  if (
+                    Date.now() >=
+                    deadline
+                  ) {
+
+                    reject(
+                      new Error(
+                        'The portal could not verify this photo within 45 seconds. You can retry it without intentionally creating a duplicate.'
+                      )
+                    );
+
+
+                    return;
+
+                  }
+
+
+                  window.setTimeout(
+
+                    check,
+
+                    STATUS_INTERVAL_MS
+
+                  );
+
+                }
               )
-            : (
-                addedCount +
-                ' photos prepared and added. ' +
-                'Add more, or submit when finished.'
+
+              .catch(
+                function(error) {
+
+                  if (
+                    Date.now() >=
+                    deadline
+                  ) {
+
+                    reject(
+                      new Error(
+
+                        error &&
+                        error.message
+
+                          ? error.message
+
+                          : 'The portal could not verify this photo within 45 seconds.'
+
+                      )
+                    );
+
+
+                    return;
+
+                  }
+
+
+                  window.setTimeout(
+
+                    check,
+
+                    STATUS_INTERVAL_MS
+
+                  );
+
+                }
               );
 
+          }
 
-        selectionMessage.style.display =
-          'block';
+
+          window.setTimeout(
+
+            check,
+
+            700
+
+          );
+
+        }
+      );
+
+    }
+
+
+    function getExactUploadStatus(
+      uploadId
+    ) {
+
+      return jsonpRequest(
+
+        BACKEND +
+
+        '?action=uploadStatus' +
+
+        '&job=' +
+        encodeURIComponent(
+          jobId
+        ) +
+
+        '&uploadId=' +
+        encodeURIComponent(
+          uploadId
+        ) +
+
+        '&_=' +
+        Date.now(),
+
+        'genIIIUploadStatus'
+
+      );
+
+    }
+
+
+    function parseUploadStatus(
+      response
+    ) {
+
+      if (
+        !response
+      ) {
+
+        return {
+
+          status:
+            'processing',
+
+          message:
+            ''
+
+        };
+
+      }
+
+
+      if (
+        response.success ===
+        false
+      ) {
+
+        return {
+
+          status:
+            'error',
+
+          message:
+
+            response.message ||
+
+            response.error ||
+
+            'The backend reported an upload error.',
+
+          result:
+            response
+
+        };
+
+      }
+
+
+      const record =
+
+        response.upload ||
+
+        response.record ||
+
+        response.statusRecord ||
+
+        response.result ||
+
+        response;
+
+
+      let status =
+        String(
+          record.status ||
+          ''
+        )
+          .toLowerCase();
+
+
+      if (
+        !status &&
+        record.success === true
+      ) {
+
+        status =
+          'success';
+
+      }
+
+
+      if (
+        !status &&
+        record.success === false
+      ) {
+
+        status =
+          'error';
+
+      }
+
+
+      if (
+
+        status ===
+          'complete' ||
+
+        status ===
+          'completed' ||
+
+        status ===
+          'uploaded'
+
+      ) {
+
+        status =
+          'success';
+
+      }
+
+
+      if (
+
+        status ===
+          'failed' ||
+
+        status ===
+          'failure'
+
+      ) {
+
+        status =
+          'error';
+
+      }
+
+
+      if (
+        !status
+      ) {
+
+        status =
+          'processing';
+
+      }
+
+
+      return {
+
+        status:
+          status,
+
+
+        message:
+
+          record.message ||
+
+          record.error ||
+
+          response.message ||
+
+          response.error ||
+
+          '',
+
+
+        result:
+          record
+
+      };
+
+    }
+
+
+    function extractPhotoCount(
+      result
+    ) {
+
+      const candidates = [
+
+        result &&
+        result.photoCount,
+
+
+        result &&
+        result.result &&
+        result.result.photoCount,
+
+
+        result &&
+        result.upload &&
+        result.upload.photoCount,
+
+
+        result &&
+        result.data &&
+        result.data.photoCount
+
+      ];
+
+
+      for (
+        const value
+        of candidates
+      ) {
+
+        const number =
+          Number(
+            value
+          );
+
+
+        if (
+          Number.isFinite(
+            number
+          )
+        ) {
+
+          return number;
+
+        }
+
+      }
+
+
+      return NaN;
+
+    }
+
+
+    function finishBatch(
+      successCount,
+      failureCount,
+      attemptedCount
+    ) {
+
+      statusBox.textContent =
+
+        lastPhotoCount +
+
+        ' photo' +
+
+        (
+          lastPhotoCount === 1
+            ? ''
+            : 's'
+        ) +
+
+        ' currently on file.';
+
+
+      const failedItems =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+              item.status ===
+              'failed'
+            );
+
+          }
+        );
+
+
+      const uploadedTotal =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+              item.status ===
+              'uploaded'
+            );
+
+          }
+        ).length;
+
+
+      if (
+        failureCount === 0
+      ) {
+
+        showMessage(
+
+          successCount +
+
+          ' photo' +
+
+          (
+            successCount === 1
+              ? ''
+              : 's'
+          ) +
+
+          ' uploaded successfully. ' +
+
+          lastPhotoCount +
+
+          ' total photo' +
+
+          (
+            lastPhotoCount === 1
+              ? ''
+              : 's'
+          ) +
+
+          ' are now on file for this job.',
+
+          'success'
+
+        );
+
+      }
+      else {
+
+        showMessage(
+
+          successCount +
+
+          ' of ' +
+
+          attemptedCount +
+
+          ' photos uploaded successfully. ' +
+
+          failureCount +
+
+          ' failed and can be retried or downloaded for manual upload.',
+
+          'warning'
+
+        );
+
+      }
+
+
+      summaryBox.innerHTML =
+
+        '<strong>Batch summary:</strong> ' +
+
+        uploadedTotal +
+
+        ' verified in this queue • ' +
+
+        failedItems.length +
+
+        ' failed • ' +
+
+        lastPhotoCount +
+
+        ' total on file for this job.';
+
+
+      summaryBox.style.display =
+        'block';
+
+
+      endActions.style.display =
+        'grid';
+
+
+      retryButton.style.display =
+
+        failedItems.length > 0
+
+          ? 'block'
+
+          : 'none';
+
+
+      downloadFailedButton.style.display =
+
+        failedItems.length > 0
+
+          ? 'block'
+
+          : 'none';
+
+
+      downloadBatchButton.style.display =
+
+        photoQueue.length > 0
+
+          ? 'block'
+
+          : 'none';
+
+    }
+
+
+    async function downloadFailedPhotos() {
+
+      const failed =
+        photoQueue.filter(
+          function(item) {
+
+            return (
+              item.status ===
+              'failed'
+            );
+
+          }
+        );
+
+
+      if (
+        failed.length === 0
+      ) {
+
+        showMessage(
+          'There are no failed photos to download.',
+          'warning'
+        );
+
+
+        return;
+
+      }
+
+
+      await downloadItemsAsZip(
+
+        failed,
+
+        jobId +
+        '-Failed-Photos.zip'
+
+      );
+
+    }
+
+
+    async function downloadEntireBatch() {
+
+      if (
+        photoQueue.length === 0
+      ) {
+
+        showMessage(
+          'There are no photos in this batch to download.',
+          'warning'
+        );
+
+
+        return;
+
+      }
+
+
+      await downloadItemsAsZip(
+
+        photoQueue,
+
+        jobId +
+        '-Photo-Batch-Backup.zip'
+
+      );
+
+    }
+
+
+    async function downloadItemsAsZip(
+      items,
+      zipName
+    ) {
+
+      const buttonSet = [
+
+        downloadFailedButton,
+
+        downloadBatchButton
+
+      ];
+
+
+      buttonSet.forEach(
+        function(button) {
+
+          button.disabled =
+            true;
+
+        }
+      );
+
+
+      progressBox.style.display =
+        'block';
+
+
+      progressBox.textContent =
+        'Building backup download...';
+
+
+      try {
+
+        const entries =
+          [];
+
+
+        const usedNames =
+          new Set();
+
+
+        for (
+          let i = 0;
+          i < items.length;
+          i++
+        ) {
+
+          const item =
+            items[
+              i
+            ];
+
+
+          progressBox.textContent =
+
+            'Preparing backup photo ' +
+
+            (
+              i + 1
+            ) +
+
+            ' of ' +
+
+            items.length +
+
+            '...';
+
+
+          let name =
+            buildBackupFileName(
+
+              item,
+
+              i + 1
+
+            );
+
+
+          name =
+            uniqueZipName(
+
+              name,
+
+              usedNames
+
+            );
+
+
+          usedNames.add(
+            name
+          );
+
+
+          const bytes =
+            new Uint8Array(
+
+              await item
+                .originalFile
+                .arrayBuffer()
+
+            );
+
+
+          entries.push({
+
+            name:
+              name,
+
+
+            data:
+              bytes,
+
+
+            date:
+              new Date(
+
+                item.originalFile
+                  .lastModified ||
+
+                Date.now()
+
+              )
+
+          });
+
+        }
+
+
+        const zipBlob =
+          buildStoredZip(
+            entries
+          );
+
+
+        triggerBlobDownload(
+
+          zipBlob,
+
+          zipName
+
+        );
+
+
+        showMessage(
+
+          items.length +
+
+          ' original photo' +
+
+          (
+            items.length === 1
+              ? ''
+              : 's'
+          ) +
+
+          ' packaged for download.',
+
+          'success'
+
+        );
 
       }
       catch (error) {
 
-        preparingMessage.style.display =
-          'none';
-
-
         showMessage(
+
           error &&
           error.message
+
             ? error.message
-            : 'One of the photos could not be prepared.',
-          false
+
+            : 'The backup download could not be created.',
+
+          'error'
+
         );
+
       }
       finally {
 
-        preparingPhotos =
-          false;
+        progressBox.style.display =
+          'none';
 
 
-        unlockPreparationControls();
+        buttonSet.forEach(
+          function(button) {
+
+            button.disabled =
+              false;
+
+          }
+        );
 
       }
+
     }
 
 
+    function buildBackupFileName(
+      item,
+      index
+    ) {
 
-    /* ================================================================ */
-    /* IMAGE COMPRESSION                                                */
-    /* ================================================================ */
+      const parts = [
 
-    function prepareImageForUpload(
+        item.stage,
+
+        item.category,
+
+        item.area
+
+      ]
+        .filter(
+          Boolean
+        );
+
+
+      const safeParts =
+        parts.map(
+          function(part) {
+
+            return String(
+              part
+            )
+
+              .replace(
+                /[\\/:*?"<>|]/g,
+                '-'
+              )
+
+              .replace(
+                /\s+/g,
+                ' '
+              )
+
+              .trim();
+
+          }
+        );
+
+
+      const ext =
+        fileExtension(
+          item.originalFile.name
+        ) ||
+        'jpg';
+
+
+      const number =
+        String(
+          index
+        )
+          .padStart(
+            2,
+            '0'
+          );
+
+
+      return (
+
+        (
+          safeParts.length
+
+            ? safeParts.join(
+                ' '
+              )
+
+            : 'Photo'
+        ) +
+
+        ' - ' +
+
+        number +
+
+        '.' +
+
+        ext
+
+      );
+
+    }
+
+
+    function uniqueZipName(
+      name,
+      usedNames
+    ) {
+
+      if (
+        !usedNames.has(
+          name
+        )
+      ) {
+
+        return name;
+
+      }
+
+
+      const dot =
+        name.lastIndexOf(
+          '.'
+        );
+
+
+      const base =
+
+        dot >= 0
+
+          ? name.slice(
+              0,
+              dot
+            )
+
+          : name;
+
+
+      const ext =
+
+        dot >= 0
+
+          ? name.slice(
+              dot
+            )
+
+          : '';
+
+
+      let counter =
+        2;
+
+
+      let candidate =
+
+        base +
+
+        ' (' +
+
+        counter +
+
+        ')' +
+
+        ext;
+
+
+      while (
+        usedNames.has(
+          candidate
+        )
+      ) {
+
+        counter++;
+
+
+        candidate =
+
+          base +
+
+          ' (' +
+
+          counter +
+
+          ')' +
+
+          ext;
+
+      }
+
+
+      return candidate;
+
+    }
+
+
+    function buildStoredZip(
+      entries
+    ) {
+
+      const localParts =
+        [];
+
+
+      const centralParts =
+        [];
+
+
+      let offset =
+        0;
+
+
+      entries.forEach(
+        function(entry) {
+
+          const nameBytes =
+            new TextEncoder()
+              .encode(
+                entry.name
+              );
+
+
+          const data =
+            entry.data;
+
+
+          const crc =
+            crc32(
+              data
+            );
+
+
+          const dos =
+            dateToDos(
+
+              entry.date ||
+
+              new Date()
+
+            );
+
+
+          const local =
+            new Uint8Array(
+
+              30 +
+
+              nameBytes.length
+
+            );
+
+
+          const localView =
+            new DataView(
+              local.buffer
+            );
+
+
+          localView.setUint32(
+            0,
+            0x04034b50,
+            true
+          );
+
+
+          localView.setUint16(
+            4,
+            20,
+            true
+          );
+
+
+          localView.setUint16(
+            6,
+            0x0800,
+            true
+          );
+
+
+          localView.setUint16(
+            8,
+            0,
+            true
+          );
+
+
+          localView.setUint16(
+            10,
+            dos.time,
+            true
+          );
+
+
+          localView.setUint16(
+            12,
+            dos.date,
+            true
+          );
+
+
+          localView.setUint32(
+            14,
+            crc,
+            true
+          );
+
+
+          localView.setUint32(
+            18,
+            data.length,
+            true
+          );
+
+
+          localView.setUint32(
+            22,
+            data.length,
+            true
+          );
+
+
+          localView.setUint16(
+            26,
+            nameBytes.length,
+            true
+          );
+
+
+          localView.setUint16(
+            28,
+            0,
+            true
+          );
+
+
+          local.set(
+            nameBytes,
+            30
+          );
+
+
+          localParts.push(
+
+            local,
+
+            data
+
+          );
+
+
+          const central =
+            new Uint8Array(
+
+              46 +
+
+              nameBytes.length
+
+            );
+
+
+          const centralView =
+            new DataView(
+              central.buffer
+            );
+
+
+          centralView.setUint32(
+            0,
+            0x02014b50,
+            true
+          );
+
+
+          centralView.setUint16(
+            4,
+            20,
+            true
+          );
+
+
+          centralView.setUint16(
+            6,
+            20,
+            true
+          );
+
+
+          centralView.setUint16(
+            8,
+            0x0800,
+            true
+          );
+
+
+          centralView.setUint16(
+            10,
+            0,
+            true
+          );
+
+
+          centralView.setUint16(
+            12,
+            dos.time,
+            true
+          );
+
+
+          centralView.setUint16(
+            14,
+            dos.date,
+            true
+          );
+
+
+          centralView.setUint32(
+            16,
+            crc,
+            true
+          );
+
+
+          centralView.setUint32(
+            20,
+            data.length,
+            true
+          );
+
+
+          centralView.setUint32(
+            24,
+            data.length,
+            true
+          );
+
+
+          centralView.setUint16(
+            28,
+            nameBytes.length,
+            true
+          );
+
+
+          centralView.setUint16(
+            30,
+            0,
+            true
+          );
+
+
+          centralView.setUint16(
+            32,
+            0,
+            true
+          );
+
+
+          centralView.setUint16(
+            34,
+            0,
+            true
+          );
+
+
+          centralView.setUint16(
+            36,
+            0,
+            true
+          );
+
+
+          centralView.setUint32(
+            38,
+            0,
+            true
+          );
+
+
+          centralView.setUint32(
+            42,
+            offset,
+            true
+          );
+
+
+          central.set(
+            nameBytes,
+            46
+          );
+
+
+          centralParts.push(
+            central
+          );
+
+
+          offset +=
+
+            local.length +
+
+            data.length;
+
+        }
+      );
+
+
+      const centralSize =
+        centralParts.reduce(
+          function(
+            sum,
+            part
+          ) {
+
+            return (
+              sum +
+              part.length
+            );
+
+          },
+          0
+        );
+
+
+      const end =
+        new Uint8Array(
+          22
+        );
+
+
+      const endView =
+        new DataView(
+          end.buffer
+        );
+
+
+      endView.setUint32(
+        0,
+        0x06054b50,
+        true
+      );
+
+
+      endView.setUint16(
+        4,
+        0,
+        true
+      );
+
+
+      endView.setUint16(
+        6,
+        0,
+        true
+      );
+
+
+      endView.setUint16(
+        8,
+        entries.length,
+        true
+      );
+
+
+      endView.setUint16(
+        10,
+        entries.length,
+        true
+      );
+
+
+      endView.setUint32(
+        12,
+        centralSize,
+        true
+      );
+
+
+      endView.setUint32(
+        16,
+        offset,
+        true
+      );
+
+
+      endView.setUint16(
+        20,
+        0,
+        true
+      );
+
+
+      return new Blob(
+
+        localParts.concat(
+
+          centralParts,
+
+          [
+            end
+          ]
+
+        ),
+
+        {
+          type:
+            'application/zip'
+        }
+
+      );
+
+    }
+
+
+    let crcTable =
+      null;
+
+
+    function crc32(
+      bytes
+    ) {
+
+      if (
+        !crcTable
+      ) {
+
+        crcTable =
+          new Uint32Array(
+            256
+          );
+
+
+        for (
+          let n = 0;
+          n < 256;
+          n++
+        ) {
+
+          let c =
+            n;
+
+
+          for (
+            let k = 0;
+            k < 8;
+            k++
+          ) {
+
+            c =
+
+              (
+                c &
+                1
+              )
+
+                ? (
+                    0xedb88320 ^
+                    (
+                      c >>>
+                      1
+                    )
+                  )
+
+                : (
+                    c >>>
+                    1
+                  );
+
+          }
+
+
+          crcTable[
+            n
+          ] =
+            c >>>
+            0;
+
+        }
+
+      }
+
+
+      let crc =
+        0xffffffff;
+
+
+      for (
+        let i = 0;
+        i < bytes.length;
+        i++
+      ) {
+
+        crc =
+
+          crcTable[
+            (
+              crc ^
+              bytes[
+                i
+              ]
+            ) &
+            0xff
+          ] ^
+
+          (
+            crc >>>
+            8
+          );
+
+      }
+
+
+      return (
+        crc ^
+        0xffffffff
+      ) >>>
+      0;
+
+    }
+
+
+    function dateToDos(
+      date
+    ) {
+
+      const safeDate =
+
+        date instanceof Date
+
+          ? date
+
+          : new Date();
+
+
+      const year =
+        Math.max(
+
+          1980,
+
+          safeDate
+            .getFullYear()
+
+        );
+
+
+      return {
+
+        time:
+
+          (
+            safeDate
+              .getHours() <<
+            11
+          ) |
+
+          (
+            safeDate
+              .getMinutes() <<
+            5
+          ) |
+
+          Math.floor(
+
+            safeDate
+              .getSeconds() /
+
+            2
+
+          ),
+
+
+        date:
+
+          (
+            (
+              year -
+              1980
+            ) <<
+            9
+          ) |
+
+          (
+            (
+              safeDate
+                .getMonth() +
+              1
+            ) <<
+            5
+          ) |
+
+          safeDate
+            .getDate()
+
+      };
+
+    }
+
+
+    function triggerBlobDownload(
+      blob,
+      fileName
+    ) {
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          'a'
+        );
+
+
+      link.href =
+        url;
+
+
+      link.download =
+        fileName;
+
+
+      link.style.display =
+        'none';
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      link.click();
+
+
+      link.remove();
+
+
+      window.setTimeout(
+        function() {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+        },
+        30000
+      );
+
+    }
+
+
+    async function compressImageFile(
+      file
+    ) {
+
+      if (
+        !file
+      ) {
+
+        throw new Error(
+          'No photo was provided.'
+        );
+
+      }
+
+
+      const lowerName =
+        (
+          file.name ||
+          ''
+        )
+          .toLowerCase();
+
+
+      const type =
+        (
+          file.type ||
+          ''
+        )
+          .toLowerCase();
+
+
+      const likelyHeic =
+
+        type.includes(
+          'heic'
+        ) ||
+
+        type.includes(
+          'heif'
+        ) ||
+
+        lowerName.endsWith(
+          '.heic'
+        ) ||
+
+        lowerName.endsWith(
+          '.heif'
+        );
+
+
+      if (
+        likelyHeic
+      ) {
+
+        if (
+          file.size >
+          MAX_FILE_BYTES
+        ) {
+
+          throw new Error(
+            'HEIC/HEIF photo is larger than 8 MB and could not be compressed in this browser.'
+          );
+
+        }
+
+
+        return file;
+
+      }
+
+
+      try {
+
+        const image =
+          await loadImageFromFile(
+            file
+          );
+
+
+        const scale =
+          Math.min(
+
+            1,
+
+            MAX_UPLOAD_DIMENSION /
+
+            Math.max(
+
+              image.width,
+
+              image.height
+
+            )
+
+          );
+
+
+        const width =
+          Math.max(
+
+            1,
+
+            Math.round(
+              image.width *
+              scale
+            )
+
+          );
+
+
+        const height =
+          Math.max(
+
+            1,
+
+            Math.round(
+              image.height *
+              scale
+            )
+
+          );
+
+
+        const canvas =
+          document.createElement(
+            'canvas'
+          );
+
+
+        canvas.width =
+          width;
+
+
+        canvas.height =
+          height;
+
+
+        const context =
+          canvas.getContext(
+
+            '2d',
+
+            {
+              alpha:
+                false
+            }
+
+          );
+
+
+        context.fillStyle =
+          '#ffffff';
+
+
+        context.fillRect(
+
+          0,
+
+          0,
+
+          width,
+
+          height
+
+        );
+
+
+        context.drawImage(
+
+          image,
+
+          0,
+
+          0,
+
+          width,
+
+          height
+
+        );
+
+
+        const blob =
+          await canvasToBlob(
+
+            canvas,
+
+            'image/jpeg',
+
+            UPLOAD_JPEG_QUALITY
+
+          );
+
+
+        if (
+          blob.size >
+          MAX_FILE_BYTES
+        ) {
+
+          throw new Error(
+            'Prepared photo is still larger than 8 MB.'
+          );
+
+        }
+
+
+        const name =
+          replaceFileExtension(
+
+            file.name ||
+            'Photo.jpg',
+
+            'jpg'
+
+          );
+
+
+        return new File(
+
+          [
+            blob
+          ],
+
+          name,
+
+          {
+
+            type:
+              'image/jpeg',
+
+            lastModified:
+
+              file.lastModified ||
+
+              Date.now()
+
+          }
+
+        );
+
+      }
+      catch (error) {
+
+        if (
+          file.size <=
+          MAX_FILE_BYTES
+        ) {
+
+          return file;
+
+        }
+
+
+        throw error;
+
+      }
+
+    }
+
+
+    function loadImageFromFile(
       file
     ) {
 
@@ -1765,7 +5726,7 @@
           reject
         ) {
 
-          const objectUrl =
+          const url =
             URL.createObjectURL(
               file
             );
@@ -1778,153 +5739,15 @@
           image.onload =
             function() {
 
-              try {
-
-                let width =
-                  image.naturalWidth;
-
-
-                let height =
-                  image.naturalHeight;
+              URL.revokeObjectURL(
+                url
+              );
 
 
-                if (
-                  width < 1 ||
-                  height < 1
-                ) {
+              resolve(
+                image
+              );
 
-                  throw new Error(
-                    'The image dimensions could not be read.'
-                  );
-                }
-
-
-                const scale =
-                  Math.min(
-                    1,
-                    MAX_DIMENSION /
-                    Math.max(
-                      width,
-                      height
-                    )
-                  );
-
-
-                const targetWidth =
-                  Math.max(
-                    1,
-                    Math.round(
-                      width * scale
-                    )
-                  );
-
-
-                const targetHeight =
-                  Math.max(
-                    1,
-                    Math.round(
-                      height * scale
-                    )
-                  );
-
-
-                const canvas =
-                  document.createElement(
-                    'canvas'
-                  );
-
-
-                canvas.width =
-                  targetWidth;
-
-
-                canvas.height =
-                  targetHeight;
-
-
-                const context =
-                  canvas.getContext(
-                    '2d'
-                  );
-
-
-                if (!context) {
-
-                  throw new Error(
-                    'The browser could not prepare this photo.'
-                  );
-                }
-
-
-                context.drawImage(
-                  image,
-                  0,
-                  0,
-                  targetWidth,
-                  targetHeight
-                );
-
-
-                canvas.toBlob(
-                  function(blob) {
-
-                    URL.revokeObjectURL(
-                      objectUrl
-                    );
-
-
-                    canvas.width =
-                      1;
-
-
-                    canvas.height =
-                      1;
-
-
-                    if (!blob) {
-
-                      reject(
-                        new Error(
-                          file.name +
-                          ' could not be compressed.'
-                        )
-                      );
-
-                      return;
-                    }
-
-
-                    resolve(
-                      {
-
-                        blob:
-                          blob,
-
-                        fileName:
-                          changeExtensionToJpg(
-                            file.name
-                          )
-
-                      }
-                    );
-
-                  },
-                  'image/jpeg',
-                  JPEG_QUALITY
-                );
-
-              }
-              catch (error) {
-
-                URL.revokeObjectURL(
-                  objectUrl
-                );
-
-
-                reject(
-                  error
-                );
-              }
             };
 
 
@@ -1932,64 +5755,534 @@
             function() {
 
               URL.revokeObjectURL(
-                objectUrl
+                url
               );
-
-
-              /*
-               * Some phones/browsers may not decode HEIC/HEIF
-               * through a canvas.
-               *
-               * If the original file is already under the
-               * backend's 8 MB limit, we keep it unchanged.
-               */
-
-              if (
-                file.size <=
-                MAX_UPLOAD_BYTES
-              ) {
-
-                resolve(
-                  {
-
-                    blob:
-                      file,
-
-                    fileName:
-                      file.name
-
-                  }
-                );
-
-                return;
-              }
 
 
               reject(
                 new Error(
-                  file.name +
-                  ' could not be prepared by this browser and is larger than 8 MB.'
+                  'This photo format could not be prepared.'
                 )
               );
+
             };
 
 
           image.src =
-            objectUrl;
+            url;
 
         }
       );
+
     }
 
 
-
-    function changeExtensionToJpg(
-      fileName
+    function canvasToBlob(
+      canvas,
+      type,
+      quality
     ) {
 
-      const base =
+      return new Promise(
+        function(
+          resolve,
+          reject
+        ) {
+
+          canvas.toBlob(
+
+            function(blob) {
+
+              if (
+                !blob
+              ) {
+
+                reject(
+                  new Error(
+                    'The photo could not be converted for upload.'
+                  )
+                );
+
+
+                return;
+
+              }
+
+
+              resolve(
+                blob
+              );
+
+            },
+
+            type,
+
+            quality
+
+          );
+
+        }
+      );
+
+    }
+
+
+    function fileToDataUrl(
+      file
+    ) {
+
+      return new Promise(
+        function(
+          resolve,
+          reject
+        ) {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(event) {
+
+              resolve(
+                event.target.result
+              );
+
+            };
+
+
+          reader.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  'The selected photo could not be read.'
+                )
+              );
+
+            };
+
+
+          reader.readAsDataURL(
+            file
+          );
+
+        }
+      );
+
+    }
+
+
+    function jsonpRequest(
+      baseUrl,
+      prefix
+    ) {
+
+      return new Promise(
+        function(
+          resolve,
+          reject
+        ) {
+
+          const callback =
+
+            prefix +
+
+            '_' +
+
+            Date.now() +
+
+            '_' +
+
+            Math.random()
+              .toString(
+                36
+              )
+              .slice(
+                2
+              );
+
+
+          const script =
+            document.createElement(
+              'script'
+            );
+
+
+          let finished =
+            false;
+
+
+          function cleanup() {
+
+            if (
+              finished
+            ) {
+
+              return;
+
+            }
+
+
+            finished =
+              true;
+
+
+            try {
+
+              delete window[
+                callback
+              ];
+
+            }
+            catch (error) {
+
+              window[
+                callback
+              ] =
+                undefined;
+
+            }
+
+
+            if (
+              script.parentNode
+            ) {
+
+              script
+                .parentNode
+                .removeChild(
+                  script
+                );
+
+            }
+
+          }
+
+
+          window[
+            callback
+          ] =
+            function(result) {
+
+              cleanup();
+
+
+              resolve(
+                result
+              );
+
+            };
+
+
+          script.onerror =
+            function() {
+
+              cleanup();
+
+
+              reject(
+                new Error(
+                  'Could not reach the photo portal backend.'
+                )
+              );
+
+            };
+
+
+          const separator =
+
+            baseUrl.includes(
+              '?'
+            )
+
+              ? '&'
+
+              : '?';
+
+
+          script.src =
+
+            baseUrl +
+
+            separator +
+
+            'callback=' +
+
+            encodeURIComponent(
+              callback
+            );
+
+
+          document.body.appendChild(
+            script
+          );
+
+        }
+      );
+
+    }
+
+
+    function lockForm() {
+
+      stageInput.disabled =
+        true;
+
+
+      categoryInput.disabled =
+        true;
+
+
+      areaInput.disabled =
+        true;
+
+
+      openCameraButton.disabled =
+        true;
+
+
+      existingPhotosButton.disabled =
+        true;
+
+
+      photosInput.disabled =
+        true;
+
+
+      takePhotoButton.disabled =
+        true;
+
+
+      closeCameraButton.disabled =
+        true;
+
+
+      submitButton.disabled =
+        true;
+
+
+      retryButton.disabled =
+        true;
+
+
+      downloadFailedButton.disabled =
+        true;
+
+
+      downloadBatchButton.disabled =
+        true;
+
+    }
+
+
+    function unlockForm() {
+
+      stageInput.disabled =
+        false;
+
+
+      categoryInput.disabled =
+        false;
+
+
+      updateAreaOptions();
+
+
+      openCameraButton.disabled =
+        false;
+
+
+      existingPhotosButton.disabled =
+        false;
+
+
+      photosInput.disabled =
+        false;
+
+
+      takePhotoButton.disabled =
+        false;
+
+
+      closeCameraButton.disabled =
+        false;
+
+
+      retryButton.disabled =
+        false;
+
+
+      downloadFailedButton.disabled =
+        false;
+
+
+      downloadBatchButton.disabled =
+        false;
+
+    }
+
+
+    function statusLabel(
+      status
+    ) {
+
+      const labels = {
+
+        ready:
+          'Ready',
+
+        uploading:
+          'Uploading',
+
+        verifying:
+          'Verifying',
+
+        uploaded:
+          'Uploaded',
+
+        failed:
+          'Failed'
+
+      };
+
+
+      return (
+        labels[
+          status
+        ] ||
+        status
+      );
+
+    }
+
+
+    function makeUploadId() {
+
+      if (
+
+        window.crypto &&
+
+        typeof
+          window.crypto.randomUUID ===
+          'function'
+
+      ) {
+
+        return window
+          .crypto
+          .randomUUID();
+
+      }
+
+
+      return (
+
+        Date.now()
+          .toString(
+            36
+          ) +
+
+        '-' +
+
+        Math.random()
+          .toString(
+            36
+          )
+          .slice(
+            2
+          ) +
+
+        '-' +
+
+        Math.random()
+          .toString(
+            36
+          )
+          .slice(
+            2
+          )
+
+      );
+
+    }
+
+
+    function makeCameraOriginalName() {
+
+      const now =
+        new Date();
+
+
+      const pad =
+        function(value) {
+
+          return String(
+            value
+          )
+            .padStart(
+              2,
+              '0'
+            );
+
+        };
+
+
+      return (
+
+        'GENIII-Camera-' +
+
+        now.getFullYear() +
+
+        pad(
+          now.getMonth() +
+          1
+        ) +
+
+        pad(
+          now.getDate()
+        ) +
+
+        '-' +
+
+        pad(
+          now.getHours()
+        ) +
+
+        pad(
+          now.getMinutes()
+        ) +
+
+        pad(
+          now.getSeconds()
+        ) +
+
+        '-' +
+
+        Math.random()
+          .toString(
+            36
+          )
+          .slice(
+            2,
+            6
+          ) +
+
+        '.jpg'
+
+      );
+
+    }
+
+
+    function replaceFileExtension(
+      name,
+      extension
+    ) {
+
+      const clean =
         String(
-          fileName ||
+          name ||
           'Photo'
         )
           .replace(
@@ -1999,1525 +6292,117 @@
 
 
       return (
-        base +
-        '.jpg'
+        clean +
+        '.' +
+        extension
       );
+
     }
 
 
-
-    function yieldToBrowser() {
-
-      return new Promise(
-        function(resolve) {
-
-          window.setTimeout(
-            resolve,
-            0
-          );
-
-        }
-      );
-    }
-
-
-
-    /* ================================================================ */
-    /* QUEUE DISPLAY                                                    */
-    /* ================================================================ */
-
-    function renderQueue() {
-
-      queueList.innerHTML =
-        '';
-
-
-      if (
-        photoQueue.length === 0
-      ) {
-
-        queueSection.style.display =
-          'none';
-
-        return;
-      }
-
-
-      queueSection.style.display =
-        'block';
-
-
-      const totalBytes =
-        photoQueue.reduce(
-          function(
-            sum,
-            item
-          ) {
-
-            return (
-              sum +
-              item.preparedSize
-            );
-
-          },
-          0
-        );
-
-
-      const uploadedCount =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state ===
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      const failedCount =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state ===
-              'failed'
-            );
-
-          }
-        ).length;
-
-
-      let countText =
-        photoQueue.length +
-        ' photo' +
-        (
-          photoQueue.length === 1
-            ? ''
-            : 's'
-        ) +
-        ' in queue • ' +
-        formatBytes(
-          totalBytes
-        ) +
-        ' total';
-
-
-      if (
-        uploadedCount > 0
-      ) {
-
-        countText +=
-          ' • ' +
-          uploadedCount +
-          ' uploaded';
-
-      }
-
-
-      if (
-        failedCount > 0
-      ) {
-
-        countText +=
-          ' • ' +
-          failedCount +
-          ' failed';
-
-      }
-
-
-      queueCount.textContent =
-        countText;
-
-
-      photoQueue.forEach(
-        function(
-          item,
-          index
-        ) {
-
-          const row =
-            document.createElement(
-              'div'
-            );
-
-
-          row.className =
-            'queue-item';
-
-
-          if (
-            item.state ===
-            'uploaded'
-          ) {
-
-            row.classList.add(
-              'uploaded'
-            );
-
-          }
-
-
-          if (
-            item.state ===
-            'failed'
-          ) {
-
-            row.classList.add(
-              'failed'
-            );
-
-          }
-
-
-          const img =
-            document.createElement(
-              'img'
-            );
-
-
-          img.src =
-            item.previewUrl;
-
-
-          img.className =
-            'queue-thumb';
-
-
-          const info =
-            document.createElement(
-              'div'
-            );
-
-
-          info.className =
-            'queue-info';
-
-
-          const stage =
-            document.createElement(
-              'div'
-            );
-
-
-          stage.className =
-            'queue-stage';
-
-
-          stage.textContent =
-            item.stage;
-
-
-          const category =
-            document.createElement(
-              'div'
-            );
-
-
-          category.className =
-            'queue-category';
-
-
-          category.textContent =
-            item.category;
-
-
-          const area =
-            document.createElement(
-              'div'
-            );
-
-
-          area.className =
-            'queue-area';
-
-
-          area.textContent =
-            item.area ||
-            'No specific area';
-
-
-          const size =
-            document.createElement(
-              'div'
-            );
-
-
-          size.className =
-            'queue-size';
-
-
-          size.textContent =
-            formatBytes(
-              item.originalSize
-            ) +
-            ' → ' +
-            formatBytes(
-              item.preparedSize
-            );
-
-
-          const fileName =
-            document.createElement(
-              'div'
-            );
-
-
-          fileName.className =
-            'queue-file';
-
-
-          fileName.textContent =
-            item.originalName;
-
-
-          const itemStatus =
-            document.createElement(
-              'div'
-            );
-
-
-          itemStatus.className =
-            'queue-status ' +
-            item.state;
-
-
-          if (
-            item.state ===
-            'uploaded'
-          ) {
-
-            itemStatus.textContent =
-              'Uploaded';
-
-          }
-          else if (
-            item.state ===
-            'failed'
-          ) {
-
-            itemStatus.textContent =
-              'Upload Failed';
-
-          }
-          else {
-
-            itemStatus.textContent =
-              'Ready';
-
-          }
-
-
-          info.appendChild(
-            stage
-          );
-
-
-          info.appendChild(
-            category
-          );
-
-
-          info.appendChild(
-            area
-          );
-
-
-          info.appendChild(
-            size
-          );
-
-
-          info.appendChild(
-            fileName
-          );
-
-
-          info.appendChild(
-            itemStatus
-          );
-
-
-          if (
-            item.errorMessage
-          ) {
-
-            const errorText =
-              document.createElement(
-                'div'
-              );
-
-
-            errorText.className =
-              'queue-error';
-
-
-            errorText.textContent =
-              item.errorMessage;
-
-
-            info.appendChild(
-              errorText
-            );
-
-          }
-
-
-          const remove =
-            document.createElement(
-              'button'
-            );
-
-
-          remove.type =
-            'button';
-
-
-          remove.className =
-            'remove-button';
-
-
-          remove.textContent =
-            'Remove';
-
-
-          remove.disabled =
-            uploadInProgress;
-
-
-          remove.onclick =
-            function() {
-
-              removeQueuedPhoto(
-                index
-              );
-            };
-
-
-          row.appendChild(
-            img
-          );
-
-
-          row.appendChild(
-            info
-          );
-
-
-          row.appendChild(
-            remove
-          );
-
-
-          queueList.appendChild(
-            row
-          );
-
-        }
-      );
-
-
-      updateSubmitButtonText();
-    }
-
-
-
-    function removeQueuedPhoto(
-      index
+    function fileExtension(
+      name
     ) {
 
-      if (
-        uploadInProgress ||
-        preparingPhotos
-      ) {
-
-        return;
-      }
-
-
-      const item =
-        photoQueue[
-          index
-        ];
+      const match =
+        String(
+          name ||
+          ''
+        )
+          .match(
+            /\.([a-zA-Z0-9]+)$/
+          );
 
 
-      if (
-        item &&
-        item.previewUrl
-      ) {
-
-        URL.revokeObjectURL(
-          item.previewUrl
-        );
-      }
-
-
-      photoQueue.splice(
-        index,
-        1
+      return (
+        match
+          ? match[
+              1
+            ]
+              .toLowerCase()
+          : ''
       );
 
-
-      renderQueue();
-
-
-      if (
-        photoQueue.length === 0
-      ) {
-
-        selectionMessage.style.display =
-          'none';
-
-      }
     }
-
-
-
-    function updateSubmitButtonText() {
-
-      const failedOrReady =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state !==
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      const uploaded =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state ===
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      if (
-        uploaded > 0 &&
-        failedOrReady > 0
-      ) {
-
-        submitButton.textContent =
-          'Retry Remaining Photos';
-
-      }
-      else {
-
-        submitButton.textContent =
-          'Submit All Photos';
-
-      }
-    }
-
 
 
     function formatBytes(
       bytes
     ) {
 
-      if (
-        !bytes ||
-        bytes <= 0
-      ) {
-
-        return '0 KB';
-
-      }
-
-
-      const mb =
-        bytes /
-        (
-          1024 *
-          1024
+      const value =
+        Number(
+          bytes ||
+          0
         );
 
 
       if (
-        mb >= 1
+        value <
+        1024
       ) {
 
         return (
-          mb.toFixed(1) +
-          ' MB'
+          value +
+          ' B'
         );
 
-      }
-
-
-      return (
-        Math.round(
-          bytes / 1024
-        ) +
-        ' KB'
-      );
-    }
-
-
-
-    /* ================================================================ */
-    /* START UPLOAD                                                     */
-    /* ================================================================ */
-
-    function submitQueue() {
-
-      if (
-        uploadInProgress ||
-        preparingPhotos
-      ) {
-
-        return;
       }
 
 
       if (
-        photoQueue.length === 0
+        value <
+        1024 * 1024
       ) {
 
-        showMessage(
-          'Add at least one photo before submitting.',
-          false
-        );
-
-        return;
-      }
-
-
-      const remaining =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state !==
-              'uploaded'
-            );
-
-          }
-        );
-
-
-      if (
-        remaining.length === 0
-      ) {
-
-        showMessage(
-          'All photos in this queue are already uploaded.',
-          true
-        );
-
-        return;
-      }
-
-
-      /*
-       * Clear the failed flag so a retry can begin cleanly.
-       */
-      photoQueue.forEach(
-        function(item) {
-
-          if (
-            item.state ===
-            'failed'
-          ) {
-
-            item.state =
-              'ready';
-
-
-            item.errorMessage =
-              '';
-
-          }
-
-        }
-      );
-
-
-      uploadInProgress =
-        true;
-
-
-      uploadIndex =
-        -1;
-
-
-      lockForm();
-
-
-      selectionMessage.style.display =
-        'none';
-
-
-      hideMessage();
-
-
-      progressBox.style.display =
-        'block';
-
-
-      progressBox.textContent =
-        'Checking job before upload...';
-
-
-      getJobInfo()
-        .then(
-          function(result) {
-
-            if (
-              !result ||
-              !result.success
-            ) {
-
-              throw new Error(
-                result &&
-                result.message
-                  ? result.message
-                  : 'The job could not be verified.'
-              );
-
-            }
-
-
-            lastPhotoCount =
-              Number(
-                result.job.photoCount || 0
-              );
-
-
-            uploadNextPhoto();
-
-          }
-        )
-        .catch(
-          function(error) {
-
-            stopBatch(
-              error &&
-              error.message
-                ? error.message
-                : 'The portal could not verify the job before uploading.'
-            );
-
-          }
-        );
-    }
-
-
-
-    /* ================================================================ */
-    /* UPLOAD ONE PHOTO                                                 */
-    /* ================================================================ */
-
-    function uploadNextPhoto() {
-
-      const nextIndex =
-        findNextPendingPhotoIndex();
-
-
-      if (
-        nextIndex === -1
-      ) {
-
-        finishUploadBatch();
-
-        return;
-      }
-
-
-      uploadIndex =
-        nextIndex;
-
-
-      const item =
-        photoQueue[
-          uploadIndex
-        ];
-
-
-      item.state =
-        'ready';
-
-
-      item.errorMessage =
-        '';
-
-
-      renderQueue();
-
-
-      const uploadedSoFar =
-        photoQueue.filter(
-          function(queueItem) {
-
-            return (
-              queueItem.state ===
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      progressBox.textContent =
-        'Uploading photo ' +
-        (
-          uploadedSoFar + 1
-        ) +
-        ' of ' +
-        photoQueue.length +
-        '...';
-
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(event) {
-
-          document
-            .getElementById(
-              'formJob'
-            )
-            .value =
-              jobId;
-
-
-          document
-            .getElementById(
-              'formStage'
-            )
-            .value =
-              item.stage;
-
-
-          document
-            .getElementById(
-              'formCategory'
-            )
-            .value =
-              item.category;
-
-
-          document
-            .getElementById(
-              'formArea'
-            )
-            .value =
-              item.area;
-
-
-          document
-            .getElementById(
-              'formFileName'
-            )
-            .value =
-              item.fileName;
-
-
-          document
-            .getElementById(
-              'formMimeType'
-            )
-            .value =
-              item.blob.type ||
-              'image/jpeg';
-
-
-          document
-            .getElementById(
-              'formFileData'
-            )
-            .value =
-              event.target.result;
-
-
-          document
-            .getElementById(
-              'formUploadId'
-            )
-            .value =
-              item.id;
-
-
-          const form =
-            document.getElementById(
-              'uploadForm'
-            );
-
-
-          form.action =
-            BACKEND;
-
-
-          /*
-           * This sends the photo to Apps Script.
-           *
-           * The hidden iframe response is NOT used
-           * to determine success.
-           *
-           * We verify this exact upload ID below.
-           */
-          form.submit();
-
-
-          /*
-           * Remove the large base64 string from the page
-           * shortly after submission so we do not keep an
-           * unnecessary second copy in browser memory.
-           */
-          window.setTimeout(
-            function() {
-
-              document
-                .getElementById(
-                  'formFileData'
-                )
-                .value =
-                  '';
-
-            },
-            750
-          );
-
-
-          pollExactUploadStatus(
-            item
-          );
-
-        };
-
-
-      reader.onerror =
-        function() {
-
-          markCurrentPhotoFailed(
-            'The prepared photo could not be read by the browser.'
-          );
-
-        };
-
-
-      reader.readAsDataURL(
-        item.blob
-      );
-    }
-
-
-
-    function findNextPendingPhotoIndex() {
-
-      for (
-        let i = 0;
-        i < photoQueue.length;
-        i++
-      ) {
-
-        if (
-          photoQueue[i].state !==
-          'uploaded'
-        ) {
-
-          return i;
-
-        }
-
-      }
-
-
-      return -1;
-    }
-
-
-
-    /* ================================================================ */
-    /* EXACT UPLOAD STATUS                                              */
-    /* ================================================================ */
-
-    function pollExactUploadStatus(
-      item
-    ) {
-
-      const deadline =
-        Date.now() +
-        STATUS_TIMEOUT_MS;
-
-
-      progressBox.textContent =
-        'Confirming ' +
-        item.stage +
-        ' ' +
-        item.category +
-        ' photo...';
-
-
-      function check() {
-
-        if (
-          !uploadInProgress
-        ) {
-
-          return;
-        }
-
-
-        getExactUploadStatus(
-          item.id
-        )
-          .then(
-            function(result) {
-
-              if (
-                !uploadInProgress
-              ) {
-
-                return;
-
-              }
-
-
-              /*
-               * A status request itself failed.
-               */
-              if (
-                !result ||
-                result.success === false
-              ) {
-
-                const message =
-                  result &&
-                  result.message
-                    ? result.message
-                    : 'The upload status could not be checked.';
-
-
-                markCurrentPhotoFailed(
-                  message
-                );
-
-                return;
-              }
-
-
-              /*
-               * Backend has not finished recording
-               * this upload yet.
-               */
-              if (
-                !result.found ||
-                result.status === 'pending' ||
-                result.status === 'processing'
-              ) {
-
-                scheduleAnotherCheck();
-
-                return;
-              }
-
-
-              /*
-               * Exact upload succeeded.
-               */
-              if (
-                result.status === 'success'
-              ) {
-
-                item.state =
-                  'uploaded';
-
-
-                item.errorMessage =
-                  '';
-
-
-                if (
-                  result.result &&
-                  result.result.photoCount != null
-                ) {
-
-                  lastPhotoCount =
-                    Number(
-                      result.result.photoCount
-                    );
-
-                }
-                else if (
-                  result.photoCount != null
-                ) {
-
-                  lastPhotoCount =
-                    Number(
-                      result.photoCount
-                    );
-
-                }
-
-
-                renderQueue();
-
-
-                uploadNextPhoto();
-
-                return;
-              }
-
-
-              /*
-               * Exact upload failed.
-               */
-              if (
-                result.status === 'error' ||
-                result.status === 'failed'
-              ) {
-
-                markCurrentPhotoFailed(
-                  result.message ||
-                  (
-                    result.result &&
-                    result.result.message
-                  ) ||
-                  'Apps Script rejected this photo.'
-                );
-
-                return;
-              }
-
-
-              scheduleAnotherCheck();
-
-            }
+        return (
+
+          (
+            value /
+            1024
           )
-          .catch(
-            function() {
+            .toFixed(
+              1
+            ) +
 
-              scheduleAnotherCheck();
+          ' KB'
 
-            }
-          );
-
-      }
-
-
-      function scheduleAnotherCheck() {
-
-        if (
-          Date.now() >=
-          deadline
-        ) {
-
-          markCurrentPhotoFailed(
-            'Apps Script received the upload request, but did not report success or an error within 45 seconds.'
-          );
-
-          return;
-        }
-
-
-        window.setTimeout(
-          check,
-          STATUS_INTERVAL_MS
-        );
-      }
-
-
-      /*
-       * Give doPost a moment to begin.
-       */
-      window.setTimeout(
-        check,
-        700
-      );
-    }
-
-
-
-    function getExactUploadStatus(
-      uploadId
-    ) {
-
-      return jsonpRequest(
-        {
-
-          action:
-            'uploadStatus',
-
-          job:
-            jobId,
-
-          uploadId:
-            uploadId
-
-        },
-        10000
-      );
-    }
-
-
-
-    /* ================================================================ */
-    /* FAILURE / SUCCESS                                                */
-    /* ================================================================ */
-
-    function markCurrentPhotoFailed(
-      errorMessage
-    ) {
-
-      if (
-        uploadIndex < 0 ||
-        uploadIndex >=
-        photoQueue.length
-      ) {
-
-        stopBatch(
-          errorMessage
-        );
-
-        return;
-      }
-
-
-      const item =
-        photoQueue[
-          uploadIndex
-        ];
-
-
-      item.state =
-        'failed';
-
-
-      item.errorMessage =
-        errorMessage ||
-        'The photo could not be uploaded.';
-
-
-      renderQueue();
-
-
-      uploadInProgress =
-        false;
-
-
-      progressBox.style.display =
-        'none';
-
-
-      unlockForm();
-
-
-      showMessage(
-        'Photo ' +
-        (
-          uploadIndex + 1
-        ) +
-        ' failed: ' +
-        item.errorMessage,
-        false
-      );
-    }
-
-
-
-    function stopBatch(
-      message
-    ) {
-
-      uploadInProgress =
-        false;
-
-
-      progressBox.style.display =
-        'none';
-
-
-      unlockForm();
-
-
-      renderQueue();
-
-
-      showMessage(
-        message,
-        false
-      );
-    }
-
-
-
-    function finishUploadBatch() {
-
-      uploadInProgress =
-        false;
-
-
-      progressBox.style.display =
-        'none';
-
-
-      const uploadedCount =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.state ===
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      unlockForm();
-
-
-      showMessage(
-        uploadedCount +
-        ' photo' +
-        (
-          uploadedCount === 1
-            ? ''
-            : 's'
-        ) +
-        ' uploaded successfully. ' +
-        lastPhotoCount +
-        ' total photo' +
-        (
-          lastPhotoCount === 1
-            ? ''
-            : 's'
-        ) +
-        ' are now on file for this job.',
-        true
-      );
-
-
-      statusBox.textContent =
-        lastPhotoCount +
-        ' photo' +
-        (
-          lastPhotoCount === 1
-            ? ''
-            : 's'
-        ) +
-        ' currently on file.';
-
-
-      /*
-       * The batch fully succeeded.
-       * Release preview URLs and clear the queue.
-       */
-      photoQueue.forEach(
-        function(item) {
-
-          if (
-            item.previewUrl
-          ) {
-
-            URL.revokeObjectURL(
-              item.previewUrl
-            );
-
-          }
-
-        }
-      );
-
-
-      photoQueue =
-        [];
-
-
-      renderQueue();
-
-
-      stageInput.value =
-        '';
-
-
-      categoryInput.value =
-        '';
-
-
-      updateAreaOptions();
-
-
-      photosInput.value =
-        '';
-    }
-
-
-
-    /* ================================================================ */
-    /* FORM LOCKING                                                     */
-    /* ================================================================ */
-
-    function lockPreparationControls() {
-
-      addButton.disabled =
-        true;
-
-
-      submitButton.disabled =
-        true;
-
-
-      stageInput.disabled =
-        true;
-
-
-      categoryInput.disabled =
-        true;
-
-
-      areaInput.disabled =
-        true;
-
-
-      photosInput.disabled =
-        true;
-    }
-
-
-
-    function unlockPreparationControls() {
-
-      addButton.disabled =
-        false;
-
-
-      submitButton.disabled =
-        false;
-
-
-      stageInput.disabled =
-        false;
-
-
-      categoryInput.disabled =
-        false;
-
-
-      updateAreaOptions();
-
-
-      photosInput.disabled =
-        false;
-    }
-
-
-
-    function lockForm() {
-
-      addButton.disabled =
-        true;
-
-
-      submitButton.disabled =
-        true;
-
-
-      stageInput.disabled =
-        true;
-
-
-      categoryInput.disabled =
-        true;
-
-
-      areaInput.disabled =
-        true;
-
-
-      photosInput.disabled =
-        true;
-
-
-      renderQueue();
-    }
-
-
-
-    function unlockForm() {
-
-      addButton.disabled =
-        false;
-
-
-      submitButton.disabled =
-        false;
-
-
-      stageInput.disabled =
-        false;
-
-
-      categoryInput.disabled =
-        false;
-
-
-      updateAreaOptions();
-
-
-      photosInput.disabled =
-        false;
-
-
-      renderQueue();
-    }
-
-
-
-    /* ================================================================ */
-    /* UNIQUE UPLOAD ID                                                 */
-    /* ================================================================ */
-
-    function makeUploadId() {
-
-      if (
-        window.crypto &&
-        typeof
-          window.crypto.randomUUID ===
-          'function'
-      ) {
-
-        return (
-          window.crypto.randomUUID()
         );
 
       }
 
 
       return (
-        Date.now()
-          .toString(36) +
-        '-' +
-        Math.random()
-          .toString(36)
-          .slice(2) +
-        '-' +
-        Math.random()
-          .toString(36)
-          .slice(2)
+
+        (
+          value /
+          (
+            1024 *
+            1024
+          )
+        )
+          .toFixed(
+            2
+          ) +
+
+        ' MB'
+
       );
+
     }
 
 
+    function showSelectionMessage(
+      text
+    ) {
 
-    /* ================================================================ */
-    /* MESSAGES                                                         */
-    /* ================================================================ */
+      showMessage(
+        text,
+        'success'
+      );
+
+    }
+
 
     function showFatalError(
       text
@@ -3541,15 +6426,15 @@
 
       showMessage(
         text,
-        false
+        'error'
       );
-    }
 
+    }
 
 
     function showMessage(
       text,
-      success
+      type
     ) {
 
       messageBox.textContent =
@@ -3557,38 +6442,117 @@
 
 
       messageBox.className =
+
         'message ' +
+
         (
-          success
-            ? 'success'
-            : 'error'
+          type ||
+          'error'
         );
 
 
       messageBox.style.display =
         'block';
-    }
 
+    }
 
 
     function hideMessage() {
 
       messageBox.style.display =
         'none';
+
     }
 
 
+    categoryInput
+      .addEventListener(
+        'change',
+        updateAreaOptions
+      );
 
-    /* ================================================================ */
-    /* START                                                            */
-    /* ================================================================ */
+
+    openCameraButton
+      .addEventListener(
+        'click',
+        openCamera
+      );
+
+
+    existingPhotosButton
+      .addEventListener(
+        'click',
+        showExistingPhotos
+      );
+
+
+    takePhotoButton
+      .addEventListener(
+        'click',
+        takeCameraPhoto
+      );
+
+
+    closeCameraButton
+      .addEventListener(
+        'click',
+        stopCamera
+      );
+
+
+    photosInput
+      .addEventListener(
+        'change',
+        handleExistingPhotos
+      );
+
+
+    submitButton
+      .addEventListener(
+        'click',
+        submitQueue
+      );
+
+
+    retryButton
+      .addEventListener(
+        'click',
+        retryRemainingPhotos
+      );
+
+
+    downloadFailedButton
+      .addEventListener(
+        'click',
+        downloadFailedPhotos
+      );
+
+
+    downloadBatchButton
+      .addEventListener(
+        'click',
+        downloadEntireBatch
+      );
+
+
+    window.addEventListener(
+      'pagehide',
+      stopCamera
+    );
+
+
+    window.addEventListener(
+      'beforeunload',
+      stopCamera
+    );
+
 
     updateAreaOptions();
+
 
     loadJob();
 
   </script>
 
 </body>
-
 </html>
