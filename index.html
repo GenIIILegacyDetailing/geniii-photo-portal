@@ -11,1210 +11,488 @@
     Gen III Legacy Detailing - Vehicle Photo Upload
   </title>
 
-
   <style>
 
     :root {
-
-      --navy:
-        #00101a;
-
-      --navy-2:
-        #0d2430;
-
-      --paper:
-        #ffffff;
-
-      --page:
-        #f3f5f7;
-
-      --line:
-        #d8dde3;
-
-      --muted:
-        #667085;
-
-      --text:
-        #17212b;
-
-      --success-bg:
-        #e8f5e9;
-
-      --success-text:
-        #256029;
-
-      --error-bg:
-        #fdecec;
-
-      --error-text:
-        #b42318;
-
-      --warn-bg:
-        #fff4df;
-
-      --warn-text:
-        #8a5a00;
-
-      --info-bg:
-        #eef4f8;
-
-      --info-text:
-        #264653;
-
-      --shadow:
-        0 10px 30px
-        rgba(
-          0,
-          16,
-          26,
-          0.12
-        );
-
+      --navy: #00101a;
+      --paper: #ffffff;
+      --page: #f3f5f7;
+      --line: #d8dde3;
+      --muted: #667085;
+      --text: #17212b;
+      --success-bg: #e8f5e9;
+      --success-text: #256029;
+      --error-bg: #fdecec;
+      --error-text: #b42318;
+      --warn-bg: #fff4df;
+      --warn-text: #8a5a00;
+      --info-bg: #eef4f8;
+      --info-text: #264653;
+      --shadow: 0 10px 30px rgba(0, 16, 26, 0.12);
     }
-
 
     * {
-
-      box-sizing:
-        border-box;
-
+      box-sizing: border-box;
     }
-
 
     body {
-
-      margin:
-        0;
-
-      min-height:
-        100vh;
-
-      background:
-        var(--page);
-
-      color:
-        var(--text);
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      -webkit-font-smoothing:
-        antialiased;
-
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
-
 
     .container {
-
-      width:
-        min(
-          760px,
-          100%
-        );
-
-      margin:
-        0 auto;
-
-      padding:
-        18px
-        14px
-        42px;
-
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 18px 14px 42px;
     }
-
 
     .card {
-
-      background:
-        var(--paper);
-
-      border-radius:
-        14px;
-
-      box-shadow:
-        var(--shadow);
-
-      overflow:
-        hidden;
-
+      background: var(--paper);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
-
 
     .header {
-
-      background:
-        var(--navy);
-
-      color:
-        #ffffff;
-
-      padding:
-        22px
-        18px
-        20px;
-
-      text-align:
-        center;
-
+      background: var(--navy);
+      color: #ffffff;
+      padding: 22px 18px 20px;
+      text-align: center;
     }
-
 
     h1 {
-
-      margin:
-        0;
-
-      font-size:
-        25px;
-
-      line-height:
-        1.2;
-
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.2;
     }
-
 
     .subtitle {
-
-      margin-top:
-        6px;
-
-      font-size:
-        14px;
-
-      opacity:
-        0.84;
-
-      letter-spacing:
-        0.3px;
-
+      margin-top: 6px;
+      font-size: 14px;
+      opacity: 0.84;
+      letter-spacing: 0.3px;
     }
-
 
     .content {
-
-      padding:
-        18px;
-
+      padding: 18px;
     }
-
 
     .status,
     .message,
     .progress,
     .backup-note,
     .summary-box {
-
-      border-radius:
-        9px;
-
-      padding:
-        13px;
-
-      line-height:
-        1.45;
-
+      border-radius: 9px;
+      padding: 13px;
+      line-height: 1.45;
     }
-
 
     .status {
-
-      background:
-        var(--info-bg);
-
-      color:
-        var(--info-text);
-
-      font-weight:
-        700;
-
-      text-align:
-        center;
-
+      background: var(--info-bg);
+      color: var(--info-text);
+      font-weight: 700;
+      text-align: center;
     }
-
 
     .details {
-
-      display:
-        none;
-
-      margin-top:
-        16px;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      border-radius:
-        10px;
-
-      overflow:
-        hidden;
-
+      display: none;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
     }
-
 
     .detail-row {
-
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      gap:
-        16px;
-
-      padding:
-        11px
-        12px;
-
-      border-bottom:
-        1px
-        solid
-        var(--line);
-
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
     }
-
 
     .detail-row:last-child {
-
-      border-bottom:
-        0;
-
+      border-bottom: 0;
     }
-
 
     .label {
-
-      color:
-        var(--muted);
-
-      font-weight:
-        700;
-
-      flex:
-        0 0 110px;
-
+      color: var(--muted);
+      font-weight: 700;
+      flex: 0 0 110px;
     }
-
 
     .value {
-
-      text-align:
-        right;
-
-      font-weight:
-        700;
-
-      overflow-wrap:
-        anywhere;
-
+      text-align: right;
+      font-weight: 700;
+      overflow-wrap: anywhere;
     }
-
 
     .backup-note {
-
-      display:
-        none;
-
-      margin-top:
-        16px;
-
-      background:
-        #f7f8fa;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      color:
-        #475467;
-
-      font-size:
-        14px;
-
+      display: none;
+      margin-top: 16px;
+      background: #f7f8fa;
+      border: 1px solid var(--line);
+      color: #475467;
+      font-size: 14px;
     }
-
 
     .form-section {
-
-      display:
-        none;
-
-      margin-top:
-        18px;
-
+      display: none;
+      margin-top: 18px;
     }
-
 
     .field {
-
-      margin-bottom:
-        15px;
-
+      margin-bottom: 15px;
     }
-
 
     label {
-
-      display:
-        block;
-
-      margin-bottom:
-        7px;
-
-      font-weight:
-        700;
-
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 700;
     }
-
 
     select,
     input[type="file"] {
-
-      width:
-        100%;
-
-      min-height:
-        46px;
-
-      border:
-        1px
-        solid
-        #b9c2cc;
-
-      border-radius:
-        9px;
-
-      background:
-        #ffffff;
-
-      color:
-        var(--text);
-
-      padding:
-        10px
-        11px;
-
-      font-size:
-        16px;
-
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #b9c2cc;
+      border-radius: 9px;
+      background: #ffffff;
+      color: var(--text);
+      padding: 10px 11px;
+      font-size: 16px;
     }
-
 
     select:focus,
     input[type="file"]:focus,
     button:focus-visible {
-
-      outline:
-        3px
-        solid
-        rgba(
-          0,
-          90,
-          140,
-          0.22
-        );
-
-      outline-offset:
-        2px;
-
+      outline: 3px solid rgba(0, 90, 140, 0.22);
+      outline-offset: 2px;
     }
-
 
     .help {
-
-      margin-top:
-        6px;
-
-      color:
-        var(--muted);
-
-      font-size:
-        13px;
-
-      line-height:
-        1.4;
-
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
     }
-
 
     .capture-actions,
     .batch-actions,
     .end-actions {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        1fr;
-
-      gap:
-        10px;
-
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
-
 
     .capture-actions {
-
-      margin:
-        4px
-        0
-        16px;
-
+      margin: 4px 0 16px;
     }
-
 
     button {
-
-      width:
-        100%;
-
-      min-height:
-        48px;
-
-      border:
-        0;
-
-      border-radius:
-        9px;
-
-      padding:
-        11px
-        14px;
-
-      background:
-        var(--navy);
-
-      color:
-        #ffffff;
-
-      font-size:
-        16px;
-
-      font-weight:
-        800;
-
-      cursor:
-        pointer;
-
-      touch-action:
-        manipulation;
-
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 14px;
+      background: var(--navy);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
     }
-
 
     button.secondary {
-
-      background:
-        #5a6772;
-
+      background: #5a6772;
     }
-
 
     button.ghost {
-
-      background:
-        #eef2f5;
-
-      color:
-        var(--navy);
-
-      border:
-        1px
-        solid
-        #cfd6dd;
-
+      background: #eef2f5;
+      color: var(--navy);
+      border: 1px solid #cfd6dd;
     }
-
 
     button:disabled {
-
-      opacity:
-        0.5;
-
-      cursor:
-        not-allowed;
-
+      opacity: 0.5;
+      cursor: not-allowed;
     }
-
 
     .camera-panel {
-
-      display:
-        none;
-
-      margin:
-        8px
-        0
-        18px;
-
-      padding:
-        12px;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      border-radius:
-        12px;
-
-      background:
-        #0c1115;
-
+      display: none;
+      margin: 8px 0 18px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0c1115;
     }
-
 
     .camera-panel.open {
-
-      display:
-        block;
-
+      display: block;
     }
-
 
     .camera-frame {
-
-      position:
-        relative;
-
-      width:
-        100%;
-
-      overflow:
-        hidden;
-
-      border-radius:
-        10px;
-
-      background:
-        #000000;
-
-      aspect-ratio:
-        3 / 4;
-
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #000000;
+      aspect-ratio: 3 / 4;
     }
-
 
     #cameraVideo {
-
-      width:
-        100%;
-
-      height:
-        100%;
-
-      object-fit:
-        cover;
-
-      display:
-        block;
-
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
-
 
     .camera-caption {
-
-      color:
-        #ffffff;
-
-      font-size:
-        13px;
-
-      text-align:
-        center;
-
-      padding:
-        9px
-        4px
-        3px;
-
-      opacity:
-        0.9;
-
+      color: #ffffff;
+      font-size: 13px;
+      text-align: center;
+      padding: 9px 4px 3px;
+      opacity: 0.9;
     }
-
 
     .camera-buttons {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        2fr 1fr;
-
-      gap:
-        9px;
-
-      margin-top:
-        10px;
-
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 9px;
+      margin-top: 10px;
     }
-
 
     .camera-buttons button {
-
-      min-height:
-        52px;
-
+      min-height: 52px;
     }
-
 
     .camera-buttons .close-camera {
-
-      background:
-        #4b5560;
-
+      background: #4b5560;
     }
-
 
     .camera-flash {
-
-      position:
-        absolute;
-
-      inset:
-        0;
-
-      background:
-        #ffffff;
-
-      opacity:
-        0;
-
-      pointer-events:
-        none;
-
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      opacity: 0;
+      pointer-events: none;
     }
-
 
     .camera-flash.flash {
-
-      animation:
-        flash
-        180ms
-        ease-out;
-
+      animation: flash 180ms ease-out;
     }
 
-
     @keyframes flash {
-
       0% {
-
-        opacity:
-          0.75;
-
+        opacity: 0.75;
       }
 
       100% {
-
-        opacity:
-          0;
-
+        opacity: 0;
       }
-
     }
-
 
     .existing-upload {
-
-      padding:
-        12px;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      border-radius:
-        10px;
-
-      background:
-        #fafbfc;
-
-      margin-bottom:
-        16px;
-
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fafbfc;
+      margin-bottom: 16px;
     }
-
 
     .section-title {
-
-      margin:
-        0
-        0
-        9px;
-
-      font-size:
-        17px;
-
-      color:
-        var(--navy);
-
+      margin: 0 0 9px;
+      font-size: 17px;
+      color: var(--navy);
     }
-
 
     .queue-wrap {
-
-      display:
-        none;
-
-      margin-top:
-        18px;
-
+      display: none;
+      margin-top: 18px;
     }
-
 
     .queue-title-row {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        space-between;
-
-      gap:
-        10px;
-
-      margin-bottom:
-        10px;
-
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
     }
-
 
     .queue-title-row h2 {
-
-      margin:
-        0;
-
-      font-size:
-        19px;
-
+      margin: 0;
+      font-size: 19px;
     }
-
 
     .queue-count {
-
-      color:
-        var(--muted);
-
-      font-size:
-        14px;
-
-      font-weight:
-        700;
-
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
     }
-
 
     .queue-list {
-
-      display:
-        grid;
-
-      gap:
-        10px;
-
+      display: grid;
+      gap: 10px;
     }
-
 
     .queue-item {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        82px
-        1fr;
-
-      gap:
-        11px;
-
-      padding:
-        10px;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      border-radius:
-        10px;
-
-      background:
-        #ffffff;
-
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 11px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
     }
-
 
     .thumb {
-
-      width:
-        82px;
-
-      height:
-        82px;
-
-      object-fit:
-        cover;
-
-      border-radius:
-        8px;
-
-      background:
-        #e5e7eb;
-
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #e5e7eb;
     }
-
 
     .queue-main {
-
-      min-width:
-        0;
-
+      min-width: 0;
     }
-
 
     .queue-meta {
-
-      font-size:
-        14px;
-
-      font-weight:
-        800;
-
-      line-height:
-        1.35;
-
-      overflow-wrap:
-        anywhere;
-
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
-
 
     .queue-sub {
-
-      margin-top:
-        4px;
-
-      color:
-        var(--muted);
-
-      font-size:
-        12px;
-
-      line-height:
-        1.35;
-
-      overflow-wrap:
-        anywhere;
-
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
-
 
     .queue-status {
-
-      display:
-        inline-block;
-
-      margin-top:
-        7px;
-
-      padding:
-        4px
-        8px;
-
-      border-radius:
-        999px;
-
-      font-size:
-        12px;
-
-      font-weight:
-        800;
-
+      display: inline-block;
+      margin-top: 7px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
     }
-
 
     .queue-status.ready {
-
-      background:
-        #eef2f5;
-
-      color:
-        #475467;
-
+      background: #eef2f5;
+      color: #475467;
     }
-
 
     .queue-status.uploading,
     .queue-status.verifying {
-
-      background:
-        #e9f2ff;
-
-      color:
-        #175cd3;
-
+      background: #e9f2ff;
+      color: #175cd3;
     }
-
 
     .queue-status.uploaded {
-
-      background:
-        var(--success-bg);
-
-      color:
-        var(--success-text);
-
+      background: var(--success-bg);
+      color: var(--success-text);
     }
-
 
     .queue-status.failed {
-
-      background:
-        var(--error-bg);
-
-      color:
-        var(--error-text);
-
+      background: var(--error-bg);
+      color: var(--error-text);
     }
-
 
     .failure-reason {
-
-      margin-top:
-        6px;
-
-      color:
-        var(--error-text);
-
-      font-size:
-        12px;
-
-      line-height:
-        1.35;
-
-      overflow-wrap:
-        anywhere;
-
+      margin-top: 6px;
+      color: var(--error-text);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
-
 
     .remove-button {
-
-      width:
-        auto;
-
-      min-height:
-        34px;
-
-      margin-top:
-        7px;
-
-      padding:
-        6px
-        10px;
-
-      background:
-        #eef2f5;
-
-      color:
-        #344054;
-
-      border:
-        1px
-        solid
-        #d0d5dd;
-
-      font-size:
-        12px;
-
+      width: auto;
+      min-height: 34px;
+      margin-top: 7px;
+      padding: 6px 10px;
+      background: #eef2f5;
+      color: #344054;
+      border: 1px solid #d0d5dd;
+      font-size: 12px;
     }
-
 
     .batch-actions {
-
-      margin-top:
-        14px;
-
+      margin-top: 14px;
     }
-
 
     .progress {
-
-      display:
-        none;
-
-      margin-top:
-        18px;
-
-      background:
-        var(--info-bg);
-
-      color:
-        var(--info-text);
-
-      text-align:
-        center;
-
-      font-weight:
-        800;
-
+      display: none;
+      margin-top: 18px;
+      background: var(--info-bg);
+      color: var(--info-text);
+      text-align: center;
+      font-weight: 800;
     }
-
 
     .message {
-
-      display:
-        none;
-
-      margin-top:
-        18px;
-
-      text-align:
-        center;
-
-      font-weight:
-        800;
-
+      display: none;
+      margin-top: 18px;
+      text-align: center;
+      font-weight: 800;
     }
-
 
     .message.success {
-
-      background:
-        var(--success-bg);
-
-      color:
-        var(--success-text);
-
+      background: var(--success-bg);
+      color: var(--success-text);
     }
-
 
     .message.error {
-
-      background:
-        var(--error-bg);
-
-      color:
-        var(--error-text);
-
+      background: var(--error-bg);
+      color: var(--error-text);
     }
-
 
     .message.warning {
-
-      background:
-        var(--warn-bg);
-
-      color:
-        var(--warn-text);
-
+      background: var(--warn-bg);
+      color: var(--warn-text);
     }
-
 
     .end-actions {
-
-      display:
-        none;
-
-      margin-top:
-        12px;
-
+      display: none;
+      margin-top: 12px;
     }
-
 
     .summary-box {
-
-      display:
-        none;
-
-      margin-top:
-        12px;
-
-      background:
-        #f7f8fa;
-
-      border:
-        1px
-        solid
-        var(--line);
-
-      font-size:
-        14px;
-
+      display: none;
+      margin-top: 12px;
+      background: #f7f8fa;
+      border: 1px solid var(--line);
+      font-size: 14px;
     }
-
 
     .footer {
-
-      padding:
-        14px
-        18px
-        18px;
-
-      color:
-        #7b8794;
-
-      text-align:
-        center;
-
-      font-size:
-        12px;
-
+      padding: 14px 18px 18px;
+      color: #7b8794;
+      text-align: center;
+      font-size: 12px;
     }
-
 
     .hidden-frame,
     #captureCanvas {
-
-      display:
-        none;
-
+      display: none;
     }
 
-
-    @media (
-      min-width:
-      560px
-    ) {
-
+    @media (min-width: 560px) {
       .capture-actions,
       .end-actions {
-
-        grid-template-columns:
-          1fr
-          1fr;
-
+        grid-template-columns: 1fr 1fr;
       }
-
-
-      .batch-actions {
-
-        grid-template-columns:
-          1fr;
-
-      }
-
 
       .camera-frame {
-
-        aspect-ratio:
-          4 / 3;
-
+        aspect-ratio: 4 / 3;
       }
-
     }
 
   </style>
@@ -1256,72 +534,28 @@
         >
 
           <div class="detail-row">
-
-            <span class="label">
-              Customer ID
-            </span>
-
-            <span
-              id="customerIdDisplay"
-              class="value"
-            ></span>
-
+            <span class="label">Customer ID</span>
+            <span id="customerIdDisplay" class="value"></span>
           </div>
 
-
           <div class="detail-row">
-
-            <span class="label">
-              Customer
-            </span>
-
-            <span
-              id="customerNameDisplay"
-              class="value"
-            ></span>
-
+            <span class="label">Customer</span>
+            <span id="customerNameDisplay" class="value"></span>
           </div>
 
-
           <div class="detail-row">
-
-            <span class="label">
-              Job ID
-            </span>
-
-            <span
-              id="jobDisplay"
-              class="value"
-            ></span>
-
+            <span class="label">Job ID</span>
+            <span id="jobDisplay" class="value"></span>
           </div>
 
-
           <div class="detail-row">
-
-            <span class="label">
-              Vehicle
-            </span>
-
-            <span
-              id="vehicleDisplay"
-              class="value"
-            ></span>
-
+            <span class="label">Vehicle</span>
+            <span id="vehicleDisplay" class="value"></span>
           </div>
 
-
           <div class="detail-row">
-
-            <span class="label">
-              Service
-            </span>
-
-            <span
-              id="serviceDisplay"
-              class="value"
-            ></span>
-
+            <span class="label">Service</span>
+            <span id="serviceDisplay" class="value"></span>
           </div>
 
         </div>
@@ -1331,13 +565,11 @@
           id="backupNote"
           class="backup-note"
         >
-
           Use the camera here for normal job photos,
           or choose existing photos from your phone.
           Each photo is uploaded and verified individually.
           If any photo fails, you can retry it or save the
           failed originals to your phone for manual upload.
-
         </div>
 
 
@@ -1345,7 +577,6 @@
           id="formSection"
           class="form-section"
         >
-
 
           <div class="field">
 
@@ -1430,13 +661,10 @@
 
             </select>
 
-
             <div class="help">
-
               Stage, category, and area are saved
               with each photo when it is added
               to the queue.
-
             </div>
 
           </div>
@@ -1450,7 +678,6 @@
             >
               📷 Open Camera
             </button>
-
 
             <button
               id="existingPhotosButton"
@@ -1484,18 +711,14 @@
 
             </div>
 
-
             <div
               id="cameraCaption"
               class="camera-caption"
             >
-
               Rear camera ready.
               Take as many photos as needed
               for the selected stage/category/area.
-
             </div>
-
 
             <div class="camera-buttons">
 
@@ -1505,7 +728,6 @@
               >
                 Take Photo
               </button>
-
 
               <button
                 id="closeCameraButton"
@@ -1533,7 +755,6 @@
               Upload Existing Photos
             </h2>
 
-
             <input
               type="file"
               id="photos"
@@ -1541,14 +762,11 @@
               multiple
             >
 
-
             <div class="help">
-
               Select one or more saved photos.
               They will be compressed for upload
               while the originals remain unchanged
               on your phone.
-
             </div>
 
           </div>
@@ -1626,7 +844,6 @@
               Retry Remaining Photos
             </button>
 
-
             <button
               id="downloadFailedButton"
               type="button"
@@ -1635,7 +852,6 @@
             >
               Download Failed Photos
             </button>
-
 
             <button
               id="downloadBatchButton"
@@ -1653,11 +869,9 @@
 
 
       <div class="footer">
-
-        Portal Version 5.0
+        Portal Version 5.1
         •
-        Camera + Recovery Backup
-
+        Camera + Dual Verification
       </div>
 
     </div>
@@ -1736,2534 +950,479 @@
   ></iframe>
 
 
-  <script>
+<script>
+
+const BACKEND =
+  'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
+
+
+const MAX_FILE_BYTES =
+  8 * 1024 * 1024;
+
+
+const MAX_UPLOAD_DIMENSION =
+  2048;
+
+
+const UPLOAD_JPEG_QUALITY =
+  0.82;
+
+
+const CAMERA_JPEG_QUALITY =
+  0.95;
+
+
+const STATUS_TIMEOUT_MS =
+  45000;
+
+
+const STATUS_INTERVAL_MS =
+  1200;
+
+
+const JSONP_TIMEOUT_MS =
+  8000;
+
+
+const AREA_OPTIONS = {
+
+  'Exterior': [
+    'Driver Side',
+    'Front',
+    'Passenger Side',
+    'Rear',
+    'Hood',
+    'Roof',
+    'Bed',
+    'Tailgate',
+    'Driver Mirror',
+    'Passenger Mirror'
+  ],
 
-    const BACKEND =
-      'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
+  'Interior': [
+    'Driver Seat',
+    'Passenger Seat',
+    'Rear Driver Seat',
+    'Rear Passenger Seat',
+    'Third Row / Far Back',
+    'Dash',
+    'Center Console',
+    'Driver Floor',
+    'Passenger Floor',
+    'Rear Floor',
+    'Trunk / Cargo Area',
+    'Headliner',
+    'Driver Door Panel',
+    'Passenger Door Panel',
+    'Rear Driver Door Panel',
+    'Rear Passenger Door Panel'
+  ],
 
+  'Wheels & Tires': [
+    'Front Driver Tire',
+    'Rear Driver Tire',
+    'Front Passenger Tire',
+    'Rear Passenger Tire',
+    'Spare Tire'
+  ],
 
-    const MAX_FILE_BYTES =
-      8 * 1024 * 1024;
+  'Existing Damage': [
+    'Front Driver Area',
+    'Front Passenger Area',
+    'Rear Driver Area',
+    'Rear Passenger Area',
+    'Front Center',
+    'Rear Center',
+    'Driver Side',
+    'Passenger Side',
+    'Hood',
+    'Roof',
+    'Windshield / Glass',
+    'Front Driver Tire',
+    'Rear Driver Tire',
+    'Front Passenger Tire',
+    'Rear Passenger Tire',
+    'Driver Interior',
+    'Passenger Interior',
+    'Rear Interior',
+    'Trunk / Cargo Area',
+    'Bed',
+    'Tailgate'
+  ],
 
+  'Engine Bay': [
+    'Full Engine Bay',
+    'Driver Side',
+    'Passenger Side',
+    'Front / Radiator Area',
+    'Battery Area'
+  ],
 
-    const MAX_UPLOAD_DIMENSION =
-      2048;
+  'Other': [
+    'General / Miscellaneous',
+    'Customer Concern',
+    'Detail Shot',
+    'Product / Equipment',
+    'Before / After Comparison',
+    'Other Area'
+  ]
 
+};
 
-    const UPLOAD_JPEG_QUALITY =
-      0.82;
 
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-    const CAMERA_JPEG_QUALITY =
-      0.95;
 
+const jobId =
+  params.get('job') ||
+  '';
 
-    const STATUS_TIMEOUT_MS =
-      45000;
 
+let jobInfo =
+  null;
 
-    const STATUS_INTERVAL_MS =
-      1200;
 
+let photoQueue =
+  [];
 
-    const AREA_OPTIONS = {
 
-      'Exterior': [
+let uploadInProgress =
+  false;
 
-        'Driver Side',
-        'Front',
-        'Passenger Side',
-        'Rear',
-        'Hood',
-        'Roof',
-        'Bed',
-        'Tailgate',
-        'Driver Mirror',
-        'Passenger Mirror'
 
-      ],
+let lastPhotoCount =
+  0;
 
 
-      'Interior': [
+let cameraStream =
+  null;
 
-        'Driver Seat',
-        'Passenger Seat',
-        'Rear Driver Seat',
-        'Rear Passenger Seat',
-        'Third Row / Far Back',
-        'Dash',
-        'Center Console',
-        'Driver Floor',
-        'Passenger Floor',
-        'Rear Floor',
-        'Trunk / Cargo Area',
-        'Headliner',
-        'Driver Door Panel',
-        'Passenger Door Panel',
-        'Rear Driver Door Panel',
-        'Rear Passenger Door Panel'
 
-      ],
+let currentBatchItems =
+  [];
 
 
-      'Wheels & Tires': [
+const statusBox =
+  document.getElementById(
+    'status'
+  );
 
-        'Front Driver Tire',
-        'Rear Driver Tire',
-        'Front Passenger Tire',
-        'Rear Passenger Tire',
-        'Spare Tire'
 
-      ],
+const details =
+  document.getElementById(
+    'details'
+  );
 
 
-      'Existing Damage': [
+const backupNote =
+  document.getElementById(
+    'backupNote'
+  );
 
-        'Front Driver Area',
-        'Front Passenger Area',
-        'Rear Driver Area',
-        'Rear Passenger Area',
-        'Front Center',
-        'Rear Center',
-        'Driver Side',
-        'Passenger Side',
-        'Hood',
-        'Roof',
-        'Windshield / Glass',
-        'Front Driver Tire',
-        'Rear Driver Tire',
-        'Front Passenger Tire',
-        'Rear Passenger Tire',
-        'Driver Interior',
-        'Passenger Interior',
-        'Rear Interior',
-        'Trunk / Cargo Area',
-        'Bed',
-        'Tailgate'
 
-      ],
+const formSection =
+  document.getElementById(
+    'formSection'
+  );
 
 
-      'Engine Bay': [
+const stageInput =
+  document.getElementById(
+    'stage'
+  );
 
-        'Full Engine Bay',
-        'Driver Side',
-        'Passenger Side',
-        'Front / Radiator Area',
-        'Battery Area'
 
-      ],
+const categoryInput =
+  document.getElementById(
+    'category'
+  );
 
 
-      'Other': [
+const areaInput =
+  document.getElementById(
+    'area'
+  );
 
-        'General / Miscellaneous',
-        'Customer Concern',
-        'Detail Shot',
-        'Product / Equipment',
-        'Before / After Comparison',
-        'Other Area'
 
-      ]
+const photosInput =
+  document.getElementById(
+    'photos'
+  );
 
-    };
 
+const existingUpload =
+  document.getElementById(
+    'existingUpload'
+  );
 
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
 
+const cameraPanel =
+  document.getElementById(
+    'cameraPanel'
+  );
 
-    const jobId =
-      params.get('job') || '';
 
+const cameraVideo =
+  document.getElementById(
+    'cameraVideo'
+  );
 
-    let jobInfo =
-      null;
 
+const cameraFlash =
+  document.getElementById(
+    'cameraFlash'
+  );
 
-    let photoQueue =
-      [];
 
+const captureCanvas =
+  document.getElementById(
+    'captureCanvas'
+  );
 
-    let uploadInProgress =
-      false;
 
+const openCameraButton =
+  document.getElementById(
+    'openCameraButton'
+  );
 
-    let lastPhotoCount =
-      0;
 
+const existingPhotosButton =
+  document.getElementById(
+    'existingPhotosButton'
+  );
 
-    let cameraStream =
-      null;
 
+const takePhotoButton =
+  document.getElementById(
+    'takePhotoButton'
+  );
 
-    let currentBatchItems =
-      [];
 
+const closeCameraButton =
+  document.getElementById(
+    'closeCameraButton'
+  );
 
-    const statusBox =
-      document.getElementById(
-        'status'
-      );
 
+const queueWrap =
+  document.getElementById(
+    'queueWrap'
+  );
 
-    const details =
-      document.getElementById(
-        'details'
-      );
 
+const queueList =
+  document.getElementById(
+    'queueList'
+  );
 
-    const backupNote =
-      document.getElementById(
-        'backupNote'
-      );
 
+const queueCount =
+  document.getElementById(
+    'queueCount'
+  );
 
-    const formSection =
-      document.getElementById(
-        'formSection'
-      );
 
+const submitButton =
+  document.getElementById(
+    'submitButton'
+  );
 
-    const stageInput =
-      document.getElementById(
-        'stage'
-      );
 
+const progressBox =
+  document.getElementById(
+    'progress'
+  );
 
-    const categoryInput =
-      document.getElementById(
-        'category'
-      );
 
+const messageBox =
+  document.getElementById(
+    'message'
+  );
 
-    const areaInput =
-      document.getElementById(
-        'area'
-      );
 
+const summaryBox =
+  document.getElementById(
+    'summaryBox'
+  );
 
-    const photosInput =
-      document.getElementById(
-        'photos'
-      );
 
+const endActions =
+  document.getElementById(
+    'endActions'
+  );
 
-    const existingUpload =
-      document.getElementById(
-        'existingUpload'
-      );
 
+const retryButton =
+  document.getElementById(
+    'retryButton'
+  );
 
-    const cameraPanel =
-      document.getElementById(
-        'cameraPanel'
-      );
 
+const downloadFailedButton =
+  document.getElementById(
+    'downloadFailedButton'
+  );
 
-    const cameraVideo =
-      document.getElementById(
-        'cameraVideo'
-      );
 
+const downloadBatchButton =
+  document.getElementById(
+    'downloadBatchButton'
+  );
 
-    const cameraFlash =
-      document.getElementById(
-        'cameraFlash'
-      );
 
+function loadJob() {
 
-    const captureCanvas =
-      document.getElementById(
-        'captureCanvas'
-      );
+  if (!jobId) {
 
+    showFatalError(
+      'This photo link is missing its Job ID.'
+    );
 
-    const openCameraButton =
-      document.getElementById(
-        'openCameraButton'
-      );
+    return;
 
+  }
 
-    const existingPhotosButton =
-      document.getElementById(
-        'existingPhotosButton'
-      );
 
+  getJobInfo()
 
-    const takePhotoButton =
-      document.getElementById(
-        'takePhotoButton'
-      );
-
-
-    const closeCameraButton =
-      document.getElementById(
-        'closeCameraButton'
-      );
-
-
-    const queueWrap =
-      document.getElementById(
-        'queueWrap'
-      );
-
-
-    const queueList =
-      document.getElementById(
-        'queueList'
-      );
-
-
-    const queueCount =
-      document.getElementById(
-        'queueCount'
-      );
-
-
-    const submitButton =
-      document.getElementById(
-        'submitButton'
-      );
-
-
-    const progressBox =
-      document.getElementById(
-        'progress'
-      );
-
-
-    const messageBox =
-      document.getElementById(
-        'message'
-      );
-
-
-    const summaryBox =
-      document.getElementById(
-        'summaryBox'
-      );
-
-
-    const endActions =
-      document.getElementById(
-        'endActions'
-      );
-
-
-    const retryButton =
-      document.getElementById(
-        'retryButton'
-      );
-
-
-    const downloadFailedButton =
-      document.getElementById(
-        'downloadFailedButton'
-      );
-
-
-    const downloadBatchButton =
-      document.getElementById(
-        'downloadBatchButton'
-      );
-
-
-    function loadJob() {
-
-      if (!jobId) {
-
-        showFatalError(
-          'This photo link is missing its Job ID.'
-        );
-
-        return;
-
-      }
-
-
-      getJobInfo()
-
-        .then(
-          function(result) {
-
-            if (
-              !result ||
-              !result.success ||
-              !result.job
-            ) {
-
-              throw new Error(
-                result &&
-                result.message
-                  ? result.message
-                  : 'The job could not be loaded.'
-              );
-
-            }
-
-
-            showJob(
-              result.job
-            );
-
-          }
-        )
-
-        .catch(
-          function(error) {
-
-            showFatalError(
-              error &&
-              error.message
-                ? error.message
-                : 'The job could not be loaded. Check your connection and try again.'
-            );
-
-          }
-        );
-
-    }
-
-
-    function getJobInfo() {
-
-      return jsonpRequest(
-
-        BACKEND +
-
-        '?action=lookup' +
-
-        '&job=' +
-        encodeURIComponent(
-          jobId
-        ) +
-
-        '&_=' +
-        Date.now(),
-
-        'genIIILoadJob'
-
-      );
-
-    }
-
-
-    function showJob(
-      info
-    ) {
-
-      jobInfo =
-        info;
-
-
-      document
-        .getElementById(
-          'customerIdDisplay'
-        )
-        .textContent =
-          info.customerId ||
-          '—';
-
-
-      document
-        .getElementById(
-          'customerNameDisplay'
-        )
-        .textContent =
-          info.customerName ||
-          '—';
-
-
-      document
-        .getElementById(
-          'jobDisplay'
-        )
-        .textContent =
-          info.jobId ||
-          jobId;
-
-
-      document
-        .getElementById(
-          'vehicleDisplay'
-        )
-        .textContent =
-          info.vehicle ||
-          'Vehicle not assigned';
-
-
-      document
-        .getElementById(
-          'serviceDisplay'
-        )
-        .textContent =
-          info.serviceCode ||
-          '—';
-
-
-      lastPhotoCount =
-        Number(
-          info.photoCount ||
-          0
-        );
-
-
-      statusBox.textContent =
-
-        lastPhotoCount > 0
-
-          ? (
-
-              'Job found. ' +
-
-              lastPhotoCount +
-
-              ' photo' +
-
-              (
-                lastPhotoCount === 1
-                  ? ''
-                  : 's'
-              ) +
-
-              ' currently on file.'
-
-            )
-
-          : 'Job found. Ready for photo upload.';
-
-
-      details.style.display =
-        'block';
-
-
-      backupNote.style.display =
-        'block';
-
-
-      formSection.style.display =
-        'block';
-
-    }
-
-
-    function updateAreaOptions() {
-
-      const category =
-        categoryInput.value;
-
-
-      const choices =
-        AREA_OPTIONS[
-          category
-        ] ||
-        [];
-
-
-      areaInput.innerHTML =
-        '';
-
-
-      const blank =
-        document.createElement(
-          'option'
-        );
-
-
-      blank.value =
-        '';
-
-
-      blank.textContent =
-        'No specific area / Miscellaneous';
-
-
-      areaInput.appendChild(
-        blank
-      );
-
-
-      choices.forEach(
-        function(area) {
-
-          const option =
-            document.createElement(
-              'option'
-            );
-
-
-          option.value =
-            area;
-
-
-          option.textContent =
-            area;
-
-
-          areaInput.appendChild(
-            option
-          );
-
-        }
-      );
-
-
-      areaInput.disabled =
-        !category ||
-        uploadInProgress;
-
-    }
-
-
-    function validateCaptureSelections() {
-
-      const stage =
-        stageInput
-          .value
-          .trim();
-
-
-      const category =
-        categoryInput
-          .value
-          .trim();
-
-
-      if (!stage) {
-
-        showMessage(
-          'Select Before or After first.',
-          'error'
-        );
-
-
-        stageInput.focus();
-
-
-        return false;
-
-      }
-
-
-      if (!category) {
-
-        showMessage(
-          'Select a photo category first.',
-          'error'
-        );
-
-
-        categoryInput.focus();
-
-
-        return false;
-
-      }
-
-
-      return true;
-
-    }
-
-
-    async function openCamera() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !validateCaptureSelections()
-      ) {
-
-        return;
-
-      }
-
-
-      hideMessage();
-
-
-      existingUpload.style.display =
-        'none';
-
-
-      if (
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia
-      ) {
-
-        showMessage(
-          'This browser does not support the in-page camera. Use Choose Existing Photos instead.',
-          'error'
-        );
-
-
-        return;
-
-      }
-
-
-      try {
-
-        stopCamera();
-
-
-        cameraStream =
-          await navigator
-            .mediaDevices
-            .getUserMedia({
-
-              audio:
-                false,
-
-
-              video: {
-
-                facingMode: {
-                  ideal:
-                    'environment'
-                },
-
-
-                width: {
-                  ideal:
-                    3840
-                },
-
-
-                height: {
-                  ideal:
-                    2160
-                }
-
-              }
-
-            });
-
-
-        cameraVideo.srcObject =
-          cameraStream;
-
-
-        cameraPanel
-          .classList
-          .add(
-            'open'
-          );
-
-
-        try {
-
-          await cameraVideo.play();
-
-        }
-        catch (error) {
-
-          /*
-           * Autoplay may already be satisfied
-           * because this came from a user tap.
-           */
-
-        }
-
-      }
-      catch (error) {
-
-        cameraPanel
-          .classList
-          .remove(
-            'open'
-          );
-
-
-        showMessage(
-          'The camera could not be opened. Check camera permission for this site, or use Choose Existing Photos.',
-          'error'
-        );
-
-      }
-
-    }
-
-
-    function stopCamera() {
-
-      if (
-        cameraStream
-      ) {
-
-        cameraStream
-          .getTracks()
-          .forEach(
-            function(track) {
-
-              track.stop();
-
-            }
-          );
-
-
-        cameraStream =
-          null;
-
-      }
-
-
-      cameraVideo.srcObject =
-        null;
-
-
-      cameraPanel
-        .classList
-        .remove(
-          'open'
-        );
-
-    }
-
-
-    async function takeCameraPhoto() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !validateCaptureSelections()
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !cameraStream ||
-        !cameraVideo.videoWidth ||
-        !cameraVideo.videoHeight
-      ) {
-
-        showMessage(
-          'The camera is not ready yet. Give it a second and try again.',
-          'error'
-        );
-
-
-        return;
-
-      }
-
-
-      takePhotoButton.disabled =
-        true;
-
-
-      takePhotoButton.textContent =
-        'Saving Photo...';
-
-
-      hideMessage();
-
-
-      try {
-
-        const width =
-          cameraVideo.videoWidth;
-
-
-        const height =
-          cameraVideo.videoHeight;
-
-
-        captureCanvas.width =
-          width;
-
-
-        captureCanvas.height =
-          height;
-
-
-        const context =
-          captureCanvas.getContext(
-            '2d',
-            {
-              alpha:
-                false
-            }
-          );
-
-
-        context.drawImage(
-          cameraVideo,
-          0,
-          0,
-          width,
-          height
-        );
-
-
-        const originalBlob =
-          await canvasToBlob(
-
-            captureCanvas,
-
-            'image/jpeg',
-
-            CAMERA_JPEG_QUALITY
-
-          );
-
-
-        const originalName =
-          makeCameraOriginalName();
-
-
-        const originalFile =
-          new File(
-
-            [
-              originalBlob
-            ],
-
-            originalName,
-
-            {
-              type:
-                'image/jpeg',
-
-              lastModified:
-                Date.now()
-            }
-
-          );
-
-
-        const preparedFile =
-          await compressImageFile(
-            originalFile
-          );
-
-
-        addQueueItem(
-
-          originalFile,
-
-          preparedFile,
-
-          'camera'
-
-        );
-
-
-        cameraFlash
-          .classList
-          .remove(
-            'flash'
-          );
-
-
-        void cameraFlash.offsetWidth;
-
-
-        cameraFlash
-          .classList
-          .add(
-            'flash'
-          );
-
-
-        showSelectionMessage(
-          'Photo added. Take another, change the area, or submit when finished.'
-        );
-
-      }
-      catch (error) {
-
-        showMessage(
-
-          error &&
-          error.message
-
-            ? error.message
-
-            : 'The camera photo could not be prepared.',
-
-          'error'
-
-        );
-
-      }
-      finally {
-
-        takePhotoButton.disabled =
-          false;
-
-
-        takePhotoButton.textContent =
-          'Take Photo';
-
-      }
-
-    }
-
-
-    function showExistingPhotos() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !validateCaptureSelections()
-      ) {
-
-        return;
-
-      }
-
-
-      stopCamera();
-
-
-      hideMessage();
-
-
-      existingUpload.style.display =
-        'block';
-
-
-      photosInput.click();
-
-    }
-
-
-    async function handleExistingPhotos() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !validateCaptureSelections()
-      ) {
-
-        photosInput.value =
-          '';
-
-
-        return;
-
-      }
-
-
-      const files =
-        Array.from(
-          photosInput.files ||
-          []
-        );
-
-
-      if (
-        files.length === 0
-      ) {
-
-        return;
-
-      }
-
-
-      hideMessage();
-
-
-      existingPhotosButton.disabled =
-        true;
-
-
-      existingPhotosButton.textContent =
-        'Preparing Photos...';
-
-
-      let added =
-        0;
-
-
-      const errors =
-        [];
-
-
-      for (
-        const file
-        of files
-      ) {
-
-        try {
-
-          const preparedFile =
-            await compressImageFile(
-              file
-            );
-
-
-          addQueueItem(
-
-            file,
-
-            preparedFile,
-
-            'existing'
-
-          );
-
-
-          added++;
-
-        }
-        catch (error) {
-
-          errors.push(
-
-            (
-              file.name ||
-              'Photo'
-            ) +
-
-            ': ' +
-
-            (
-              error &&
-              error.message
-
-                ? error.message
-
-                : 'Could not prepare photo.'
-            )
-
-          );
-
-        }
-
-      }
-
-
-      photosInput.value =
-        '';
-
-
-      existingPhotosButton.disabled =
-        false;
-
-
-      existingPhotosButton.textContent =
-        '🖼️ Choose Existing Photos';
-
-
-      if (
-        added > 0
-      ) {
-
-        showSelectionMessage(
-
-          added +
-
-          ' photo' +
-
-          (
-            added === 1
-              ? ''
-              : 's'
-          ) +
-
-          ' added. Add more, or submit when finished.'
-
-        );
-
-      }
-
-
-      if (
-        errors.length > 0
-      ) {
-
-        showMessage(
-          errors.join(
-            ' | '
-          ),
-          'warning'
-        );
-
-      }
-
-    }
-
-
-    function addQueueItem(
-      originalFile,
-      preparedFile,
-      source
-    ) {
-
-      const item = {
-
-        id:
-          makeUploadId(),
-
-
-        originalFile:
-          originalFile,
-
-
-        preparedFile:
-          preparedFile,
-
-
-        source:
-          source,
-
-
-        stage:
-          stageInput
-            .value
-            .trim(),
-
-
-        category:
-          categoryInput
-            .value
-            .trim(),
-
-
-        area:
-          areaInput
-            .value
-            .trim(),
-
-
-        previewUrl:
-          URL.createObjectURL(
-            preparedFile
-          ),
-
-
-        status:
-          'ready',
-
-
-        error:
-          '',
-
-
-        lastResult:
-          null
-
-      };
-
-
-      photoQueue.push(
-        item
-      );
-
-
-      renderQueue();
-
-    }
-
-
-    function removeQueueItem(
-      id
-    ) {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      const index =
-        photoQueue.findIndex(
-          function(item) {
-
-            return (
-              item.id === id
-            );
-
-          }
-        );
-
-
-      if (
-        index < 0
-      ) {
-
-        return;
-
-      }
-
-
-      const item =
-        photoQueue[
-          index
-        ];
-
-
-      if (
-        item.status ===
-        'uploaded'
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        item.previewUrl
-      ) {
-
-        URL.revokeObjectURL(
-          item.previewUrl
-        );
-
-      }
-
-
-      photoQueue.splice(
-        index,
-        1
-      );
-
-
-      renderQueue();
-
-    }
-
-
-    function renderQueue() {
-
-      queueList.innerHTML =
-        '';
-
-
-      if (
-        photoQueue.length === 0
-      ) {
-
-        queueWrap.style.display =
-          'none';
-
-
-        endActions.style.display =
-          'none';
-
-
-        summaryBox.style.display =
-          'none';
-
-
-        return;
-
-      }
-
-
-      queueWrap.style.display =
-        'block';
-
-
-      queueCount.textContent =
-
-        photoQueue.length +
-
-        ' photo' +
-
-        (
-          photoQueue.length === 1
-            ? ''
-            : 's'
-        );
-
-
-      photoQueue.forEach(
-        function(item) {
-
-          const card =
-            document.createElement(
-              'div'
-            );
-
-
-          card.className =
-            'queue-item';
-
-
-          const img =
-            document.createElement(
-              'img'
-            );
-
-
-          img.className =
-            'thumb';
-
-
-          img.src =
-            item.previewUrl;
-
-
-          img.alt =
-            'Queued vehicle photo';
-
-
-          const main =
-            document.createElement(
-              'div'
-            );
-
-
-          main.className =
-            'queue-main';
-
-
-          const meta =
-            document.createElement(
-              'div'
-            );
-
-
-          meta.className =
-            'queue-meta';
-
-
-          meta.textContent = [
-
-            item.stage,
-
-            item.category,
-
-            item.area
-
-          ]
-            .filter(
-              Boolean
-            )
-            .join(
-              ' • '
-            );
-
-
-          const sub =
-            document.createElement(
-              'div'
-            );
-
-
-          sub.className =
-            'queue-sub';
-
-
-          sub.textContent =
-
-            (
-              item.source ===
-              'camera'
-
-                ? 'Camera'
-
-                : 'Existing photo'
-            ) +
-
-            ' • ' +
-
-            formatBytes(
-              item.originalFile.size
-            ) +
-
-            ' → ' +
-
-            formatBytes(
-              item.preparedFile.size
-            ) +
-
-            ' prepared';
-
-
-          const status =
-            document.createElement(
-              'div'
-            );
-
-
-          status.className =
-
-            'queue-status ' +
-
-            item.status;
-
-
-          status.textContent =
-            statusLabel(
-              item.status
-            );
-
-
-          main.appendChild(
-            meta
-          );
-
-
-          main.appendChild(
-            sub
-          );
-
-
-          main.appendChild(
-            status
-          );
-
-
-          if (
-            item.status ===
-              'failed' &&
-            item.error
-          ) {
-
-            const reason =
-              document.createElement(
-                'div'
-              );
-
-
-            reason.className =
-              'failure-reason';
-
-
-            reason.textContent =
-              item.error;
-
-
-            main.appendChild(
-              reason
-            );
-
-          }
-
-
-          if (
-            !uploadInProgress &&
-            item.status !==
-              'uploaded'
-          ) {
-
-            const remove =
-              document.createElement(
-                'button'
-              );
-
-
-            remove.type =
-              'button';
-
-
-            remove.className =
-              'remove-button';
-
-
-            remove.textContent =
-              'Remove';
-
-
-            remove.addEventListener(
-              'click',
-              function() {
-
-                removeQueueItem(
-                  item.id
-                );
-
-              }
-            );
-
-
-            main.appendChild(
-              remove
-            );
-
-          }
-
-
-          card.appendChild(
-            img
-          );
-
-
-          card.appendChild(
-            main
-          );
-
-
-          queueList.appendChild(
-            card
-          );
-
-        }
-      );
-
-
-      const remaining =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.status !==
-              'uploaded'
-            );
-
-          }
-        ).length;
-
-
-      submitButton.disabled =
-
-        uploadInProgress ||
-
-        remaining === 0;
-
-
-      submitButton.textContent =
-
-        remaining ===
-        photoQueue.length
-
-          ? 'Submit All Photos'
-
-          : 'Submit Remaining Photos';
-
-    }
-
-
-    async function submitQueue() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      const items =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-
-              item.status ===
-                'ready' ||
-
-              item.status ===
-                'failed'
-
-            );
-
-          }
-        );
-
-
-      if (
-        items.length === 0
-      ) {
-
-        showMessage(
-          'There are no photos waiting to upload.',
-          'warning'
-        );
-
-
-        return;
-
-      }
-
-
-      await runBatch(
-        items
-      );
-
-    }
-
-
-    async function retryRemainingPhotos() {
-
-      if (
-        uploadInProgress
-      ) {
-
-        return;
-
-      }
-
-
-      const items =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-
-              item.status ===
-                'failed' ||
-
-              item.status ===
-                'ready'
-
-            );
-
-          }
-        );
-
-
-      if (
-        items.length === 0
-      ) {
-
-        showMessage(
-          'There are no failed or remaining photos to retry.',
-          'warning'
-        );
-
-
-        return;
-
-      }
-
-
-      items.forEach(
-        function(item) {
-
-          item.status =
-            'ready';
-
-
-          item.error =
-            '';
-
-        }
-      );
-
-
-      renderQueue();
-
-
-      await runBatch(
-        items
-      );
-
-    }
-
-
-    async function runBatch(
-      items
-    ) {
-
-      uploadInProgress =
-        true;
-
-
-      currentBatchItems =
-        items.slice();
-
-
-      hideMessage();
-
-
-      summaryBox.style.display =
-        'none';
-
-
-      endActions.style.display =
-        'none';
-
-
-      progressBox.style.display =
-        'block';
-
-
-      lockForm();
-
-
-      renderQueue();
-
-
-      let successCount =
-        0;
-
-
-      let failureCount =
-        0;
-
-
-      for (
-        let i = 0;
-        i < items.length;
-        i++
-      ) {
-
-        const item =
-          items[
-            i
-          ];
-
-
-        progressBox.textContent =
-
-          'Uploading photo ' +
-
-          (
-            i + 1
-          ) +
-
-          ' of ' +
-
-          items.length +
-
-          '...';
-
-
-        item.status =
-          'uploading';
-
-
-        item.error =
-          '';
-
-
-        renderQueue();
-
-
-        try {
-
-          const result =
-            await uploadAndVerifyItem(
-
-              item,
-
-              i + 1,
-
-              items.length
-
-            );
-
-
-          item.status =
-            'uploaded';
-
-
-          item.error =
-            '';
-
-
-          item.lastResult =
-            result;
-
-
-          successCount++;
-
-
-          const count =
-            extractPhotoCount(
-              result
-            );
-
-
-          if (
-            Number.isFinite(
-              count
-            ) &&
-            count >= 0
-          ) {
-
-            lastPhotoCount =
-              count;
-
-          }
-          else {
-
-            lastPhotoCount =
-              Math.max(
-                lastPhotoCount + 1,
-                lastPhotoCount
-              );
-
-          }
-
-        }
-        catch (error) {
-
-          item.status =
-            'failed';
-
-
-          item.error =
-
-            error &&
-            error.message
-
-              ? error.message
-
-              : 'The photo could not be uploaded.';
-
-
-          failureCount++;
-
-        }
-
-
-        renderQueue();
-
-      }
-
-
-      uploadInProgress =
-        false;
-
-
-      progressBox.style.display =
-        'none';
-
-
-      unlockForm();
-
-
-      renderQueue();
-
-
-      finishBatch(
-
-        successCount,
-
-        failureCount,
-
-        items.length
-
-      );
-
-    }
-
-
-    async function uploadAndVerifyItem(
-      item,
-      number,
-      total
-    ) {
-
-      const dataUrl =
-        await fileToDataUrl(
-          item.preparedFile
-        );
-
-
-      document
-        .getElementById(
-          'formJob'
-        )
-        .value =
-          jobId;
-
-
-      document
-        .getElementById(
-          'formStage'
-        )
-        .value =
-          item.stage;
-
-
-      document
-        .getElementById(
-          'formCategory'
-        )
-        .value =
-          item.category;
-
-
-      document
-        .getElementById(
-          'formArea'
-        )
-        .value =
-          item.area;
-
-
-      document
-        .getElementById(
-          'formFileName'
-        )
-        .value =
-
-          item.preparedFile.name ||
-
-          item.originalFile.name ||
-
-          'Photo.jpg';
-
-
-      document
-        .getElementById(
-          'formMimeType'
-        )
-        .value =
-
-          item.preparedFile.type ||
-
-          'image/jpeg';
-
-
-      document
-        .getElementById(
-          'formFileData'
-        )
-        .value =
-          dataUrl;
-
-
-      document
-        .getElementById(
-          'formUploadId'
-        )
-        .value =
-          item.id;
-
-
-      const form =
-        document.getElementById(
-          'uploadForm'
-        );
-
-
-      form.action =
-        BACKEND;
-
-
-      form.submit();
-
-
-      item.status =
-        'verifying';
-
-
-      renderQueue();
-
-
-      progressBox.textContent =
-
-        'Confirming photo ' +
-
-        number +
-
-        ' of ' +
-
-        total +
-
-        '...';
-
-
-      return waitForExactUploadStatus(
-        item.id
-      );
-
-    }
-
-
-    function waitForExactUploadStatus(
-      uploadId
-    ) {
-
-      const deadline =
-        Date.now() +
-        STATUS_TIMEOUT_MS;
-
-
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
-
-          function check() {
-
-            getExactUploadStatus(
-              uploadId
-            )
-
-              .then(
-                function(result) {
-
-                  const parsed =
-                    parseUploadStatus(
-                      result
-                    );
-
-
-                  if (
-                    parsed.status ===
-                    'success'
-                  ) {
-
-                    resolve(
-                      parsed.result ||
-                      result
-                    );
-
-
-                    return;
-
-                  }
-
-
-                  if (
-                    parsed.status ===
-                    'error'
-                  ) {
-
-                    reject(
-                      new Error(
-
-                        parsed.message ||
-
-                        'The backend reported an upload error.'
-
-                      )
-                    );
-
-
-                    return;
-
-                  }
-
-
-                  if (
-                    Date.now() >=
-                    deadline
-                  ) {
-
-                    reject(
-                      new Error(
-                        'The portal could not verify this photo within 45 seconds. You can retry it without intentionally creating a duplicate.'
-                      )
-                    );
-
-
-                    return;
-
-                  }
-
-
-                  window.setTimeout(
-
-                    check,
-
-                    STATUS_INTERVAL_MS
-
-                  );
-
-                }
-              )
-
-              .catch(
-                function(error) {
-
-                  if (
-                    Date.now() >=
-                    deadline
-                  ) {
-
-                    reject(
-                      new Error(
-
-                        error &&
-                        error.message
-
-                          ? error.message
-
-                          : 'The portal could not verify this photo within 45 seconds.'
-
-                      )
-                    );
-
-
-                    return;
-
-                  }
-
-
-                  window.setTimeout(
-
-                    check,
-
-                    STATUS_INTERVAL_MS
-
-                  );
-
-                }
-              );
-
-          }
-
-
-          window.setTimeout(
-
-            check,
-
-            700
-
-          );
-
-        }
-      );
-
-    }
-
-
-    function getExactUploadStatus(
-      uploadId
-    ) {
-
-      return jsonpRequest(
-
-        BACKEND +
-
-        '?action=uploadStatus' +
-
-        '&job=' +
-        encodeURIComponent(
-          jobId
-        ) +
-
-        '&uploadId=' +
-        encodeURIComponent(
-          uploadId
-        ) +
-
-        '&_=' +
-        Date.now(),
-
-        'genIIIUploadStatus'
-
-      );
-
-    }
-
-
-    function parseUploadStatus(
-      response
-    ) {
-
-      if (
-        !response
-      ) {
-
-        return {
-
-          status:
-            'processing',
-
-          message:
-            ''
-
-        };
-
-      }
-
-
-      if (
-        response.success ===
-        false
-      ) {
-
-        return {
-
-          status:
-            'error',
-
-          message:
-
-            response.message ||
-
-            response.error ||
-
-            'The backend reported an upload error.',
-
-          result:
-            response
-
-        };
-
-      }
-
-
-      const record =
-
-        response.upload ||
-
-        response.record ||
-
-        response.statusRecord ||
-
-        response.result ||
-
-        response;
-
-
-      let status =
-        String(
-          record.status ||
-          ''
-        )
-          .toLowerCase();
-
-
-      if (
-        !status &&
-        record.success === true
-      ) {
-
-        status =
-          'success';
-
-      }
-
-
-      if (
-        !status &&
-        record.success === false
-      ) {
-
-        status =
-          'error';
-
-      }
-
-
-      if (
-
-        status ===
-          'complete' ||
-
-        status ===
-          'completed' ||
-
-        status ===
-          'uploaded'
-
-      ) {
-
-        status =
-          'success';
-
-      }
-
-
-      if (
-
-        status ===
-          'failed' ||
-
-        status ===
-          'failure'
-
-      ) {
-
-        status =
-          'error';
-
-      }
-
-
-      if (
-        !status
-      ) {
-
-        status =
-          'processing';
-
-      }
-
-
-      return {
-
-        status:
-          status,
-
-
-        message:
-
-          record.message ||
-
-          record.error ||
-
-          response.message ||
-
-          response.error ||
-
-          '',
-
-
-        result:
-          record
-
-      };
-
-    }
-
-
-    function extractPhotoCount(
-      result
-    ) {
-
-      const candidates = [
-
-        result &&
-        result.photoCount,
-
-
-        result &&
-        result.result &&
-        result.result.photoCount,
-
-
-        result &&
-        result.upload &&
-        result.upload.photoCount,
-
-
-        result &&
-        result.data &&
-        result.data.photoCount
-
-      ];
-
-
-      for (
-        const value
-        of candidates
-      ) {
-
-        const number =
-          Number(
-            value
-          );
-
+    .then(
+      function(result) {
 
         if (
-          Number.isFinite(
-            number
-          )
+          !result ||
+          !result.success ||
+          !result.job
         ) {
 
-          return number;
+          throw new Error(
+            result &&
+            result.message
+              ? result.message
+              : 'The job could not be loaded.'
+          );
 
         }
 
-      }
 
-
-      return NaN;
-
-    }
-
-
-    function finishBatch(
-      successCount,
-      failureCount,
-      attemptedCount
-    ) {
-
-      statusBox.textContent =
-
-        lastPhotoCount +
-
-        ' photo' +
-
-        (
-          lastPhotoCount === 1
-            ? ''
-            : 's'
-        ) +
-
-        ' currently on file.';
-
-
-      const failedItems =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.status ===
-              'failed'
-            );
-
-          }
+        showJob(
+          result.job
         );
 
+      }
+    )
 
-      const uploadedTotal =
-        photoQueue.filter(
-          function(item) {
+    .catch(
+      function(error) {
 
-            return (
-              item.status ===
-              'uploaded'
-            );
+        showFatalError(
+          error &&
+          error.message
+            ? error.message
+            : 'The job could not be loaded. Check your connection and try again.'
+        );
 
-          }
-        ).length;
+      }
+    );
+
+}
 
 
-      if (
-        failureCount === 0
-      ) {
+function getJobInfo() {
 
-        showMessage(
+  return jsonpRequest(
 
-          successCount +
+    BACKEND +
 
-          ' photo' +
+    '?action=lookup' +
 
-          (
-            successCount === 1
-              ? ''
-              : 's'
-          ) +
+    '&job=' +
+    encodeURIComponent(
+      jobId
+    ) +
 
-          ' uploaded successfully. ' +
+    '&_=' +
+    Date.now(),
+
+    'genIIILoadJob'
+
+  );
+
+}
+
+
+function showJob(
+  info
+) {
+
+  jobInfo =
+    info;
+
+
+  document
+    .getElementById(
+      'customerIdDisplay'
+    )
+    .textContent =
+      info.customerId ||
+      '—';
+
+
+  document
+    .getElementById(
+      'customerNameDisplay'
+    )
+    .textContent =
+      info.customerName ||
+      '—';
+
+
+  document
+    .getElementById(
+      'jobDisplay'
+    )
+    .textContent =
+      info.jobId ||
+      jobId;
+
+
+  document
+    .getElementById(
+      'vehicleDisplay'
+    )
+    .textContent =
+      info.vehicle ||
+      'Vehicle not assigned';
+
+
+  document
+    .getElementById(
+      'serviceDisplay'
+    )
+    .textContent =
+      info.serviceCode ||
+      '—';
+
+
+  lastPhotoCount =
+    Number(
+      info.photoCount ||
+      0
+    );
+
+
+  statusBox.textContent =
+
+    lastPhotoCount > 0
+
+      ? (
+          'Job found. ' +
 
           lastPhotoCount +
 
-          ' total photo' +
+          ' photo' +
 
           (
             lastPhotoCount === 1
@@ -4271,1536 +1430,1761 @@
               : 's'
           ) +
 
-          ' are now on file for this job.',
+          ' currently on file.'
+        )
 
-          'success'
+      : 'Job found. Ready for photo upload.';
 
+
+  details.style.display =
+    'block';
+
+
+  backupNote.style.display =
+    'block';
+
+
+  formSection.style.display =
+    'block';
+
+}
+
+
+function updateAreaOptions() {
+
+  const category =
+    categoryInput.value;
+
+
+  const choices =
+    AREA_OPTIONS[
+      category
+    ] ||
+    [];
+
+
+  areaInput.innerHTML =
+    '';
+
+
+  const blank =
+    document.createElement(
+      'option'
+    );
+
+
+  blank.value =
+    '';
+
+
+  blank.textContent =
+    'No specific area / Miscellaneous';
+
+
+  areaInput.appendChild(
+    blank
+  );
+
+
+  choices.forEach(
+    function(area) {
+
+      const option =
+        document.createElement(
+          'option'
         );
+
+
+      option.value =
+        area;
+
+
+      option.textContent =
+        area;
+
+
+      areaInput.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+  areaInput.disabled =
+    !category ||
+    uploadInProgress;
+
+}
+
+
+function validateCaptureSelections() {
+
+  const stage =
+    stageInput
+      .value
+      .trim();
+
+
+  const category =
+    categoryInput
+      .value
+      .trim();
+
+
+  if (!stage) {
+
+    showMessage(
+      'Select Before or After first.',
+      'error'
+    );
+
+
+    stageInput.focus();
+
+
+    return false;
+
+  }
+
+
+  if (!category) {
+
+    showMessage(
+      'Select a photo category first.',
+      'error'
+    );
+
+
+    categoryInput.focus();
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+async function openCamera() {
+
+  if (
+    uploadInProgress ||
+    !validateCaptureSelections()
+  ) {
+
+    return;
+
+  }
+
+
+  hideMessage();
+
+
+  existingUpload.style.display =
+    'none';
+
+
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+
+    showMessage(
+      'This browser does not support the in-page camera. Use Choose Existing Photos instead.',
+      'error'
+    );
+
+
+    return;
+
+  }
+
+
+  try {
+
+    stopCamera();
+
+
+    cameraStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          audio:
+            false,
+
+          video: {
+
+            facingMode: {
+              ideal:
+                'environment'
+            },
+
+            width: {
+              ideal:
+                3840
+            },
+
+            height: {
+              ideal:
+                2160
+            }
+
+          }
+
+        });
+
+
+    cameraVideo.srcObject =
+      cameraStream;
+
+
+    cameraPanel
+      .classList
+      .add(
+        'open'
+      );
+
+
+    try {
+
+      await cameraVideo.play();
+
+    }
+    catch (error) {
+
+    }
+
+  }
+  catch (error) {
+
+    cameraPanel
+      .classList
+      .remove(
+        'open'
+      );
+
+
+    showMessage(
+      'The camera could not be opened. Check camera permission for this site, or use Choose Existing Photos.',
+      'error'
+    );
+
+  }
+
+}
+
+
+function stopCamera() {
+
+  if (
+    cameraStream
+  ) {
+
+    cameraStream
+      .getTracks()
+      .forEach(
+        function(track) {
+
+          track.stop();
+
+        }
+      );
+
+
+    cameraStream =
+      null;
+
+  }
+
+
+  cameraVideo.srcObject =
+    null;
+
+
+  cameraPanel
+    .classList
+    .remove(
+      'open'
+    );
+
+}
+
+
+async function takeCameraPhoto() {
+
+  if (
+    uploadInProgress ||
+    !validateCaptureSelections()
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    !cameraStream ||
+    !cameraVideo.videoWidth ||
+    !cameraVideo.videoHeight
+  ) {
+
+    showMessage(
+      'The camera is not ready yet. Give it a second and try again.',
+      'error'
+    );
+
+
+    return;
+
+  }
+
+
+  takePhotoButton.disabled =
+    true;
+
+
+  takePhotoButton.textContent =
+    'Saving Photo...';
+
+
+  hideMessage();
+
+
+  try {
+
+    const width =
+      cameraVideo.videoWidth;
+
+
+    const height =
+      cameraVideo.videoHeight;
+
+
+    captureCanvas.width =
+      width;
+
+
+    captureCanvas.height =
+      height;
+
+
+    const context =
+      captureCanvas.getContext(
+        '2d',
+        {
+          alpha:
+            false
+        }
+      );
+
+
+    context.drawImage(
+      cameraVideo,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const originalBlob =
+      await canvasToBlob(
+        captureCanvas,
+        'image/jpeg',
+        CAMERA_JPEG_QUALITY
+      );
+
+
+    const originalFile =
+      new File(
+        [
+          originalBlob
+        ],
+        makeCameraOriginalName(),
+        {
+          type:
+            'image/jpeg',
+
+          lastModified:
+            Date.now()
+        }
+      );
+
+
+    const preparedFile =
+      await compressImageFile(
+        originalFile
+      );
+
+
+    addQueueItem(
+      originalFile,
+      preparedFile,
+      'camera'
+    );
+
+
+    cameraFlash
+      .classList
+      .remove(
+        'flash'
+      );
+
+
+    void cameraFlash.offsetWidth;
+
+
+    cameraFlash
+      .classList
+      .add(
+        'flash'
+      );
+
+
+    showSelectionMessage(
+      'Photo added. Take another, change the area, or submit when finished.'
+    );
+
+  }
+  catch (error) {
+
+    showMessage(
+      error &&
+      error.message
+        ? error.message
+        : 'The camera photo could not be prepared.',
+      'error'
+    );
+
+  }
+  finally {
+
+    takePhotoButton.disabled =
+      false;
+
+
+    takePhotoButton.textContent =
+      'Take Photo';
+
+  }
+
+}
+
+
+function showExistingPhotos() {
+
+  if (
+    uploadInProgress ||
+    !validateCaptureSelections()
+  ) {
+
+    return;
+
+  }
+
+
+  stopCamera();
+
+
+  hideMessage();
+
+
+  existingUpload.style.display =
+    'block';
+
+
+  photosInput.click();
+
+}
+
+
+async function handleExistingPhotos() {
+
+  if (
+    uploadInProgress
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    !validateCaptureSelections()
+  ) {
+
+    photosInput.value =
+      '';
+
+
+    return;
+
+  }
+
+
+  const files =
+    Array.from(
+      photosInput.files ||
+      []
+    );
+
+
+  if (
+    files.length === 0
+  ) {
+
+    return;
+
+  }
+
+
+  hideMessage();
+
+
+  existingPhotosButton.disabled =
+    true;
+
+
+  existingPhotosButton.textContent =
+    'Preparing Photos...';
+
+
+  let added =
+    0;
+
+
+  const errors =
+    [];
+
+
+  for (
+    const file
+    of files
+  ) {
+
+    try {
+
+      const preparedFile =
+        await compressImageFile(
+          file
+        );
+
+
+      addQueueItem(
+        file,
+        preparedFile,
+        'existing'
+      );
+
+
+      added++;
+
+    }
+    catch (error) {
+
+      errors.push(
+        (
+          file.name ||
+          'Photo'
+        ) +
+
+        ': ' +
+
+        (
+          error &&
+          error.message
+            ? error.message
+            : 'Could not prepare photo.'
+        )
+      );
+
+    }
+
+  }
+
+
+  photosInput.value =
+    '';
+
+
+  existingPhotosButton.disabled =
+    false;
+
+
+  existingPhotosButton.textContent =
+    '🖼️ Choose Existing Photos';
+
+
+  if (
+    added > 0
+  ) {
+
+    showSelectionMessage(
+      added +
+
+      ' photo' +
+
+      (
+        added === 1
+          ? ''
+          : 's'
+      ) +
+
+      ' added. Add more, or submit when finished.'
+    );
+
+  }
+
+
+  if (
+    errors.length > 0
+  ) {
+
+    showMessage(
+      errors.join(
+        ' | '
+      ),
+      'warning'
+    );
+
+  }
+
+}
+
+
+function addQueueItem(
+  originalFile,
+  preparedFile,
+  source
+) {
+
+  photoQueue.push({
+
+    id:
+      makeUploadId(),
+
+    originalFile:
+      originalFile,
+
+    preparedFile:
+      preparedFile,
+
+    source:
+      source,
+
+    stage:
+      stageInput
+        .value
+        .trim(),
+
+    category:
+      categoryInput
+        .value
+        .trim(),
+
+    area:
+      areaInput
+        .value
+        .trim(),
+
+    previewUrl:
+      URL.createObjectURL(
+        preparedFile
+      ),
+
+    status:
+      'ready',
+
+    error:
+      '',
+
+    lastResult:
+      null,
+
+    verification:
+      ''
+
+  });
+
+
+  renderQueue();
+
+}
+
+
+function removeQueueItem(
+  id
+) {
+
+  if (
+    uploadInProgress
+  ) {
+
+    return;
+
+  }
+
+
+  const index =
+    photoQueue.findIndex(
+      function(item) {
+
+        return (
+          item.id === id
+        );
+
+      }
+    );
+
+
+  if (
+    index < 0
+  ) {
+
+    return;
+
+  }
+
+
+  const item =
+    photoQueue[
+      index
+    ];
+
+
+  if (
+    item.status ===
+    'uploaded'
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    item.previewUrl
+  ) {
+
+    URL.revokeObjectURL(
+      item.previewUrl
+    );
+
+  }
+
+
+  photoQueue.splice(
+    index,
+    1
+  );
+
+
+  renderQueue();
+
+}
+
+
+function renderQueue() {
+
+  queueList.innerHTML =
+    '';
+
+
+  if (
+    photoQueue.length === 0
+  ) {
+
+    queueWrap.style.display =
+      'none';
+
+
+    endActions.style.display =
+      'none';
+
+
+    summaryBox.style.display =
+      'none';
+
+
+    return;
+
+  }
+
+
+  queueWrap.style.display =
+    'block';
+
+
+  queueCount.textContent =
+    photoQueue.length +
+
+    ' photo' +
+
+    (
+      photoQueue.length === 1
+        ? ''
+        : 's'
+    );
+
+
+  photoQueue.forEach(
+    function(item) {
+
+      const card =
+        document.createElement(
+          'div'
+        );
+
+
+      card.className =
+        'queue-item';
+
+
+      const img =
+        document.createElement(
+          'img'
+        );
+
+
+      img.className =
+        'thumb';
+
+
+      img.src =
+        item.previewUrl;
+
+
+      img.alt =
+        'Queued vehicle photo';
+
+
+      const main =
+        document.createElement(
+          'div'
+        );
+
+
+      main.className =
+        'queue-main';
+
+
+      const meta =
+        document.createElement(
+          'div'
+        );
+
+
+      meta.className =
+        'queue-meta';
+
+
+      meta.textContent =
+        [
+          item.stage,
+          item.category,
+          item.area
+        ]
+          .filter(
+            Boolean
+          )
+          .join(
+            ' • '
+          );
+
+
+      const sub =
+        document.createElement(
+          'div'
+        );
+
+
+      sub.className =
+        'queue-sub';
+
+
+      sub.textContent =
+        (
+          item.source ===
+          'camera'
+            ? 'Camera'
+            : 'Existing photo'
+        ) +
+
+        ' • ' +
+
+        formatBytes(
+          item.originalFile.size
+        ) +
+
+        ' → ' +
+
+        formatBytes(
+          item.preparedFile.size
+        ) +
+
+        ' prepared';
+
+
+      const status =
+        document.createElement(
+          'div'
+        );
+
+
+      status.className =
+        'queue-status ' +
+        item.status;
+
+
+      status.textContent =
+        statusLabel(
+          item.status
+        );
+
+
+      main.appendChild(
+        meta
+      );
+
+
+      main.appendChild(
+        sub
+      );
+
+
+      main.appendChild(
+        status
+      );
+
+
+      if (
+        item.status ===
+        'failed' &&
+        item.error
+      ) {
+
+        const reason =
+          document.createElement(
+            'div'
+          );
+
+
+        reason.className =
+          'failure-reason';
+
+
+        reason.textContent =
+          item.error;
+
+
+        main.appendChild(
+          reason
+        );
+
+      }
+
+
+      if (
+        !uploadInProgress &&
+        item.status !==
+        'uploaded'
+      ) {
+
+        const remove =
+          document.createElement(
+            'button'
+          );
+
+
+        remove.type =
+          'button';
+
+
+        remove.className =
+          'remove-button';
+
+
+        remove.textContent =
+          'Remove';
+
+
+        remove.addEventListener(
+          'click',
+          function() {
+
+            removeQueueItem(
+              item.id
+            );
+
+          }
+        );
+
+
+        main.appendChild(
+          remove
+        );
+
+      }
+
+
+      card.appendChild(
+        img
+      );
+
+
+      card.appendChild(
+        main
+      );
+
+
+      queueList.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  const remaining =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status !==
+          'uploaded'
+        );
+
+      }
+    ).length;
+
+
+  submitButton.disabled =
+    uploadInProgress ||
+    remaining === 0;
+
+
+  submitButton.textContent =
+    remaining ===
+    photoQueue.length
+      ? 'Submit All Photos'
+      : 'Submit Remaining Photos';
+
+}
+
+
+async function submitQueue() {
+
+  if (
+    uploadInProgress
+  ) {
+
+    return;
+
+  }
+
+
+  const items =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status ===
+          'ready' ||
+          item.status ===
+          'failed'
+        );
+
+      }
+    );
+
+
+  if (
+    items.length === 0
+  ) {
+
+    showMessage(
+      'There are no photos waiting to upload.',
+      'warning'
+    );
+
+
+    return;
+
+  }
+
+
+  await runBatch(
+    items
+  );
+
+}
+
+
+async function retryRemainingPhotos() {
+
+  if (
+    uploadInProgress
+  ) {
+
+    return;
+
+  }
+
+
+  const items =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status ===
+          'failed' ||
+          item.status ===
+          'ready'
+        );
+
+      }
+    );
+
+
+  if (
+    items.length === 0
+  ) {
+
+    showMessage(
+      'There are no failed or remaining photos to retry.',
+      'warning'
+    );
+
+
+    return;
+
+  }
+
+
+  items.forEach(
+    function(item) {
+
+      item.status =
+        'ready';
+
+
+      item.error =
+        '';
+
+
+      item.verification =
+        '';
+
+    }
+  );
+
+
+  renderQueue();
+
+
+  await runBatch(
+    items
+  );
+
+}
+
+
+async function runBatch(
+  items
+) {
+
+  uploadInProgress =
+    true;
+
+
+  currentBatchItems =
+    items.slice();
+
+
+  hideMessage();
+
+
+  summaryBox.style.display =
+    'none';
+
+
+  endActions.style.display =
+    'none';
+
+
+  progressBox.style.display =
+    'block';
+
+
+  lockForm();
+
+
+  renderQueue();
+
+
+  let successCount =
+    0;
+
+
+  let failureCount =
+    0;
+
+
+  for (
+    let i = 0;
+    i < items.length;
+    i++
+  ) {
+
+    const item =
+      items[
+        i
+      ];
+
+
+    progressBox.textContent =
+      'Uploading photo ' +
+
+      (
+        i + 1
+      ) +
+
+      ' of ' +
+
+      items.length +
+
+      '...';
+
+
+    item.status =
+      'uploading';
+
+
+    item.error =
+      '';
+
+
+    renderQueue();
+
+
+    try {
+
+      const result =
+        await uploadAndVerifyItem(
+          item,
+          i + 1,
+          items.length
+        );
+
+
+      item.status =
+        'uploaded';
+
+
+      item.error =
+        '';
+
+
+      item.lastResult =
+        result;
+
+
+      item.verification =
+        result &&
+        result.verification
+          ? result.verification
+          : '';
+
+
+      successCount++;
+
+
+      const count =
+        extractPhotoCount(
+          result
+        );
+
+
+      if (
+        Number.isFinite(
+          count
+        ) &&
+        count >= 0
+      ) {
+
+        lastPhotoCount =
+          count;
 
       }
       else {
 
-        showMessage(
-
-          successCount +
-
-          ' of ' +
-
-          attemptedCount +
-
-          ' photos uploaded successfully. ' +
-
-          failureCount +
-
-          ' failed and can be retried or downloaded for manual upload.',
-
-          'warning'
-
-        );
+        lastPhotoCount =
+          Math.max(
+            lastPhotoCount + 1,
+            lastPhotoCount
+          );
 
       }
 
+    }
+    catch (error) {
 
-      summaryBox.innerHTML =
-
-        '<strong>Batch summary:</strong> ' +
-
-        uploadedTotal +
-
-        ' verified in this queue • ' +
-
-        failedItems.length +
-
-        ' failed • ' +
-
-        lastPhotoCount +
-
-        ' total on file for this job.';
+      item.status =
+        'failed';
 
 
-      summaryBox.style.display =
-        'block';
+      item.error =
+        error &&
+        error.message
+          ? error.message
+          : 'The photo could not be uploaded.';
 
 
-      endActions.style.display =
-        'grid';
-
-
-      retryButton.style.display =
-
-        failedItems.length > 0
-
-          ? 'block'
-
-          : 'none';
-
-
-      downloadFailedButton.style.display =
-
-        failedItems.length > 0
-
-          ? 'block'
-
-          : 'none';
-
-
-      downloadBatchButton.style.display =
-
-        photoQueue.length > 0
-
-          ? 'block'
-
-          : 'none';
+      failureCount++;
 
     }
 
 
-    async function downloadFailedPhotos() {
+    renderQueue();
 
-      const failed =
-        photoQueue.filter(
-          function(item) {
-
-            return (
-              item.status ===
-              'failed'
-            );
-
-          }
-        );
+  }
 
 
-      if (
-        failed.length === 0
-      ) {
-
-        showMessage(
-          'There are no failed photos to download.',
-          'warning'
-        );
+  uploadInProgress =
+    false;
 
 
-        return;
-
-      }
-
-
-      await downloadItemsAsZip(
-
-        failed,
-
-        jobId +
-        '-Failed-Photos.zip'
-
-      );
-
-    }
+  progressBox.style.display =
+    'none';
 
 
-    async function downloadEntireBatch() {
-
-      if (
-        photoQueue.length === 0
-      ) {
-
-        showMessage(
-          'There are no photos in this batch to download.',
-          'warning'
-        );
+  unlockForm();
 
 
-        return;
-
-      }
+  renderQueue();
 
 
-      await downloadItemsAsZip(
+  finishBatch(
+    successCount,
+    failureCount,
+    items.length
+  );
 
-        photoQueue,
-
-        jobId +
-        '-Photo-Batch-Backup.zip'
-
-      );
-
-    }
+}
 
 
-    async function downloadItemsAsZip(
-      items,
-      zipName
+async function uploadAndVerifyItem(
+  item,
+  number,
+  total
+) {
+
+  /*
+   * V5.1:
+   * Get a fresh photo count immediately before
+   * sending this specific photo.
+   */
+
+  let startingCount =
+    lastPhotoCount;
+
+
+  try {
+
+    const fresh =
+      await getJobInfo();
+
+
+    if (
+      fresh &&
+      fresh.success &&
+      fresh.job
     ) {
 
-      const buttonSet = [
-
-        downloadFailedButton,
-
-        downloadBatchButton
-
-      ];
+      const n =
+        Number(
+          fresh.job.photoCount
+        );
 
 
-      buttonSet.forEach(
-        function(button) {
+      if (
+        Number.isFinite(
+          n
+        )
+      ) {
 
-          button.disabled =
-            true;
-
-        }
-      );
-
-
-      progressBox.style.display =
-        'block';
+        startingCount =
+          n;
 
 
-      progressBox.textContent =
-        'Building backup download...';
+        lastPhotoCount =
+          n;
+
+      }
+
+    }
+
+  }
+  catch (error) {
+
+    /*
+     * The known count is still usable.
+     * Do not stop the upload just because
+     * this preliminary lookup failed.
+     */
+
+  }
 
 
-      try {
-
-        const entries =
-          [];
-
-
-        const usedNames =
-          new Set();
+  const dataUrl =
+    await fileToDataUrl(
+      item.preparedFile
+    );
 
 
-        for (
-          let i = 0;
-          i < items.length;
-          i++
+  document
+    .getElementById(
+      'formJob'
+    )
+    .value =
+      jobId;
+
+
+  document
+    .getElementById(
+      'formStage'
+    )
+    .value =
+      item.stage;
+
+
+  document
+    .getElementById(
+      'formCategory'
+    )
+    .value =
+      item.category;
+
+
+  document
+    .getElementById(
+      'formArea'
+    )
+    .value =
+      item.area;
+
+
+  document
+    .getElementById(
+      'formFileName'
+    )
+    .value =
+      item.preparedFile.name ||
+      item.originalFile.name ||
+      'Photo.jpg';
+
+
+  document
+    .getElementById(
+      'formMimeType'
+    )
+    .value =
+      item.preparedFile.type ||
+      'image/jpeg';
+
+
+  document
+    .getElementById(
+      'formFileData'
+    )
+    .value =
+      dataUrl;
+
+
+  document
+    .getElementById(
+      'formUploadId'
+    )
+    .value =
+      item.id;
+
+
+  const form =
+    document.getElementById(
+      'uploadForm'
+    );
+
+
+  form.action =
+    BACKEND;
+
+
+  form.submit();
+
+
+  item.status =
+    'verifying';
+
+
+  renderQueue();
+
+
+  progressBox.textContent =
+    'Confirming photo ' +
+
+    number +
+
+    ' of ' +
+
+    total +
+
+    '...';
+
+
+  return waitForUploadVerification(
+    item.id,
+    startingCount
+  );
+
+}
+
+
+/*
+ * VERSION 5.1 DUAL VERIFICATION
+ *
+ * Verification method 1:
+ * exact upload ID status from Apps Script.
+ *
+ * Verification method 2:
+ * actual job photo count in Drive.
+ *
+ * Either one can positively confirm the upload.
+ */
+
+function waitForUploadVerification(
+  uploadId,
+  startingCount
+) {
+
+  const deadline =
+    Date.now() +
+    STATUS_TIMEOUT_MS;
+
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      let finished =
+        false;
+
+
+      function succeed(
+        result,
+        verification
+      ) {
+
+        if (
+          finished
         ) {
 
-          const item =
-            items[
-              i
-            ];
-
-
-          progressBox.textContent =
-
-            'Preparing backup photo ' +
-
-            (
-              i + 1
-            ) +
-
-            ' of ' +
-
-            items.length +
-
-            '...';
-
-
-          let name =
-            buildBackupFileName(
-
-              item,
-
-              i + 1
-
-            );
-
-
-          name =
-            uniqueZipName(
-
-              name,
-
-              usedNames
-
-            );
-
-
-          usedNames.add(
-            name
-          );
-
-
-          const bytes =
-            new Uint8Array(
-
-              await item
-                .originalFile
-                .arrayBuffer()
-
-            );
-
-
-          entries.push({
-
-            name:
-              name,
-
-
-            data:
-              bytes,
-
-
-            date:
-              new Date(
-
-                item.originalFile
-                  .lastModified ||
-
-                Date.now()
-
-              )
-
-          });
+          return;
 
         }
 
 
-        const zipBlob =
-          buildStoredZip(
-            entries
-          );
+        finished =
+          true;
 
 
-        triggerBlobDownload(
-
-          zipBlob,
-
-          zipName
-
-        );
-
-
-        showMessage(
-
-          items.length +
-
-          ' original photo' +
-
+        const output =
           (
-            items.length === 1
-              ? ''
-              : 's'
-          ) +
+            result &&
+            typeof result ===
+            'object'
+          )
 
-          ' packaged for download.',
+            ? Object.assign(
+                {},
+                result
+              )
 
-          'success'
-
-        );
-
-      }
-      catch (error) {
-
-        showMessage(
-
-          error &&
-          error.message
-
-            ? error.message
-
-            : 'The backup download could not be created.',
-
-          'error'
-
-        );
-
-      }
-      finally {
-
-        progressBox.style.display =
-          'none';
+            : {};
 
 
-        buttonSet.forEach(
-          function(button) {
+        output.verification =
+          verification;
 
-            button.disabled =
-              false;
 
-          }
+        resolve(
+          output
         );
 
       }
 
-    }
 
-
-    function buildBackupFileName(
-      item,
-      index
-    ) {
-
-      const parts = [
-
-        item.stage,
-
-        item.category,
-
-        item.area
-
-      ]
-        .filter(
-          Boolean
-        );
-
-
-      const safeParts =
-        parts.map(
-          function(part) {
-
-            return String(
-              part
-            )
-
-              .replace(
-                /[\\/:*?"<>|]/g,
-                '-'
-              )
-
-              .replace(
-                /\s+/g,
-                ' '
-              )
-
-              .trim();
-
-          }
-        );
-
-
-      const ext =
-        fileExtension(
-          item.originalFile.name
-        ) ||
-        'jpg';
-
-
-      const number =
-        String(
-          index
-        )
-          .padStart(
-            2,
-            '0'
-          );
-
-
-      return (
-
-        (
-          safeParts.length
-
-            ? safeParts.join(
-                ' '
-              )
-
-            : 'Photo'
-        ) +
-
-        ' - ' +
-
-        number +
-
-        '.' +
-
-        ext
-
-      );
-
-    }
-
-
-    function uniqueZipName(
-      name,
-      usedNames
-    ) {
-
-      if (
-        !usedNames.has(
-          name
-        )
+      function fail(
+        error
       ) {
 
-        return name;
-
-      }
-
-
-      const dot =
-        name.lastIndexOf(
-          '.'
-        );
-
-
-      const base =
-
-        dot >= 0
-
-          ? name.slice(
-              0,
-              dot
-            )
-
-          : name;
-
-
-      const ext =
-
-        dot >= 0
-
-          ? name.slice(
-              dot
-            )
-
-          : '';
-
-
-      let counter =
-        2;
-
-
-      let candidate =
-
-        base +
-
-        ' (' +
-
-        counter +
-
-        ')' +
-
-        ext;
-
-
-      while (
-        usedNames.has(
-          candidate
-        )
-      ) {
-
-        counter++;
-
-
-        candidate =
-
-          base +
-
-          ' (' +
-
-          counter +
-
-          ')' +
-
-          ext;
-
-      }
-
-
-      return candidate;
-
-    }
-
-
-    function buildStoredZip(
-      entries
-    ) {
-
-      const localParts =
-        [];
-
-
-      const centralParts =
-        [];
-
-
-      let offset =
-        0;
-
-
-      entries.forEach(
-        function(entry) {
-
-          const nameBytes =
-            new TextEncoder()
-              .encode(
-                entry.name
-              );
-
-
-          const data =
-            entry.data;
-
-
-          const crc =
-            crc32(
-              data
-            );
-
-
-          const dos =
-            dateToDos(
-
-              entry.date ||
-
-              new Date()
-
-            );
-
-
-          const local =
-            new Uint8Array(
-
-              30 +
-
-              nameBytes.length
-
-            );
-
-
-          const localView =
-            new DataView(
-              local.buffer
-            );
-
-
-          localView.setUint32(
-            0,
-            0x04034b50,
-            true
-          );
-
-
-          localView.setUint16(
-            4,
-            20,
-            true
-          );
-
-
-          localView.setUint16(
-            6,
-            0x0800,
-            true
-          );
-
-
-          localView.setUint16(
-            8,
-            0,
-            true
-          );
-
-
-          localView.setUint16(
-            10,
-            dos.time,
-            true
-          );
-
-
-          localView.setUint16(
-            12,
-            dos.date,
-            true
-          );
-
-
-          localView.setUint32(
-            14,
-            crc,
-            true
-          );
-
-
-          localView.setUint32(
-            18,
-            data.length,
-            true
-          );
-
-
-          localView.setUint32(
-            22,
-            data.length,
-            true
-          );
-
-
-          localView.setUint16(
-            26,
-            nameBytes.length,
-            true
-          );
-
-
-          localView.setUint16(
-            28,
-            0,
-            true
-          );
-
-
-          local.set(
-            nameBytes,
-            30
-          );
-
-
-          localParts.push(
-
-            local,
-
-            data
-
-          );
-
-
-          const central =
-            new Uint8Array(
-
-              46 +
-
-              nameBytes.length
-
-            );
-
-
-          const centralView =
-            new DataView(
-              central.buffer
-            );
-
-
-          centralView.setUint32(
-            0,
-            0x02014b50,
-            true
-          );
-
-
-          centralView.setUint16(
-            4,
-            20,
-            true
-          );
-
-
-          centralView.setUint16(
-            6,
-            20,
-            true
-          );
-
-
-          centralView.setUint16(
-            8,
-            0x0800,
-            true
-          );
-
-
-          centralView.setUint16(
-            10,
-            0,
-            true
-          );
-
-
-          centralView.setUint16(
-            12,
-            dos.time,
-            true
-          );
-
-
-          centralView.setUint16(
-            14,
-            dos.date,
-            true
-          );
-
-
-          centralView.setUint32(
-            16,
-            crc,
-            true
-          );
-
-
-          centralView.setUint32(
-            20,
-            data.length,
-            true
-          );
-
-
-          centralView.setUint32(
-            24,
-            data.length,
-            true
-          );
-
-
-          centralView.setUint16(
-            28,
-            nameBytes.length,
-            true
-          );
-
-
-          centralView.setUint16(
-            30,
-            0,
-            true
-          );
-
-
-          centralView.setUint16(
-            32,
-            0,
-            true
-          );
-
-
-          centralView.setUint16(
-            34,
-            0,
-            true
-          );
-
-
-          centralView.setUint16(
-            36,
-            0,
-            true
-          );
-
-
-          centralView.setUint32(
-            38,
-            0,
-            true
-          );
-
-
-          centralView.setUint32(
-            42,
-            offset,
-            true
-          );
-
-
-          central.set(
-            nameBytes,
-            46
-          );
-
-
-          centralParts.push(
-            central
-          );
-
-
-          offset +=
-
-            local.length +
-
-            data.length;
+        if (
+          finished
+        ) {
+
+          return;
 
         }
-      );
 
 
-      const centralSize =
-        centralParts.reduce(
-          function(
-            sum,
-            part
+        finished =
+          true;
+
+
+        reject(
+          error
+        );
+
+      }
+
+
+      function check() {
+
+        if (
+          finished
+        ) {
+
+          return;
+
+        }
+
+
+        let completed =
+          0;
+
+
+        let explicitError =
+          null;
+
+
+        function oneComplete() {
+
+          completed++;
+
+
+          if (
+            finished ||
+            completed < 2
           ) {
 
-            return (
-              sum +
-              part.length
-            );
+            return;
 
-          },
-          0
-        );
+          }
 
 
-      const end =
-        new Uint8Array(
-          22
-        );
-
-
-      const endView =
-        new DataView(
-          end.buffer
-        );
-
-
-      endView.setUint32(
-        0,
-        0x06054b50,
-        true
-      );
-
-
-      endView.setUint16(
-        4,
-        0,
-        true
-      );
-
-
-      endView.setUint16(
-        6,
-        0,
-        true
-      );
-
-
-      endView.setUint16(
-        8,
-        entries.length,
-        true
-      );
-
-
-      endView.setUint16(
-        10,
-        entries.length,
-        true
-      );
-
-
-      endView.setUint32(
-        12,
-        centralSize,
-        true
-      );
-
-
-      endView.setUint32(
-        16,
-        offset,
-        true
-      );
-
-
-      endView.setUint16(
-        20,
-        0,
-        true
-      );
-
-
-      return new Blob(
-
-        localParts.concat(
-
-          centralParts,
-
-          [
-            end
-          ]
-
-        ),
-
-        {
-          type:
-            'application/zip'
-        }
-
-      );
-
-    }
-
-
-    let crcTable =
-      null;
-
-
-    function crc32(
-      bytes
-    ) {
-
-      if (
-        !crcTable
-      ) {
-
-        crcTable =
-          new Uint32Array(
-            256
-          );
-
-
-        for (
-          let n = 0;
-          n < 256;
-          n++
-        ) {
-
-          let c =
-            n;
-
-
-          for (
-            let k = 0;
-            k < 8;
-            k++
+          if (
+            explicitError
           ) {
 
-            c =
-
-              (
-                c &
-                1
-              )
-
-                ? (
-                    0xedb88320 ^
-                    (
-                      c >>>
-                      1
-                    )
-                  )
-
-                : (
-                    c >>>
-                    1
-                  );
-
-          }
-
-
-          crcTable[
-            n
-          ] =
-            c >>>
-            0;
-
-        }
-
-      }
-
-
-      let crc =
-        0xffffffff;
-
-
-      for (
-        let i = 0;
-        i < bytes.length;
-        i++
-      ) {
-
-        crc =
-
-          crcTable[
-            (
-              crc ^
-              bytes[
-                i
-              ]
-            ) &
-            0xff
-          ] ^
-
-          (
-            crc >>>
-            8
-          );
-
-      }
-
-
-      return (
-        crc ^
-        0xffffffff
-      ) >>>
-      0;
-
-    }
-
-
-    function dateToDos(
-      date
-    ) {
-
-      const safeDate =
-
-        date instanceof Date
-
-          ? date
-
-          : new Date();
-
-
-      const year =
-        Math.max(
-
-          1980,
-
-          safeDate
-            .getFullYear()
-
-        );
-
-
-      return {
-
-        time:
-
-          (
-            safeDate
-              .getHours() <<
-            11
-          ) |
-
-          (
-            safeDate
-              .getMinutes() <<
-            5
-          ) |
-
-          Math.floor(
-
-            safeDate
-              .getSeconds() /
-
-            2
-
-          ),
-
-
-        date:
-
-          (
-            (
-              year -
-              1980
-            ) <<
-            9
-          ) |
-
-          (
-            (
-              safeDate
-                .getMonth() +
-              1
-            ) <<
-            5
-          ) |
-
-          safeDate
-            .getDate()
-
-      };
-
-    }
-
-
-    function triggerBlobDownload(
-      blob,
-      fileName
-    ) {
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-
-      const link =
-        document.createElement(
-          'a'
-        );
-
-
-      link.href =
-        url;
-
-
-      link.download =
-        fileName;
-
-
-      link.style.display =
-        'none';
-
-
-      document.body.appendChild(
-        link
-      );
-
-
-      link.click();
-
-
-      link.remove();
-
-
-      window.setTimeout(
-        function() {
-
-          URL.revokeObjectURL(
-            url
-          );
-
-        },
-        30000
-      );
-
-    }
-
-
-    async function compressImageFile(
-      file
-    ) {
-
-      if (
-        !file
-      ) {
-
-        throw new Error(
-          'No photo was provided.'
-        );
-
-      }
-
-
-      const lowerName =
-        (
-          file.name ||
-          ''
-        )
-          .toLowerCase();
-
-
-      const type =
-        (
-          file.type ||
-          ''
-        )
-          .toLowerCase();
-
-
-      const likelyHeic =
-
-        type.includes(
-          'heic'
-        ) ||
-
-        type.includes(
-          'heif'
-        ) ||
-
-        lowerName.endsWith(
-          '.heic'
-        ) ||
-
-        lowerName.endsWith(
-          '.heif'
-        );
-
-
-      if (
-        likelyHeic
-      ) {
-
-        if (
-          file.size >
-          MAX_FILE_BYTES
-        ) {
-
-          throw new Error(
-            'HEIC/HEIF photo is larger than 8 MB and could not be compressed in this browser.'
-          );
-
-        }
-
-
-        return file;
-
-      }
-
-
-      try {
-
-        const image =
-          await loadImageFromFile(
-            file
-          );
-
-
-        const scale =
-          Math.min(
-
-            1,
-
-            MAX_UPLOAD_DIMENSION /
-
-            Math.max(
-
-              image.width,
-
-              image.height
-
-            )
-
-          );
-
-
-        const width =
-          Math.max(
-
-            1,
-
-            Math.round(
-              image.width *
-              scale
-            )
-
-          );
-
-
-        const height =
-          Math.max(
-
-            1,
-
-            Math.round(
-              image.height *
-              scale
-            )
-
-          );
-
-
-        const canvas =
-          document.createElement(
-            'canvas'
-          );
-
-
-        canvas.width =
-          width;
-
-
-        canvas.height =
-          height;
-
-
-        const context =
-          canvas.getContext(
-
-            '2d',
-
-            {
-              alpha:
-                false
-            }
-
-          );
-
-
-        context.fillStyle =
-          '#ffffff';
-
-
-        context.fillRect(
-
-          0,
-
-          0,
-
-          width,
-
-          height
-
-        );
-
-
-        context.drawImage(
-
-          image,
-
-          0,
-
-          0,
-
-          width,
-
-          height
-
-        );
-
-
-        const blob =
-          await canvasToBlob(
-
-            canvas,
-
-            'image/jpeg',
-
-            UPLOAD_JPEG_QUALITY
-
-          );
-
-
-        if (
-          blob.size >
-          MAX_FILE_BYTES
-        ) {
-
-          throw new Error(
-            'Prepared photo is still larger than 8 MB.'
-          );
-
-        }
-
-
-        const name =
-          replaceFileExtension(
-
-            file.name ||
-            'Photo.jpg',
-
-            'jpg'
-
-          );
-
-
-        return new File(
-
-          [
-            blob
-          ],
-
-          name,
-
-          {
-
-            type:
-              'image/jpeg',
-
-            lastModified:
-
-              file.lastModified ||
-
-              Date.now()
-
-          }
-
-        );
-
-      }
-      catch (error) {
-
-        if (
-          file.size <=
-          MAX_FILE_BYTES
-        ) {
-
-          return file;
-
-        }
-
-
-        throw error;
-
-      }
-
-    }
-
-
-    function loadImageFromFile(
-      file
-    ) {
-
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
-
-          const url =
-            URL.createObjectURL(
-              file
+            fail(
+              explicitError
             );
 
 
-          const image =
-            new Image();
+            return;
+
+          }
 
 
-          image.onload =
-            function() {
+          if (
+            Date.now() >=
+            deadline
+          ) {
 
-              URL.revokeObjectURL(
-                url
-              );
-
-
-              resolve(
-                image
-              );
-
-            };
+            fail(
+              new Error(
+                'The portal could not verify this photo within 45 seconds. The photo may already be in Drive, so check the folder before retrying.'
+              )
+            );
 
 
-          image.onerror =
-            function() {
+            return;
 
-              URL.revokeObjectURL(
-                url
-              );
+          }
 
 
-              reject(
-                new Error(
-                  'This photo format could not be prepared.'
-                )
-              );
-
-            };
-
-
-          image.src =
-            url;
+          window.setTimeout(
+            check,
+            STATUS_INTERVAL_MS
+          );
 
         }
-      );
-
-    }
 
 
-    function canvasToBlob(
-      canvas,
-      type,
-      quality
-    ) {
+        /*
+         * Exact upload-ID verification.
+         */
 
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
+        getExactUploadStatus(
+          uploadId
+        )
 
-          canvas.toBlob(
+          .then(
+            function(response) {
 
-            function(blob) {
+              const parsed =
+                parseUploadStatus(
+                  response
+                );
+
 
               if (
-                !blob
+                parsed.status ===
+                'success'
               ) {
 
-                reject(
-                  new Error(
-                    'The photo could not be converted for upload.'
+                const result =
+                  (
+                    parsed.result &&
+                    typeof parsed.result ===
+                    'object'
                   )
+
+                    ? Object.assign(
+                        {},
+                        parsed.result
+                      )
+
+                    : {};
+
+
+                const count =
+                  extractPhotoCount(
+                    response
+                  );
+
+
+                if (
+                  Number.isFinite(
+                    count
+                  )
+                ) {
+
+                  result.photoCount =
+                    count;
+
+                }
+
+
+                succeed(
+                  result,
+                  'exact upload status'
                 );
 
 
@@ -5809,750 +3193,2719 @@
               }
 
 
-              resolve(
-                blob
-              );
+              if (
+                parsed.status ===
+                'error'
+              ) {
 
-            },
+                explicitError =
+                  new Error(
+                    parsed.message ||
+                    'The backend reported an upload error.'
+                  );
 
-            type,
-
-            quality
-
-          );
-
-        }
-      );
-
-    }
+              }
 
 
-    function fileToDataUrl(
-      file
-    ) {
+              oneComplete();
 
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
+            }
+          )
 
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            function(event) {
-
-              resolve(
-                event.target.result
-              );
-
-            };
-
-
-          reader.onerror =
+          .catch(
             function() {
 
-              reject(
-                new Error(
-                  'The selected photo could not be read.'
-                )
-              );
+              /*
+               * Exact status check failed.
+               * Drive count can still verify success.
+               */
 
-            };
+              oneComplete();
 
-
-          reader.readAsDataURL(
-            file
+            }
           );
 
-        }
-      );
 
-    }
+        /*
+         * Drive/job-count verification.
+         *
+         * If there are more files than before
+         * this exact photo was submitted,
+         * the photo reached Drive successfully.
+         */
 
+        getJobInfo()
 
-    function jsonpRequest(
-      baseUrl,
-      prefix
-    ) {
+          .then(
+            function(response) {
 
-      return new Promise(
-        function(
-          resolve,
-          reject
-        ) {
+              if (
+                response &&
+                response.success &&
+                response.job
+              ) {
 
-          const callback =
-
-            prefix +
-
-            '_' +
-
-            Date.now() +
-
-            '_' +
-
-            Math.random()
-              .toString(
-                36
-              )
-              .slice(
-                2
-              );
+                const count =
+                  Number(
+                    response.job.photoCount ||
+                    0
+                  );
 
 
-          const script =
-            document.createElement(
-              'script'
-            );
+                if (
+                  Number.isFinite(
+                    count
+                  ) &&
+                  count >
+                  startingCount
+                ) {
+
+                  succeed(
+                    {
+                      success:
+                        true,
+
+                      photoCount:
+                        count,
+
+                      job:
+                        response.job
+                    },
+                    'Drive photo count'
+                  );
 
 
-          let finished =
-            false;
+                  return;
+
+                }
+
+              }
 
 
-          function cleanup() {
-
-            if (
-              finished
-            ) {
-
-              return;
-
-            }
-
-
-            finished =
-              true;
-
-
-            try {
-
-              delete window[
-                callback
-              ];
+              oneComplete();
 
             }
-            catch (error) {
+          )
 
-              window[
-                callback
-              ] =
-                undefined;
-
-            }
-
-
-            if (
-              script.parentNode
-            ) {
-
-              script
-                .parentNode
-                .removeChild(
-                  script
-                );
-
-            }
-
-          }
-
-
-          window[
-            callback
-          ] =
-            function(result) {
-
-              cleanup();
-
-
-              resolve(
-                result
-              );
-
-            };
-
-
-          script.onerror =
+          .catch(
             function() {
 
-              cleanup();
+              oneComplete();
 
-
-              reject(
-                new Error(
-                  'Could not reach the photo portal backend.'
-                )
-              );
-
-            };
-
-
-          const separator =
-
-            baseUrl.includes(
-              '?'
-            )
-
-              ? '&'
-
-              : '?';
-
-
-          script.src =
-
-            baseUrl +
-
-            separator +
-
-            'callback=' +
-
-            encodeURIComponent(
-              callback
-            );
-
-
-          document.body.appendChild(
-            script
+            }
           );
-
-        }
-      );
-
-    }
-
-
-    function lockForm() {
-
-      stageInput.disabled =
-        true;
-
-
-      categoryInput.disabled =
-        true;
-
-
-      areaInput.disabled =
-        true;
-
-
-      openCameraButton.disabled =
-        true;
-
-
-      existingPhotosButton.disabled =
-        true;
-
-
-      photosInput.disabled =
-        true;
-
-
-      takePhotoButton.disabled =
-        true;
-
-
-      closeCameraButton.disabled =
-        true;
-
-
-      submitButton.disabled =
-        true;
-
-
-      retryButton.disabled =
-        true;
-
-
-      downloadFailedButton.disabled =
-        true;
-
-
-      downloadBatchButton.disabled =
-        true;
-
-    }
-
-
-    function unlockForm() {
-
-      stageInput.disabled =
-        false;
-
-
-      categoryInput.disabled =
-        false;
-
-
-      updateAreaOptions();
-
-
-      openCameraButton.disabled =
-        false;
-
-
-      existingPhotosButton.disabled =
-        false;
-
-
-      photosInput.disabled =
-        false;
-
-
-      takePhotoButton.disabled =
-        false;
-
-
-      closeCameraButton.disabled =
-        false;
-
-
-      retryButton.disabled =
-        false;
-
-
-      downloadFailedButton.disabled =
-        false;
-
-
-      downloadBatchButton.disabled =
-        false;
-
-    }
-
-
-    function statusLabel(
-      status
-    ) {
-
-      const labels = {
-
-        ready:
-          'Ready',
-
-        uploading:
-          'Uploading',
-
-        verifying:
-          'Verifying',
-
-        uploaded:
-          'Uploaded',
-
-        failed:
-          'Failed'
-
-      };
-
-
-      return (
-        labels[
-          status
-        ] ||
-        status
-      );
-
-    }
-
-
-    function makeUploadId() {
-
-      if (
-
-        window.crypto &&
-
-        typeof
-          window.crypto.randomUUID ===
-          'function'
-
-      ) {
-
-        return window
-          .crypto
-          .randomUUID();
 
       }
 
 
-      return (
+      window.setTimeout(
+        check,
+        700
+      );
 
-        Date.now()
-          .toString(
-            36
-          ) +
+    }
+  );
 
-        '-' +
+}
 
-        Math.random()
-          .toString(
-            36
+
+function getExactUploadStatus(
+  uploadId
+) {
+
+  return jsonpRequest(
+
+    BACKEND +
+
+    '?action=uploadStatus' +
+
+    '&job=' +
+    encodeURIComponent(
+      jobId
+    ) +
+
+    '&uploadId=' +
+    encodeURIComponent(
+      uploadId
+    ) +
+
+    '&_=' +
+    Date.now(),
+
+    'genIIIUploadStatus'
+
+  );
+
+}
+
+
+/*
+ * Accept several possible response wrappers.
+ *
+ * This prevents the portal from falsely failing
+ * just because Apps Script wraps the stored status
+ * under a slightly different property.
+ */
+
+function parseUploadStatus(
+  response
+) {
+
+  if (
+    !response
+  ) {
+
+    return {
+      status:
+        'processing',
+
+      message:
+        '',
+
+      result:
+        null
+    };
+
+  }
+
+
+  const candidates =
+    [];
+
+
+  function add(
+    value
+  ) {
+
+    if (
+      value &&
+      typeof value ===
+      'object' &&
+      !candidates.includes(
+        value
+      )
+    ) {
+
+      candidates.push(
+        value
+      );
+
+    }
+
+  }
+
+
+  add(
+    response
+  );
+
+
+  add(
+    response.uploadStatus
+  );
+
+
+  add(
+    response.upload
+  );
+
+
+  add(
+    response.record
+  );
+
+
+  add(
+    response.statusRecord
+  );
+
+
+  add(
+    response.result
+  );
+
+
+  add(
+    response.data
+  );
+
+
+  if (
+    response.result &&
+    typeof response.result ===
+    'object'
+  ) {
+
+    add(
+      response.result.uploadStatus
+    );
+
+
+    add(
+      response.result.upload
+    );
+
+
+    add(
+      response.result.record
+    );
+
+
+    add(
+      response.result.data
+    );
+
+  }
+
+
+  let explicitError =
+    '';
+
+
+  for (
+    const node
+    of candidates
+  ) {
+
+    let status =
+      String(
+        node.status ||
+        node.state ||
+        ''
+      )
+        .trim()
+        .toLowerCase();
+
+
+    if (
+      status ===
+      'complete' ||
+      status ===
+      'completed' ||
+      status ===
+      'uploaded' ||
+      status ===
+      'ok'
+    ) {
+
+      status =
+        'success';
+
+    }
+
+
+    if (
+      status ===
+      'failed' ||
+      status ===
+      'failure'
+    ) {
+
+      status =
+        'error';
+
+    }
+
+
+    if (
+      status ===
+      'success'
+    ) {
+
+      return {
+
+        status:
+          'success',
+
+        message:
+          node.message ||
+          '',
+
+        result:
+          node
+
+      };
+
+    }
+
+
+    if (
+      status ===
+      'error'
+    ) {
+
+      explicitError =
+        node.message ||
+        node.error ||
+        explicitError ||
+        'The backend reported an upload error.';
+
+    }
+
+
+    /*
+     * Backward compatibility for successful
+     * stored records that do not carry
+     * a status property.
+     */
+
+    if (
+      !status &&
+      node.success ===
+      true &&
+      (
+        node.fileId ||
+        node.fileUrl ||
+        node.folderId ||
+        node.photoCount !==
+          undefined ||
+        node.uploadId
+      )
+    ) {
+
+      return {
+
+        status:
+          'success',
+
+        message:
+          node.message ||
+          '',
+
+        result:
+          node
+
+      };
+
+    }
+
+
+    if (
+      !status &&
+      node.success ===
+      false &&
+      (
+        node.message ||
+        node.error
+      )
+    ) {
+
+      explicitError =
+        node.message ||
+        node.error;
+
+    }
+
+  }
+
+
+  if (
+    explicitError
+  ) {
+
+    return {
+
+      status:
+        'error',
+
+      message:
+        explicitError,
+
+      result:
+        response
+
+    };
+
+  }
+
+
+  return {
+
+    status:
+      'processing',
+
+    message:
+      '',
+
+    result:
+      response
+
+  };
+
+}
+
+
+function extractPhotoCount(
+  result
+) {
+
+  const seen =
+    new Set();
+
+
+  function walk(
+    value,
+    depth
+  ) {
+
+    if (
+      depth > 5 ||
+      !value ||
+      typeof value !==
+      'object' ||
+      seen.has(
+        value
+      )
+    ) {
+
+      return NaN;
+
+    }
+
+
+    seen.add(
+      value
+    );
+
+
+    if (
+      value.photoCount !==
+      undefined
+    ) {
+
+      const n =
+        Number(
+          value.photoCount
+        );
+
+
+      if (
+        Number.isFinite(
+          n
+        )
+      ) {
+
+        return n;
+
+      }
+
+    }
+
+
+    const keys = [
+      'result',
+      'uploadStatus',
+      'upload',
+      'record',
+      'statusRecord',
+      'data',
+      'job'
+    ];
+
+
+    for (
+      const key
+      of keys
+    ) {
+
+      const n =
+        walk(
+          value[
+            key
+          ],
+          depth + 1
+        );
+
+
+      if (
+        Number.isFinite(
+          n
+        )
+      ) {
+
+        return n;
+
+      }
+
+    }
+
+
+    return NaN;
+
+  }
+
+
+  return walk(
+    result,
+    0
+  );
+
+}
+
+
+function finishBatch(
+  successCount,
+  failureCount,
+  attemptedCount
+) {
+
+  statusBox.textContent =
+    lastPhotoCount +
+
+    ' photo' +
+
+    (
+      lastPhotoCount === 1
+        ? ''
+        : 's'
+    ) +
+
+    ' currently on file.';
+
+
+  const failedItems =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status ===
+          'failed'
+        );
+
+      }
+    );
+
+
+  const uploadedTotal =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status ===
+          'uploaded'
+        );
+
+      }
+    ).length;
+
+
+  if (
+    failureCount === 0
+  ) {
+
+    showMessage(
+      successCount +
+
+      ' photo' +
+
+      (
+        successCount === 1
+          ? ''
+          : 's'
+      ) +
+
+      ' uploaded successfully. ' +
+
+      lastPhotoCount +
+
+      ' total photo' +
+
+      (
+        lastPhotoCount === 1
+          ? ''
+          : 's'
+      ) +
+
+      ' are now on file for this job.',
+      'success'
+    );
+
+  }
+  else {
+
+    showMessage(
+      successCount +
+
+      ' of ' +
+
+      attemptedCount +
+
+      ' photos uploaded successfully. ' +
+
+      failureCount +
+
+      ' failed and can be retried or downloaded for manual upload.',
+      'warning'
+    );
+
+  }
+
+
+  summaryBox.innerHTML =
+    '<strong>Batch summary:</strong> ' +
+
+    uploadedTotal +
+
+    ' verified in this queue • ' +
+
+    failedItems.length +
+
+    ' failed • ' +
+
+    lastPhotoCount +
+
+    ' total on file for this job.';
+
+
+  summaryBox.style.display =
+    'block';
+
+
+  endActions.style.display =
+    'grid';
+
+
+  retryButton.style.display =
+    failedItems.length > 0
+      ? 'block'
+      : 'none';
+
+
+  downloadFailedButton.style.display =
+    failedItems.length > 0
+      ? 'block'
+      : 'none';
+
+
+  downloadBatchButton.style.display =
+    photoQueue.length > 0
+      ? 'block'
+      : 'none';
+
+}
+
+
+async function downloadFailedPhotos() {
+
+  const failed =
+    photoQueue.filter(
+      function(item) {
+
+        return (
+          item.status ===
+          'failed'
+        );
+
+      }
+    );
+
+
+  if (
+    failed.length === 0
+  ) {
+
+    showMessage(
+      'There are no failed photos to download.',
+      'warning'
+    );
+
+
+    return;
+
+  }
+
+
+  await downloadItemsAsZip(
+    failed,
+    jobId +
+    '-Failed-Photos.zip'
+  );
+
+}
+
+
+async function downloadEntireBatch() {
+
+  if (
+    photoQueue.length === 0
+  ) {
+
+    showMessage(
+      'There are no photos in this batch to download.',
+      'warning'
+    );
+
+
+    return;
+
+  }
+
+
+  await downloadItemsAsZip(
+    photoQueue,
+    jobId +
+    '-Photo-Batch-Backup.zip'
+  );
+
+}
+
+
+async function downloadItemsAsZip(
+  items,
+  zipName
+) {
+
+  const buttons = [
+    downloadFailedButton,
+    downloadBatchButton
+  ];
+
+
+  buttons.forEach(
+    function(button) {
+
+      button.disabled =
+        true;
+
+    }
+  );
+
+
+  progressBox.style.display =
+    'block';
+
+
+  progressBox.textContent =
+    'Building backup download...';
+
+
+  try {
+
+    const entries =
+      [];
+
+
+    const usedNames =
+      new Set();
+
+
+    for (
+      let i = 0;
+      i < items.length;
+      i++
+    ) {
+
+      const item =
+        items[
+          i
+        ];
+
+
+      progressBox.textContent =
+        'Preparing backup photo ' +
+
+        (
+          i + 1
+        ) +
+
+        ' of ' +
+
+        items.length +
+
+        '...';
+
+
+      let name =
+        uniqueZipName(
+          buildBackupFileName(
+            item,
+            i + 1
+          ),
+          usedNames
+        );
+
+
+      usedNames.add(
+        name
+      );
+
+
+      entries.push({
+
+        name:
+          name,
+
+        data:
+          new Uint8Array(
+            await item
+              .originalFile
+              .arrayBuffer()
+          ),
+
+        date:
+          new Date(
+            item.originalFile
+              .lastModified ||
+            Date.now()
           )
-          .slice(
-            2
-          ) +
 
-        '-' +
+      });
 
-        Math.random()
-          .toString(
-            36
+    }
+
+
+    triggerBlobDownload(
+      buildStoredZip(
+        entries
+      ),
+      zipName
+    );
+
+
+    showMessage(
+      items.length +
+
+      ' original photo' +
+
+      (
+        items.length === 1
+          ? ''
+          : 's'
+      ) +
+
+      ' packaged for download.',
+      'success'
+    );
+
+  }
+  catch (error) {
+
+    showMessage(
+      error &&
+      error.message
+        ? error.message
+        : 'The backup download could not be created.',
+      'error'
+    );
+
+  }
+  finally {
+
+    progressBox.style.display =
+      'none';
+
+
+    buttons.forEach(
+      function(button) {
+
+        button.disabled =
+          false;
+
+      }
+    );
+
+  }
+
+}
+
+
+function buildBackupFileName(
+  item,
+  index
+) {
+
+  const safe =
+    [
+      item.stage,
+      item.category,
+      item.area
+    ]
+      .filter(
+        Boolean
+      )
+      .map(
+        function(part) {
+
+          return String(
+            part
           )
-          .slice(
-            2
+            .replace(
+              /[\\/:*?"<>|]/g,
+              '-'
+            )
+            .replace(
+              /\s+/g,
+              ' '
+            )
+            .trim();
+
+        }
+      );
+
+
+  const ext =
+    fileExtension(
+      item.originalFile.name
+    ) ||
+    'jpg';
+
+
+  return (
+    (
+      safe.length
+        ? safe.join(
+            ' '
+          )
+        : 'Photo'
+    ) +
+
+    ' - ' +
+
+    String(
+      index
+    )
+      .padStart(
+        2,
+        '0'
+      ) +
+
+    '.' +
+
+    ext
+  );
+
+}
+
+
+function uniqueZipName(
+  name,
+  usedNames
+) {
+
+  if (
+    !usedNames.has(
+      name
+    )
+  ) {
+
+    return name;
+
+  }
+
+
+  const dot =
+    name.lastIndexOf(
+      '.'
+    );
+
+
+  const base =
+    dot >= 0
+      ? name.slice(
+          0,
+          dot
+        )
+      : name;
+
+
+  const ext =
+    dot >= 0
+      ? name.slice(
+          dot
+        )
+      : '';
+
+
+  let counter =
+    2;
+
+
+  let candidate =
+    base +
+
+    ' (' +
+
+    counter +
+
+    ')' +
+
+    ext;
+
+
+  while (
+    usedNames.has(
+      candidate
+    )
+  ) {
+
+    counter++;
+
+
+    candidate =
+      base +
+
+      ' (' +
+
+      counter +
+
+      ')' +
+
+      ext;
+
+  }
+
+
+  return candidate;
+
+}
+
+
+function buildStoredZip(
+  entries
+) {
+
+  const localParts =
+    [];
+
+
+  const centralParts =
+    [];
+
+
+  let offset =
+    0;
+
+
+  entries.forEach(
+    function(entry) {
+
+      const nameBytes =
+        new TextEncoder()
+          .encode(
+            entry.name
+          );
+
+
+      const data =
+        entry.data;
+
+
+      const crc =
+        crc32(
+          data
+        );
+
+
+      const dos =
+        dateToDos(
+          entry.date ||
+          new Date()
+        );
+
+
+      const local =
+        new Uint8Array(
+          30 +
+          nameBytes.length
+        );
+
+
+      const lv =
+        new DataView(
+          local.buffer
+        );
+
+
+      lv.setUint32(
+        0,
+        0x04034b50,
+        true
+      );
+
+
+      lv.setUint16(
+        4,
+        20,
+        true
+      );
+
+
+      lv.setUint16(
+        6,
+        0x0800,
+        true
+      );
+
+
+      lv.setUint16(
+        8,
+        0,
+        true
+      );
+
+
+      lv.setUint16(
+        10,
+        dos.time,
+        true
+      );
+
+
+      lv.setUint16(
+        12,
+        dos.date,
+        true
+      );
+
+
+      lv.setUint32(
+        14,
+        crc,
+        true
+      );
+
+
+      lv.setUint32(
+        18,
+        data.length,
+        true
+      );
+
+
+      lv.setUint32(
+        22,
+        data.length,
+        true
+      );
+
+
+      lv.setUint16(
+        26,
+        nameBytes.length,
+        true
+      );
+
+
+      lv.setUint16(
+        28,
+        0,
+        true
+      );
+
+
+      local.set(
+        nameBytes,
+        30
+      );
+
+
+      localParts.push(
+        local,
+        data
+      );
+
+
+      const central =
+        new Uint8Array(
+          46 +
+          nameBytes.length
+        );
+
+
+      const cv =
+        new DataView(
+          central.buffer
+        );
+
+
+      cv.setUint32(
+        0,
+        0x02014b50,
+        true
+      );
+
+
+      cv.setUint16(
+        4,
+        20,
+        true
+      );
+
+
+      cv.setUint16(
+        6,
+        20,
+        true
+      );
+
+
+      cv.setUint16(
+        8,
+        0x0800,
+        true
+      );
+
+
+      cv.setUint16(
+        10,
+        0,
+        true
+      );
+
+
+      cv.setUint16(
+        12,
+        dos.time,
+        true
+      );
+
+
+      cv.setUint16(
+        14,
+        dos.date,
+        true
+      );
+
+
+      cv.setUint32(
+        16,
+        crc,
+        true
+      );
+
+
+      cv.setUint32(
+        20,
+        data.length,
+        true
+      );
+
+
+      cv.setUint32(
+        24,
+        data.length,
+        true
+      );
+
+
+      cv.setUint16(
+        28,
+        nameBytes.length,
+        true
+      );
+
+
+      cv.setUint16(
+        30,
+        0,
+        true
+      );
+
+
+      cv.setUint16(
+        32,
+        0,
+        true
+      );
+
+
+      cv.setUint16(
+        34,
+        0,
+        true
+      );
+
+
+      cv.setUint16(
+        36,
+        0,
+        true
+      );
+
+
+      cv.setUint32(
+        38,
+        0,
+        true
+      );
+
+
+      cv.setUint32(
+        42,
+        offset,
+        true
+      );
+
+
+      central.set(
+        nameBytes,
+        46
+      );
+
+
+      centralParts.push(
+        central
+      );
+
+
+      offset +=
+        local.length +
+        data.length;
+
+    }
+  );
+
+
+  const centralSize =
+    centralParts.reduce(
+      function(
+        sum,
+        part
+      ) {
+
+        return (
+          sum +
+          part.length
+        );
+
+      },
+      0
+    );
+
+
+  const end =
+    new Uint8Array(
+      22
+    );
+
+
+  const ev =
+    new DataView(
+      end.buffer
+    );
+
+
+  ev.setUint32(
+    0,
+    0x06054b50,
+    true
+  );
+
+
+  ev.setUint16(
+    4,
+    0,
+    true
+  );
+
+
+  ev.setUint16(
+    6,
+    0,
+    true
+  );
+
+
+  ev.setUint16(
+    8,
+    entries.length,
+    true
+  );
+
+
+  ev.setUint16(
+    10,
+    entries.length,
+    true
+  );
+
+
+  ev.setUint32(
+    12,
+    centralSize,
+    true
+  );
+
+
+  ev.setUint32(
+    16,
+    offset,
+    true
+  );
+
+
+  ev.setUint16(
+    20,
+    0,
+    true
+  );
+
+
+  return new Blob(
+    localParts.concat(
+      centralParts,
+      [
+        end
+      ]
+    ),
+    {
+      type:
+        'application/zip'
+    }
+  );
+
+}
+
+
+let crcTable =
+  null;
+
+
+function crc32(
+  bytes
+) {
+
+  if (
+    !crcTable
+  ) {
+
+    crcTable =
+      new Uint32Array(
+        256
+      );
+
+
+    for (
+      let n = 0;
+      n < 256;
+      n++
+    ) {
+
+      let c =
+        n;
+
+
+      for (
+        let k = 0;
+        k < 8;
+        k++
+      ) {
+
+        c =
+          (
+            c &
+            1
           )
 
+            ? (
+                0xedb88320 ^
+                (
+                  c >>>
+                  1
+                )
+              )
+
+            : (
+                c >>>
+                1
+              );
+
+      }
+
+
+      crcTable[
+        n
+      ] =
+        c >>>
+        0;
+
+    }
+
+  }
+
+
+  let crc =
+    0xffffffff;
+
+
+  for (
+    let i = 0;
+    i < bytes.length;
+    i++
+  ) {
+
+    crc =
+      crcTable[
+        (
+          crc ^
+          bytes[
+            i
+          ]
+        ) &
+        0xff
+      ] ^
+
+      (
+        crc >>>
+        8
+      );
+
+  }
+
+
+  return (
+    crc ^
+    0xffffffff
+  ) >>>
+  0;
+
+}
+
+
+function dateToDos(
+  date
+) {
+
+  const safe =
+    date instanceof Date
+      ? date
+      : new Date();
+
+
+  const year =
+    Math.max(
+      1980,
+      safe.getFullYear()
+    );
+
+
+  return {
+
+    time:
+      (
+        safe.getHours() <<
+        11
+      ) |
+
+      (
+        safe.getMinutes() <<
+        5
+      ) |
+
+      Math.floor(
+        safe.getSeconds() /
+        2
+      ),
+
+    date:
+      (
+        (
+          year -
+          1980
+        ) <<
+        9
+      ) |
+
+      (
+        (
+          safe.getMonth() +
+          1
+        ) <<
+        5
+      ) |
+
+      safe.getDate()
+
+  };
+
+}
+
+
+function triggerBlobDownload(
+  blob,
+  fileName
+) {
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link =
+    document.createElement(
+      'a'
+    );
+
+
+  link.href =
+    url;
+
+
+  link.download =
+    fileName;
+
+
+  link.style.display =
+    'none';
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  link.remove();
+
+
+  window.setTimeout(
+    function() {
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    },
+    30000
+  );
+
+}
+
+
+async function compressImageFile(
+  file
+) {
+
+  if (
+    !file
+  ) {
+
+    throw new Error(
+      'No photo was provided.'
+    );
+
+  }
+
+
+  const lowerName =
+    (
+      file.name ||
+      ''
+    )
+      .toLowerCase();
+
+
+  const type =
+    (
+      file.type ||
+      ''
+    )
+      .toLowerCase();
+
+
+  const likelyHeic =
+    type.includes(
+      'heic'
+    ) ||
+
+    type.includes(
+      'heif'
+    ) ||
+
+    lowerName.endsWith(
+      '.heic'
+    ) ||
+
+    lowerName.endsWith(
+      '.heif'
+    );
+
+
+  if (
+    likelyHeic
+  ) {
+
+    if (
+      file.size >
+      MAX_FILE_BYTES
+    ) {
+
+      throw new Error(
+        'HEIC/HEIF photo is larger than 8 MB and could not be compressed in this browser.'
       );
 
     }
 
 
-    function makeCameraOriginalName() {
+    return file;
 
-      const now =
-        new Date();
+  }
 
 
-      const pad =
-        function(value) {
+  try {
 
-          return String(
-            value
-          )
-            .padStart(
-              2,
-              '0'
-            );
+    const image =
+      await loadImageFromFile(
+        file
+      );
+
+
+    const scale =
+      Math.min(
+        1,
+        MAX_UPLOAD_DIMENSION /
+        Math.max(
+          image.width,
+          image.height
+        )
+      );
+
+
+    const width =
+      Math.max(
+        1,
+        Math.round(
+          image.width *
+          scale
+        )
+      );
+
+
+    const height =
+      Math.max(
+        1,
+        Math.round(
+          image.height *
+          scale
+        )
+      );
+
+
+    const canvas =
+      document.createElement(
+        'canvas'
+      );
+
+
+    canvas.width =
+      width;
+
+
+    canvas.height =
+      height;
+
+
+    const context =
+      canvas.getContext(
+        '2d',
+        {
+          alpha:
+            false
+        }
+      );
+
+
+    context.fillStyle =
+      '#ffffff';
+
+
+    context.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    context.drawImage(
+      image,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const blob =
+      await canvasToBlob(
+        canvas,
+        'image/jpeg',
+        UPLOAD_JPEG_QUALITY
+      );
+
+
+    if (
+      blob.size >
+      MAX_FILE_BYTES
+    ) {
+
+      throw new Error(
+        'Prepared photo is still larger than 8 MB.'
+      );
+
+    }
+
+
+    return new File(
+      [
+        blob
+      ],
+      replaceFileExtension(
+        file.name ||
+        'Photo.jpg',
+        'jpg'
+      ),
+      {
+        type:
+          'image/jpeg',
+
+        lastModified:
+          file.lastModified ||
+          Date.now()
+      }
+    );
+
+  }
+  catch (error) {
+
+    if (
+      file.size <=
+      MAX_FILE_BYTES
+    ) {
+
+      return file;
+
+    }
+
+
+    throw error;
+
+  }
+
+}
+
+
+function loadImageFromFile(
+  file
+) {
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      const image =
+        new Image();
+
+
+      image.onload =
+        function() {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+
+          resolve(
+            image
+          );
 
         };
 
 
-      return (
+      image.onerror =
+        function() {
 
-        'GENIII-Camera-' +
+          URL.revokeObjectURL(
+            url
+          );
 
-        now.getFullYear() +
 
-        pad(
-          now.getMonth() +
-          1
-        ) +
+          reject(
+            new Error(
+              'This photo format could not be prepared.'
+            )
+          );
 
-        pad(
-          now.getDate()
-        ) +
+        };
 
-        '-' +
 
-        pad(
-          now.getHours()
-        ) +
+      image.src =
+        url;
 
-        pad(
-          now.getMinutes()
-        ) +
+    }
+  );
 
-        pad(
-          now.getSeconds()
-        ) +
+}
 
-        '-' +
+
+function canvasToBlob(
+  canvas,
+  type,
+  quality
+) {
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      canvas.toBlob(
+        function(blob) {
+
+          if (
+            blob
+          ) {
+
+            resolve(
+              blob
+            );
+
+          }
+          else {
+
+            reject(
+              new Error(
+                'The photo could not be converted for upload.'
+              )
+            );
+
+          }
+
+        },
+        type,
+        quality
+      );
+
+    }
+  );
+
+}
+
+
+function fileToDataUrl(
+  file
+) {
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event) {
+
+          resolve(
+            event.target.result
+          );
+
+        };
+
+
+      reader.onerror =
+        function() {
+
+          reject(
+            new Error(
+              'The selected photo could not be read.'
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
+
+
+function jsonpRequest(
+  baseUrl,
+  prefix,
+  timeoutMs = JSONP_TIMEOUT_MS
+) {
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      const callback =
+        prefix +
+
+        '_' +
+
+        Date.now() +
+
+        '_' +
 
         Math.random()
           .toString(
             36
           )
           .slice(
-            2,
-            6
-          ) +
-
-        '.jpg'
-
-      );
-
-    }
-
-
-    function replaceFileExtension(
-      name,
-      extension
-    ) {
-
-      const clean =
-        String(
-          name ||
-          'Photo'
-        )
-          .replace(
-            /\.[^.]+$/,
-            ''
-          );
-
-
-      return (
-        clean +
-        '.' +
-        extension
-      );
-
-    }
-
-
-    function fileExtension(
-      name
-    ) {
-
-      const match =
-        String(
-          name ||
-          ''
-        )
-          .match(
-            /\.([a-zA-Z0-9]+)$/
-          );
-
-
-      return (
-        match
-          ? match[
-              1
-            ]
-              .toLowerCase()
-          : ''
-      );
-
-    }
-
-
-    function formatBytes(
-      bytes
-    ) {
-
-      const value =
-        Number(
-          bytes ||
-          0
-        );
-
-
-      if (
-        value <
-        1024
-      ) {
-
-        return (
-          value +
-          ' B'
-        );
-
-      }
-
-
-      if (
-        value <
-        1024 * 1024
-      ) {
-
-        return (
-
-          (
-            value /
-            1024
-          )
-            .toFixed(
-              1
-            ) +
-
-          ' KB'
-
-        );
-
-      }
-
-
-      return (
-
-        (
-          value /
-          (
-            1024 *
-            1024
-          )
-        )
-          .toFixed(
             2
-          ) +
-
-        ' MB'
-
-      );
-
-    }
+          );
 
 
-    function showSelectionMessage(
-      text
-    ) {
-
-      showMessage(
-        text,
-        'success'
-      );
-
-    }
-
-
-    function showFatalError(
-      text
-    ) {
-
-      statusBox.textContent =
-        'Unable to load job.';
-
-
-      details.style.display =
-        'none';
-
-
-      backupNote.style.display =
-        'none';
-
-
-      formSection.style.display =
-        'none';
-
-
-      showMessage(
-        text,
-        'error'
-      );
-
-    }
-
-
-    function showMessage(
-      text,
-      type
-    ) {
-
-      messageBox.textContent =
-        text;
-
-
-      messageBox.className =
-
-        'message ' +
-
-        (
-          type ||
-          'error'
+      const script =
+        document.createElement(
+          'script'
         );
 
 
-      messageBox.style.display =
-        'block';
+      let finished =
+        false;
+
+
+      const timer =
+        window.setTimeout(
+          function() {
+
+            cleanup();
+
+
+            reject(
+              new Error(
+                'The backend response timed out.'
+              )
+            );
+
+          },
+          timeoutMs
+        );
+
+
+      function cleanup() {
+
+        if (
+          finished
+        ) {
+
+          return;
+
+        }
+
+
+        finished =
+          true;
+
+
+        window.clearTimeout(
+          timer
+        );
+
+
+        try {
+
+          delete window[
+            callback
+          ];
+
+        }
+        catch (error) {
+
+          window[
+            callback
+          ] =
+            undefined;
+
+        }
+
+
+        if (
+          script.parentNode
+        ) {
+
+          script
+            .parentNode
+            .removeChild(
+              script
+            );
+
+        }
+
+      }
+
+
+      window[
+        callback
+      ] =
+        function(result) {
+
+          cleanup();
+
+
+          resolve(
+            result
+          );
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          cleanup();
+
+
+          reject(
+            new Error(
+              'Could not reach the photo portal backend.'
+            )
+          );
+
+        };
+
+
+      script.src =
+        baseUrl +
+
+        (
+          baseUrl.includes(
+            '?'
+          )
+            ? '&'
+            : '?'
+        ) +
+
+        'callback=' +
+
+        encodeURIComponent(
+          callback
+        );
+
+
+      document.body.appendChild(
+        script
+      );
 
     }
+  );
+
+}
 
 
-    function hideMessage() {
+function lockForm() {
 
-      messageBox.style.display =
-        'none';
-
-    }
+  stageInput.disabled =
+    true;
 
 
-    categoryInput
-      .addEventListener(
-        'change',
-        updateAreaOptions
+  categoryInput.disabled =
+    true;
+
+
+  areaInput.disabled =
+    true;
+
+
+  openCameraButton.disabled =
+    true;
+
+
+  existingPhotosButton.disabled =
+    true;
+
+
+  photosInput.disabled =
+    true;
+
+
+  takePhotoButton.disabled =
+    true;
+
+
+  closeCameraButton.disabled =
+    true;
+
+
+  submitButton.disabled =
+    true;
+
+
+  retryButton.disabled =
+    true;
+
+
+  downloadFailedButton.disabled =
+    true;
+
+
+  downloadBatchButton.disabled =
+    true;
+
+}
+
+
+function unlockForm() {
+
+  stageInput.disabled =
+    false;
+
+
+  categoryInput.disabled =
+    false;
+
+
+  updateAreaOptions();
+
+
+  openCameraButton.disabled =
+    false;
+
+
+  existingPhotosButton.disabled =
+    false;
+
+
+  photosInput.disabled =
+    false;
+
+
+  takePhotoButton.disabled =
+    false;
+
+
+  closeCameraButton.disabled =
+    false;
+
+
+  retryButton.disabled =
+    false;
+
+
+  downloadFailedButton.disabled =
+    false;
+
+
+  downloadBatchButton.disabled =
+    false;
+
+}
+
+
+function statusLabel(
+  status
+) {
+
+  return {
+    ready:
+      'Ready',
+
+    uploading:
+      'Uploading',
+
+    verifying:
+      'Verifying',
+
+    uploaded:
+      'Uploaded',
+
+    failed:
+      'Failed'
+  }[
+    status
+  ] ||
+  status;
+
+}
+
+
+function makeUploadId() {
+
+  if (
+    window.crypto &&
+    typeof window.crypto.randomUUID ===
+    'function'
+  ) {
+
+    return window
+      .crypto
+      .randomUUID();
+
+  }
+
+
+  return (
+    Date.now()
+      .toString(
+        36
+      ) +
+
+    '-' +
+
+    Math.random()
+      .toString(
+        36
+      )
+      .slice(
+        2
+      ) +
+
+    '-' +
+
+    Math.random()
+      .toString(
+        36
+      )
+      .slice(
+        2
+      )
+  );
+
+}
+
+
+function makeCameraOriginalName() {
+
+  const now =
+    new Date();
+
+
+  const pad =
+    function(value) {
+
+      return String(
+        value
+      )
+        .padStart(
+          2,
+          '0'
+        );
+
+    };
+
+
+  return (
+    'GENIII-Camera-' +
+
+    now.getFullYear() +
+
+    pad(
+      now.getMonth() +
+      1
+    ) +
+
+    pad(
+      now.getDate()
+    ) +
+
+    '-' +
+
+    pad(
+      now.getHours()
+    ) +
+
+    pad(
+      now.getMinutes()
+    ) +
+
+    pad(
+      now.getSeconds()
+    ) +
+
+    '-' +
+
+    Math.random()
+      .toString(
+        36
+      )
+      .slice(
+        2,
+        6
+      ) +
+
+    '.jpg'
+  );
+
+}
+
+
+function replaceFileExtension(
+  name,
+  extension
+) {
+
+  return String(
+    name ||
+    'Photo'
+  )
+    .replace(
+      /\.[^.]+$/,
+      ''
+    ) +
+
+    '.' +
+
+    extension;
+
+}
+
+
+function fileExtension(
+  name
+) {
+
+  const match =
+    String(
+      name ||
+      ''
+    )
+      .match(
+        /\.([a-zA-Z0-9]+)$/
       );
 
 
-    openCameraButton
-      .addEventListener(
-        'click',
-        openCamera
-      );
+  return match
+    ? match[
+        1
+      ]
+        .toLowerCase()
+    : '';
+
+}
 
 
-    existingPhotosButton
-      .addEventListener(
-        'click',
-        showExistingPhotos
-      );
+function formatBytes(
+  bytes
+) {
 
-
-    takePhotoButton
-      .addEventListener(
-        'click',
-        takeCameraPhoto
-      );
-
-
-    closeCameraButton
-      .addEventListener(
-        'click',
-        stopCamera
-      );
-
-
-    photosInput
-      .addEventListener(
-        'change',
-        handleExistingPhotos
-      );
-
-
-    submitButton
-      .addEventListener(
-        'click',
-        submitQueue
-      );
-
-
-    retryButton
-      .addEventListener(
-        'click',
-        retryRemainingPhotos
-      );
-
-
-    downloadFailedButton
-      .addEventListener(
-        'click',
-        downloadFailedPhotos
-      );
-
-
-    downloadBatchButton
-      .addEventListener(
-        'click',
-        downloadEntireBatch
-      );
-
-
-    window.addEventListener(
-      'pagehide',
-      stopCamera
+  const value =
+    Number(
+      bytes ||
+      0
     );
 
 
-    window.addEventListener(
-      'beforeunload',
-      stopCamera
+  if (
+    value < 1024
+  ) {
+
+    return (
+      value +
+      ' B'
+    );
+
+  }
+
+
+  if (
+    value <
+    1024 *
+    1024
+  ) {
+
+    return (
+      value /
+      1024
+    )
+      .toFixed(
+        1
+      ) +
+
+      ' KB';
+
+  }
+
+
+  return (
+    value /
+    (
+      1024 *
+      1024
+    )
+  )
+    .toFixed(
+      2
+    ) +
+
+    ' MB';
+
+}
+
+
+function showSelectionMessage(
+  text
+) {
+
+  showMessage(
+    text,
+    'success'
+  );
+
+}
+
+
+function showFatalError(
+  text
+) {
+
+  statusBox.textContent =
+    'Unable to load job.';
+
+
+  details.style.display =
+    'none';
+
+
+  backupNote.style.display =
+    'none';
+
+
+  formSection.style.display =
+    'none';
+
+
+  showMessage(
+    text,
+    'error'
+  );
+
+}
+
+
+function showMessage(
+  text,
+  type
+) {
+
+  messageBox.textContent =
+    text;
+
+
+  messageBox.className =
+    'message ' +
+    (
+      type ||
+      'error'
     );
 
 
-    updateAreaOptions();
+  messageBox.style.display =
+    'block';
+
+}
 
 
-    loadJob();
+function hideMessage() {
 
-  </script>
+  messageBox.style.display =
+    'none';
+
+}
+
+
+categoryInput
+  .addEventListener(
+    'change',
+    updateAreaOptions
+  );
+
+
+openCameraButton
+  .addEventListener(
+    'click',
+    openCamera
+  );
+
+
+existingPhotosButton
+  .addEventListener(
+    'click',
+    showExistingPhotos
+  );
+
+
+takePhotoButton
+  .addEventListener(
+    'click',
+    takeCameraPhoto
+  );
+
+
+closeCameraButton
+  .addEventListener(
+    'click',
+    stopCamera
+  );
+
+
+photosInput
+  .addEventListener(
+    'change',
+    handleExistingPhotos
+  );
+
+
+submitButton
+  .addEventListener(
+    'click',
+    submitQueue
+  );
+
+
+retryButton
+  .addEventListener(
+    'click',
+    retryRemainingPhotos
+  );
+
+
+downloadFailedButton
+  .addEventListener(
+    'click',
+    downloadFailedPhotos
+  );
+
+
+downloadBatchButton
+  .addEventListener(
+    'click',
+    downloadEntireBatch
+  );
+
+
+window.addEventListener(
+  'pagehide',
+  stopCamera
+);
+
+
+window.addEventListener(
+  'beforeunload',
+  stopCamera
+);
+
+
+updateAreaOptions();
+
+
+loadJob();
+
+</script>
 
 </body>
 </html>
