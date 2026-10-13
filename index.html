@@ -176,6 +176,7 @@
       color: #667085;
       font-size: 13px;
       margin-bottom: 14px;
+      line-height: 1.4;
     }
 
     .queue-item {
@@ -203,14 +204,26 @@
       min-width: 0;
     }
 
-    .queue-category {
+    .queue-stage {
       font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .queue-category {
+      color: #344054;
+      font-size: 14px;
       margin-bottom: 3px;
     }
 
     .queue-area {
       color: #667085;
       font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .queue-size {
+      color: #667085;
+      font-size: 11px;
       margin-bottom: 3px;
     }
 
@@ -237,6 +250,18 @@
       border-radius: 8px;
       background: #e8f5e9;
       color: #256029;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .preparing-message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #eef2f6;
+      color: #344054;
       font-weight: bold;
       text-align: center;
       line-height: 1.4;
@@ -306,6 +331,7 @@
         Gen III Legacy Detailing
       </div>
 
+
       <div id="status" class="status">
         Loading job...
       </div>
@@ -343,12 +369,38 @@
 
       <div id="backupNote" class="backup-note">
         Take photos with your phone's normal Camera app first, then add them
-        to the queue below. Keep the phone copies until the job is finished
-        and the Drive photo record has been verified.
+        to the queue below. The portal creates a smaller upload copy only.
+        Your original phone photos are not changed. Keep the originals until
+        the job is finished and the Drive photo record has been verified.
       </div>
 
 
       <div id="formSection" class="form-section">
+
+        <div class="field">
+
+          <label for="stage">
+            Photo Stage
+          </label>
+
+          <select id="stage">
+
+            <option value="">
+              Select Before or After
+            </option>
+
+            <option value="Before">
+              Before
+            </option>
+
+            <option value="After">
+              After
+            </option>
+
+          </select>
+
+        </div>
+
 
         <div class="field">
 
@@ -370,8 +422,6 @@
             <option>Wheels & Tires</option>
             <option>Existing Damage</option>
             <option>Engine Bay</option>
-            <option>During Service</option>
-            <option>Finished / After</option>
             <option>Other</option>
 
           </select>
@@ -400,7 +450,7 @@
           </select>
 
           <div class="help">
-            Leave this blank for general or miscellaneous photos.
+            Leave this blank for a general or miscellaneous photo.
           </div>
 
         </div>
@@ -421,7 +471,7 @@
 
           <div class="help">
             Select one photo or several photos at once.
-            Maximum 8 MB per photo.
+            Upload copies will automatically be resized and compressed.
           </div>
 
         </div>
@@ -434,6 +484,12 @@
         >
           Add Photo(s) to Queue
         </button>
+
+
+        <div
+          id="preparingMessage"
+          class="preparing-message"
+        ></div>
 
 
         <div
@@ -479,6 +535,7 @@
         id="progress"
         class="progress"
       ></div>
+
 
       <div
         id="message"
@@ -563,7 +620,22 @@
       'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
 
 
-    const MAX_FILE_BYTES =
+    /*
+     * Compressed upload settings.
+     */
+    const MAX_DIMENSION =
+      2048;
+
+
+    const JPEG_QUALITY =
+      0.82;
+
+
+    /*
+     * Backend itself still allows up to 8 MB.
+     * This client-side limit is just a final safety check.
+     */
+    const MAX_UPLOAD_BYTES =
       8 * 1024 * 1024;
 
 
@@ -649,39 +721,6 @@
         'Battery Area'
       ],
 
-      'During Service': [
-        'Exterior',
-        'Interior',
-        'Driver Seat',
-        'Passenger Seat',
-        'Rear Seats',
-        'Dash',
-        'Center Console',
-        'Trunk / Cargo Area',
-        'Wheels & Tires',
-        'Engine Bay',
-        'Bed',
-        'Other Area'
-      ],
-
-      'Finished / After': [
-        'Full Vehicle',
-        'Driver Side',
-        'Front',
-        'Passenger Side',
-        'Rear',
-        'Driver Seat',
-        'Passenger Seat',
-        'Rear Seats',
-        'Dash',
-        'Center Console',
-        'Trunk / Cargo Area',
-        'Wheels & Tires',
-        'Engine Bay',
-        'Bed',
-        'Tailgate'
-      ],
-
       'Other': [
         'General / Miscellaneous',
         'Customer Concern',
@@ -720,6 +759,10 @@
       false;
 
 
+    let preparingPhotos =
+      false;
+
+
     let lastPhotoCount =
       0;
 
@@ -729,63 +772,105 @@
 
 
     const statusBox =
-      document.getElementById('status');
+      document.getElementById(
+        'status'
+      );
 
 
     const details =
-      document.getElementById('details');
+      document.getElementById(
+        'details'
+      );
 
 
     const backupNote =
-      document.getElementById('backupNote');
+      document.getElementById(
+        'backupNote'
+      );
 
 
     const formSection =
-      document.getElementById('formSection');
+      document.getElementById(
+        'formSection'
+      );
+
+
+    const stageInput =
+      document.getElementById(
+        'stage'
+      );
 
 
     const categoryInput =
-      document.getElementById('category');
+      document.getElementById(
+        'category'
+      );
 
 
     const areaInput =
-      document.getElementById('area');
+      document.getElementById(
+        'area'
+      );
 
 
     const photosInput =
-      document.getElementById('photos');
+      document.getElementById(
+        'photos'
+      );
 
 
     const addButton =
-      document.getElementById('addButton');
+      document.getElementById(
+        'addButton'
+      );
 
 
     const submitButton =
-      document.getElementById('submitButton');
+      document.getElementById(
+        'submitButton'
+      );
 
 
     const queueSection =
-      document.getElementById('queueSection');
+      document.getElementById(
+        'queueSection'
+      );
 
 
     const queueList =
-      document.getElementById('queueList');
+      document.getElementById(
+        'queueList'
+      );
 
 
     const queueCount =
-      document.getElementById('queueCount');
+      document.getElementById(
+        'queueCount'
+      );
 
 
     const selectionMessage =
-      document.getElementById('selectionMessage');
+      document.getElementById(
+        'selectionMessage'
+      );
+
+
+    const preparingMessage =
+      document.getElementById(
+        'preparingMessage'
+      );
 
 
     const progressBox =
-      document.getElementById('progress');
+      document.getElementById(
+        'progress'
+      );
 
 
     const messageBox =
-      document.getElementById('message');
+      document.getElementById(
+        'message'
+      );
 
 
 
@@ -1155,9 +1240,21 @@
 
 
 
-    function addPhotosToQueue() {
+    async function addPhotosToQueue() {
+
+      if (
+        preparingPhotos ||
+        uploadInProgress
+      ) {
+        return;
+      }
+
 
       hideMessage();
+
+
+      const stage =
+        stageInput.value.trim();
 
 
       const category =
@@ -1172,6 +1269,17 @@
         Array.from(
           photosInput.files || []
         );
+
+
+      if (!stage) {
+
+        showMessage(
+          'Select Before or After first.',
+          false
+        );
+
+        return;
+      }
 
 
       if (!category) {
@@ -1198,36 +1306,112 @@
       }
 
 
-      for (
-        const file of files
-      ) {
+      preparingPhotos =
+        true;
 
-        if (
-          file.size >
-          MAX_FILE_BYTES
+
+      addButton.disabled =
+        true;
+
+
+      submitButton.disabled =
+        true;
+
+
+      stageInput.disabled =
+        true;
+
+
+      categoryInput.disabled =
+        true;
+
+
+      areaInput.disabled =
+        true;
+
+
+      photosInput.disabled =
+        true;
+
+
+      selectionMessage.style.display =
+        'none';
+
+
+      preparingMessage.style.display =
+        'block';
+
+
+      let addedCount =
+        0;
+
+
+      try {
+
+        for (
+          let i = 0;
+          i < files.length;
+          i++
         ) {
 
-          showMessage(
-            file.name +
-            ' is larger than 8 MB.',
-            false
-          );
-
-          return;
-        }
-      }
+          const originalFile =
+            files[i];
 
 
-      files.forEach(
-        function(file) {
+          preparingMessage.textContent =
+            'Preparing photo ' +
+            (i + 1) +
+            ' of ' +
+            files.length +
+            '...';
+
+
+          const prepared =
+            await prepareImageForUpload(
+              originalFile
+            );
+
+
+          if (
+            prepared.blob.size >
+            MAX_UPLOAD_BYTES
+          ) {
+
+            throw new Error(
+              originalFile.name +
+              ' is still larger than 8 MB after preparation.'
+            );
+          }
+
+
+          const previewUrl =
+            URL.createObjectURL(
+              prepared.blob
+            );
+
 
           photoQueue.push({
 
             id:
               makeUploadId(),
 
-            file:
-              file,
+            blob:
+              prepared.blob,
+
+            fileName:
+              prepared.fileName,
+
+            originalName:
+              originalFile.name,
+
+            originalSize:
+              originalFile.size,
+
+            preparedSize:
+              prepared.blob.size,
+
+            stage:
+              stage,
 
             category:
               category,
@@ -1236,38 +1420,329 @@
               area,
 
             previewUrl:
-              URL.createObjectURL(
-                file
-              )
+              previewUrl
 
           });
 
+
+          addedCount++;
+
+
+          renderQueue();
+
+
+          await yieldToBrowser();
         }
-      );
 
 
-      photosInput.value =
-        '';
+        photosInput.value =
+          '';
 
 
-      renderQueue();
+        preparingMessage.style.display =
+          'none';
 
 
-      const added =
-        files.length;
+        selectionMessage.textContent =
+          addedCount === 1
+            ? 'Photo prepared and added. Add another, or submit when finished.'
+            : (
+                addedCount +
+                ' photos prepared and added. Add more, or submit when finished.'
+              );
 
 
-      selectionMessage.textContent =
-        added === 1
-          ? 'Photo added. Add another, or submit when finished.'
-          : (
-              added +
-              ' photos added. Add more, or submit when finished.'
+        selectionMessage.style.display =
+          'block';
+
+      }
+      catch (error) {
+
+        preparingMessage.style.display =
+          'none';
+
+
+        showMessage(
+          error &&
+          error.message
+            ? error.message
+            : 'One of the photos could not be prepared.',
+          false
+        );
+      }
+      finally {
+
+        preparingPhotos =
+          false;
+
+
+        addButton.disabled =
+          false;
+
+
+        submitButton.disabled =
+          false;
+
+
+        stageInput.disabled =
+          false;
+
+
+        categoryInput.disabled =
+          false;
+
+
+        updateAreaOptions();
+
+
+        photosInput.disabled =
+          false;
+      }
+    }
+
+
+
+    function prepareImageForUpload(
+      file
+    ) {
+
+      return new Promise(
+        function(
+          resolve,
+          reject
+        ) {
+
+          const objectUrl =
+            URL.createObjectURL(
+              file
             );
 
 
-      selectionMessage.style.display =
-        'block';
+          const img =
+            new Image();
+
+
+          img.onload =
+            function() {
+
+              try {
+
+                let width =
+                  img.naturalWidth;
+
+
+                let height =
+                  img.naturalHeight;
+
+
+                if (
+                  width < 1 ||
+                  height < 1
+                ) {
+
+                  throw new Error(
+                    'The image dimensions could not be read.'
+                  );
+                }
+
+
+                const scale =
+                  Math.min(
+                    1,
+                    MAX_DIMENSION /
+                    Math.max(
+                      width,
+                      height
+                    )
+                  );
+
+
+                const targetWidth =
+                  Math.max(
+                    1,
+                    Math.round(
+                      width * scale
+                    )
+                  );
+
+
+                const targetHeight =
+                  Math.max(
+                    1,
+                    Math.round(
+                      height * scale
+                    )
+                  );
+
+
+                const canvas =
+                  document.createElement(
+                    'canvas'
+                  );
+
+
+                canvas.width =
+                  targetWidth;
+
+
+                canvas.height =
+                  targetHeight;
+
+
+                const ctx =
+                  canvas.getContext(
+                    '2d'
+                  );
+
+
+                ctx.drawImage(
+                  img,
+                  0,
+                  0,
+                  targetWidth,
+                  targetHeight
+                );
+
+
+                canvas.toBlob(
+                  function(blob) {
+
+                    URL.revokeObjectURL(
+                      objectUrl
+                    );
+
+
+                    if (!blob) {
+
+                      reject(
+                        new Error(
+                          file.name +
+                          ' could not be compressed.'
+                        )
+                      );
+
+                      return;
+                    }
+
+
+                    resolve({
+
+                      blob:
+                        blob,
+
+                      fileName:
+                        changeExtensionToJpg(
+                          file.name
+                        )
+
+                    });
+
+                  },
+                  'image/jpeg',
+                  JPEG_QUALITY
+                );
+
+              }
+              catch (error) {
+
+                URL.revokeObjectURL(
+                  objectUrl
+                );
+
+
+                reject(
+                  error
+                );
+              }
+            };
+
+
+          img.onerror =
+            function() {
+
+              URL.revokeObjectURL(
+                objectUrl
+              );
+
+
+              /*
+               * Some browsers cannot decode certain
+               * formats such as HEIC.
+               *
+               * If the original is already under the
+               * backend limit, use it unchanged.
+               */
+              if (
+                file.size <=
+                MAX_UPLOAD_BYTES
+              ) {
+
+                resolve({
+
+                  blob:
+                    file,
+
+                  fileName:
+                    file.name
+
+                });
+
+                return;
+              }
+
+
+              reject(
+                new Error(
+                  file.name +
+                  ' could not be prepared by this browser and is larger than 8 MB.'
+                )
+              );
+            };
+
+
+          img.src =
+            objectUrl;
+
+        }
+      );
+    }
+
+
+
+    function changeExtensionToJpg(
+      fileName
+    ) {
+
+      const base =
+        String(
+          fileName || 'Photo'
+        )
+          .replace(
+            /\.[^.]+$/,
+            ''
+          );
+
+
+      return (
+        base +
+        '.jpg'
+      );
+    }
+
+
+
+    function yieldToBrowser() {
+
+      return new Promise(
+        function(resolve) {
+
+          window.setTimeout(
+            resolve,
+            0
+          );
+
+        }
+      );
     }
 
 
@@ -1293,6 +1768,23 @@
         'block';
 
 
+      const totalBytes =
+        photoQueue.reduce(
+          function(
+            sum,
+            item
+          ) {
+
+            return (
+              sum +
+              item.preparedSize
+            );
+
+          },
+          0
+        );
+
+
       queueCount.textContent =
         photoQueue.length +
         ' photo' +
@@ -1301,7 +1793,11 @@
             ? ''
             : 's'
         ) +
-        ' ready to upload';
+        ' ready to upload • ' +
+        formatBytes(
+          totalBytes
+        ) +
+        ' total';
 
 
       photoQueue.forEach(
@@ -1344,6 +1840,20 @@
             'queue-info';
 
 
+          const stage =
+            document.createElement(
+              'div'
+            );
+
+
+          stage.className =
+            'queue-stage';
+
+
+          stage.textContent =
+            item.stage;
+
+
           const category =
             document.createElement(
               'div'
@@ -1373,6 +1883,26 @@
             'No specific area';
 
 
+          const size =
+            document.createElement(
+              'div'
+            );
+
+
+          size.className =
+            'queue-size';
+
+
+          size.textContent =
+            formatBytes(
+              item.originalSize
+            ) +
+            ' → ' +
+            formatBytes(
+              item.preparedSize
+            );
+
+
           const fileName =
             document.createElement(
               'div'
@@ -1384,7 +1914,12 @@
 
 
           fileName.textContent =
-            item.file.name;
+            item.originalName;
+
+
+          info.appendChild(
+            stage
+          );
 
 
           info.appendChild(
@@ -1394,6 +1929,11 @@
 
           info.appendChild(
             area
+          );
+
+
+          info.appendChild(
+            size
           );
 
 
@@ -1459,9 +1999,9 @@
     ) {
 
       if (
-        uploadInProgress
+        uploadInProgress ||
+        preparingPhotos
       ) {
-
         return;
       }
 
@@ -1503,12 +2043,53 @@
 
 
 
+    function formatBytes(
+      bytes
+    ) {
+
+      if (
+        !bytes ||
+        bytes <= 0
+      ) {
+        return '0 KB';
+      }
+
+
+      const mb =
+        bytes /
+        (
+          1024 *
+          1024
+        );
+
+
+      if (
+        mb >= 1
+      ) {
+
+        return (
+          mb.toFixed(1) +
+          ' MB'
+        );
+      }
+
+
+      return (
+        Math.round(
+          bytes / 1024
+        ) +
+        ' KB'
+      );
+    }
+
+
+
     function submitQueue() {
 
       if (
-        uploadInProgress
+        uploadInProgress ||
+        preparingPhotos
       ) {
-
         return;
       }
 
@@ -1636,11 +2217,20 @@
               jobId;
 
 
+          /*
+           * Stage is intentionally prepended
+           * to Category so the existing Apps
+           * Script filename builder produces:
+           *
+           * Before Exterior Front, Vehicle, ID
+           */
           document
             .getElementById(
               'formCategory'
             )
             .value =
+              item.stage +
+              ' ' +
               item.category;
 
 
@@ -1657,8 +2247,7 @@
               'formFileName'
             )
             .value =
-              item.file.name ||
-              'Photo';
+              item.fileName;
 
 
           document
@@ -1666,8 +2255,8 @@
               'formMimeType'
             )
             .value =
-              item.file.type ||
-              'application/octet-stream';
+              item.blob.type ||
+              'image/jpeg';
 
 
           document
@@ -1707,13 +2296,13 @@
         function() {
 
           failUploadBatch(
-            'A selected photo could not be read.'
+            'A prepared photo could not be read.'
           );
         };
 
 
       reader.readAsDataURL(
-        item.file
+        item.blob
       );
     }
 
@@ -1745,7 +2334,6 @@
         if (
           !uploadInProgress
         ) {
-
           return;
         }
 
@@ -1946,6 +2534,10 @@
         true;
 
 
+      stageInput.disabled =
+        true;
+
+
       categoryInput.disabled =
         true;
 
@@ -1967,6 +2559,10 @@
 
 
       submitButton.disabled =
+        false;
+
+
+      stageInput.disabled =
         false;
 
 
@@ -2075,4 +2671,5 @@
   </script>
 
 </body>
+
 </html>
