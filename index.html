@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <title>
-    Gen III Legacy Detailing - Vehicle Photo Upload
-  </title>
+  <title>Gen III Legacy Detailing - Vehicle Photo Upload</title>
 
   <style>
-
     :root {
       --navy: #00101a;
       --paper: #ffffff;
@@ -494,29 +494,21 @@
         aspect-ratio: 4 / 3;
       }
     }
-
   </style>
 </head>
-
 
 <body>
 
   <div class="container">
-
     <div class="card">
 
       <div class="header">
-
-        <h1>
-          Vehicle Photo Upload
-        </h1>
+        <h1>Vehicle Photo Upload</h1>
 
         <div class="subtitle">
           Gen III Legacy Detailing
         </div>
-
       </div>
-
 
       <div class="content">
 
@@ -527,12 +519,10 @@
           Loading job...
         </div>
 
-
         <div
           id="details"
           class="details"
         >
-
           <div class="detail-row">
             <span class="label">Customer ID</span>
             <span id="customerIdDisplay" class="value"></span>
@@ -557,9 +547,7 @@
             <span class="label">Service</span>
             <span id="serviceDisplay" class="value"></span>
           </div>
-
         </div>
-
 
         <div
           id="backupNote"
@@ -572,20 +560,17 @@
           failed originals to your phone for manual upload.
         </div>
 
-
         <div
           id="formSection"
           class="form-section"
         >
 
           <div class="field">
-
             <label for="stage">
               Before / After
             </label>
 
             <select id="stage">
-
               <option value="">
                 Select stage
               </option>
@@ -597,20 +582,15 @@
               <option value="After">
                 After
               </option>
-
             </select>
-
           </div>
 
-
           <div class="field">
-
             <label for="category">
               Photo Category
             </label>
 
             <select id="category">
-
               <option value="">
                 Select category
               </option>
@@ -638,14 +618,10 @@
               <option value="Other">
                 Other
               </option>
-
             </select>
-
           </div>
 
-
           <div class="field">
-
             <label for="area">
               Area / Description
             </label>
@@ -654,11 +630,9 @@
               id="area"
               disabled
             >
-
               <option value="">
                 No specific area / Miscellaneous
               </option>
-
             </select>
 
             <div class="help">
@@ -666,12 +640,9 @@
               with each photo when it is added
               to the queue.
             </div>
-
           </div>
 
-
           <div class="capture-actions">
-
             <button
               id="openCameraButton"
               type="button"
@@ -686,15 +657,12 @@
             >
               🖼️ Choose Existing Photos
             </button>
-
           </div>
-
 
           <div
             id="cameraPanel"
             class="camera-panel"
           >
-
             <div class="camera-frame">
 
               <video
@@ -708,7 +676,6 @@
                 id="cameraFlash"
                 class="camera-flash"
               ></div>
-
             </div>
 
             <div
@@ -738,19 +705,15 @@
               </button>
 
             </div>
-
           </div>
 
-
           <canvas id="captureCanvas"></canvas>
-
 
           <div
             id="existingUpload"
             class="existing-upload"
             style="display:none;"
           >
-
             <h2 class="section-title">
               Upload Existing Photos
             </h2>
@@ -768,15 +731,12 @@
               while the originals remain unchanged
               on your phone.
             </div>
-
           </div>
-
 
           <div
             id="queueWrap"
             class="queue-wrap"
           >
-
             <div class="queue-title-row">
 
               <h2>
@@ -789,53 +749,42 @@
               >
                 0 photos
               </div>
-
             </div>
-
 
             <div
               id="queueList"
               class="queue-list"
             ></div>
 
-
             <div class="batch-actions">
-
               <button
                 id="submitButton"
                 type="button"
               >
                 Submit All Photos
               </button>
-
             </div>
-
           </div>
-
 
           <div
             id="progress"
             class="progress"
           ></div>
 
-
           <div
             id="message"
             class="message"
           ></div>
-
 
           <div
             id="summaryBox"
             class="summary-box"
           ></div>
 
-
           <div
             id="endActions"
             class="end-actions"
           >
-
             <button
               id="retryButton"
               type="button"
@@ -860,24 +809,18 @@
             >
               Download Entire Batch Backup
             </button>
-
           </div>
 
         </div>
-
       </div>
-
 
       <div class="footer">
         Portal Version 5.1
         •
         Camera + Dual Verification
       </div>
-
     </div>
-
   </div>
-
 
   <form
     id="uploadForm"
@@ -885,7 +828,6 @@
     target="uploadFrame"
     style="display:none;"
   >
-
     <input
       type="hidden"
       name="action"
@@ -939,9 +881,7 @@
       name="uploadId"
       id="formUploadId"
     >
-
   </form>
-
 
   <iframe
     name="uploadFrame"
@@ -949,40 +889,42 @@
     class="hidden-frame"
   ></iframe>
 
-
 <script>
 
-const BACKEND =
-  'https://script.google.com/macros/s/AKfycbwARXkY2Ygxgpfrhkg1SZVPP2jt9c018vVFq7UzGPejPFtTxxCdQiP05pxWUJeP9TQu/exec';
+/* ============================================================
+   GEN III LEGACY DETAILING
+   PHOTO PORTAL VERSION 5.1
+   REBUILD BACKEND
+   ============================================================ */
 
+const BACKEND =
+  'https://script.google.com/macros/s/AKfycbxBGfVk9Fq0m9-Dn4oomfYZQIVxOkM5CCEZXT5v4IU4SmxmuROd0UHS6X3sueyKDnXt/exec';
 
 const MAX_FILE_BYTES =
   8 * 1024 * 1024;
 
-
 const MAX_UPLOAD_DIMENSION =
   2048;
-
 
 const UPLOAD_JPEG_QUALITY =
   0.82;
 
-
 const CAMERA_JPEG_QUALITY =
   0.95;
-
 
 const STATUS_TIMEOUT_MS =
   45000;
 
-
 const STATUS_INTERVAL_MS =
   1200;
-
 
 const JSONP_TIMEOUT_MS =
   8000;
 
+
+/* ============================================================
+   PHOTO AREA OPTIONS
+   ============================================================ */
 
 const AREA_OPTIONS = {
 
@@ -1070,208 +1012,186 @@ const AREA_OPTIONS = {
 };
 
 
+/* ============================================================
+   URL / JOB STATE
+   ============================================================ */
+
 const params =
   new URLSearchParams(
     window.location.search
   );
 
-
 const jobId =
   params.get('job') ||
   '';
 
-
 let jobInfo =
   null;
-
 
 let photoQueue =
   [];
 
-
 let uploadInProgress =
   false;
-
 
 let lastPhotoCount =
   0;
 
-
 let cameraStream =
   null;
-
 
 let currentBatchItems =
   [];
 
+
+/* ============================================================
+   DOM REFERENCES
+   ============================================================ */
 
 const statusBox =
   document.getElementById(
     'status'
   );
 
-
 const details =
   document.getElementById(
     'details'
   );
-
 
 const backupNote =
   document.getElementById(
     'backupNote'
   );
 
-
 const formSection =
   document.getElementById(
     'formSection'
   );
-
 
 const stageInput =
   document.getElementById(
     'stage'
   );
 
-
 const categoryInput =
   document.getElementById(
     'category'
   );
-
 
 const areaInput =
   document.getElementById(
     'area'
   );
 
-
 const photosInput =
   document.getElementById(
     'photos'
   );
-
 
 const existingUpload =
   document.getElementById(
     'existingUpload'
   );
 
-
 const cameraPanel =
   document.getElementById(
     'cameraPanel'
   );
-
 
 const cameraVideo =
   document.getElementById(
     'cameraVideo'
   );
 
-
 const cameraFlash =
   document.getElementById(
     'cameraFlash'
   );
-
 
 const captureCanvas =
   document.getElementById(
     'captureCanvas'
   );
 
-
 const openCameraButton =
   document.getElementById(
     'openCameraButton'
   );
-
 
 const existingPhotosButton =
   document.getElementById(
     'existingPhotosButton'
   );
 
-
 const takePhotoButton =
   document.getElementById(
     'takePhotoButton'
   );
-
 
 const closeCameraButton =
   document.getElementById(
     'closeCameraButton'
   );
 
-
 const queueWrap =
   document.getElementById(
     'queueWrap'
   );
-
 
 const queueList =
   document.getElementById(
     'queueList'
   );
 
-
 const queueCount =
   document.getElementById(
     'queueCount'
   );
-
 
 const submitButton =
   document.getElementById(
     'submitButton'
   );
 
-
 const progressBox =
   document.getElementById(
     'progress'
   );
-
 
 const messageBox =
   document.getElementById(
     'message'
   );
 
-
 const summaryBox =
   document.getElementById(
     'summaryBox'
   );
-
 
 const endActions =
   document.getElementById(
     'endActions'
   );
 
-
 const retryButton =
   document.getElementById(
     'retryButton'
   );
-
 
 const downloadFailedButton =
   document.getElementById(
     'downloadFailedButton'
   );
 
-
 const downloadBatchButton =
   document.getElementById(
     'downloadBatchButton'
   );
 
+
+/* ============================================================
+   LOAD JOB
+   ============================================================ */
 
 function loadJob() {
 
@@ -1282,9 +1202,7 @@ function loadJob() {
     );
 
     return;
-
   }
-
 
   getJobInfo()
 
@@ -1303,14 +1221,11 @@ function loadJob() {
               ? result.message
               : 'The job could not be loaded.'
           );
-
         }
-
 
         showJob(
           result.job
         );
-
       }
     )
 
@@ -1323,10 +1238,8 @@ function loadJob() {
             ? error.message
             : 'The job could not be loaded. Check your connection and try again.'
         );
-
       }
     );
-
 }
 
 
@@ -1347,9 +1260,7 @@ function getJobInfo() {
     Date.now(),
 
     'genIIILoadJob'
-
   );
-
 }
 
 
@@ -1360,7 +1271,6 @@ function showJob(
   jobInfo =
     info;
 
-
   document
     .getElementById(
       'customerIdDisplay'
@@ -1368,7 +1278,6 @@ function showJob(
     .textContent =
       info.customerId ||
       '—';
-
 
   document
     .getElementById(
@@ -1378,7 +1287,6 @@ function showJob(
       info.customerName ||
       '—';
 
-
   document
     .getElementById(
       'jobDisplay'
@@ -1386,7 +1294,6 @@ function showJob(
     .textContent =
       info.jobId ||
       jobId;
-
 
   document
     .getElementById(
@@ -1396,7 +1303,6 @@ function showJob(
       info.vehicle ||
       'Vehicle not assigned';
 
-
   document
     .getElementById(
       'serviceDisplay'
@@ -1405,13 +1311,11 @@ function showJob(
       info.serviceCode ||
       '—';
 
-
   lastPhotoCount =
     Number(
       info.photoCount ||
       0
     );
-
 
   statusBox.textContent =
 
@@ -1435,26 +1339,25 @@ function showJob(
 
       : 'Job found. Ready for photo upload.';
 
-
   details.style.display =
     'block';
-
 
   backupNote.style.display =
     'block';
 
-
   formSection.style.display =
     'block';
-
 }
 
+
+/* ============================================================
+   AREA SELECTION
+   ============================================================ */
 
 function updateAreaOptions() {
 
   const category =
     categoryInput.value;
-
 
   const choices =
     AREA_OPTIONS[
@@ -1462,29 +1365,23 @@ function updateAreaOptions() {
     ] ||
     [];
 
-
   areaInput.innerHTML =
     '';
-
 
   const blank =
     document.createElement(
       'option'
     );
 
-
   blank.value =
     '';
-
 
   blank.textContent =
     'No specific area / Miscellaneous';
 
-
   areaInput.appendChild(
     blank
   );
-
 
   choices.forEach(
     function(area) {
@@ -1494,27 +1391,21 @@ function updateAreaOptions() {
           'option'
         );
 
-
       option.value =
         area;
-
 
       option.textContent =
         area;
 
-
       areaInput.appendChild(
         option
       );
-
     }
   );
-
 
   areaInput.disabled =
     !category ||
     uploadInProgress;
-
 }
 
 
@@ -1525,12 +1416,10 @@ function validateCaptureSelections() {
       .value
       .trim();
 
-
   const category =
     categoryInput
       .value
       .trim();
-
 
   if (!stage) {
 
@@ -1539,14 +1428,10 @@ function validateCaptureSelections() {
       'error'
     );
 
-
     stageInput.focus();
 
-
     return false;
-
   }
-
 
   if (!category) {
 
@@ -1555,19 +1440,18 @@ function validateCaptureSelections() {
       'error'
     );
 
-
     categoryInput.focus();
 
-
     return false;
-
   }
 
-
   return true;
-
 }
 
+
+/* ============================================================
+   CAMERA
+   ============================================================ */
 
 async function openCamera() {
 
@@ -1575,18 +1459,13 @@ async function openCamera() {
     uploadInProgress ||
     !validateCaptureSelections()
   ) {
-
     return;
-
   }
-
 
   hideMessage();
 
-
   existingUpload.style.display =
     'none';
-
 
   if (
     !navigator.mediaDevices ||
@@ -1598,16 +1477,12 @@ async function openCamera() {
       'error'
     );
 
-
     return;
-
   }
-
 
   try {
 
     stopCamera();
-
 
     cameraStream =
       await navigator
@@ -1633,15 +1508,11 @@ async function openCamera() {
               ideal:
                 2160
             }
-
           }
-
         });
-
 
     cameraVideo.srcObject =
       cameraStream;
-
 
     cameraPanel
       .classList
@@ -1649,14 +1520,11 @@ async function openCamera() {
         'open'
       );
 
-
     try {
-
       await cameraVideo.play();
-
     }
     catch (error) {
-
+      // Browser may auto-play once stream is attached.
     }
 
   }
@@ -1668,14 +1536,11 @@ async function openCamera() {
         'open'
       );
 
-
     showMessage(
       'The camera could not be opened. Check camera permission for this site, or use Choose Existing Photos.',
       'error'
     );
-
   }
-
 }
 
 
@@ -1689,29 +1554,22 @@ function stopCamera() {
       .getTracks()
       .forEach(
         function(track) {
-
           track.stop();
-
         }
       );
 
-
     cameraStream =
       null;
-
   }
-
 
   cameraVideo.srcObject =
     null;
-
 
   cameraPanel
     .classList
     .remove(
       'open'
     );
-
 }
 
 
@@ -1721,11 +1579,8 @@ async function takeCameraPhoto() {
     uploadInProgress ||
     !validateCaptureSelections()
   ) {
-
     return;
-
   }
-
 
   if (
     !cameraStream ||
@@ -1738,40 +1593,30 @@ async function takeCameraPhoto() {
       'error'
     );
 
-
     return;
-
   }
-
 
   takePhotoButton.disabled =
     true;
 
-
   takePhotoButton.textContent =
     'Saving Photo...';
 
-
   hideMessage();
-
 
   try {
 
     const width =
       cameraVideo.videoWidth;
 
-
     const height =
       cameraVideo.videoHeight;
-
 
     captureCanvas.width =
       width;
 
-
     captureCanvas.height =
       height;
-
 
     const context =
       captureCanvas.getContext(
@@ -1782,7 +1627,6 @@ async function takeCameraPhoto() {
         }
       );
 
-
     context.drawImage(
       cameraVideo,
       0,
@@ -1791,14 +1635,12 @@ async function takeCameraPhoto() {
       height
     );
 
-
     const originalBlob =
       await canvasToBlob(
         captureCanvas,
         'image/jpeg',
         CAMERA_JPEG_QUALITY
       );
-
 
     const originalFile =
       new File(
@@ -1815,12 +1657,10 @@ async function takeCameraPhoto() {
         }
       );
 
-
     const preparedFile =
       await compressImageFile(
         originalFile
       );
-
 
     addQueueItem(
       originalFile,
@@ -1828,16 +1668,13 @@ async function takeCameraPhoto() {
       'camera'
     );
 
-
     cameraFlash
       .classList
       .remove(
         'flash'
       );
 
-
     void cameraFlash.offsetWidth;
-
 
     cameraFlash
       .classList
@@ -1845,11 +1682,9 @@ async function takeCameraPhoto() {
         'flash'
       );
 
-
     showSelectionMessage(
       'Photo added. Take another, change the area, or submit when finished.'
     );
-
   }
   catch (error) {
 
@@ -1860,21 +1695,21 @@ async function takeCameraPhoto() {
         : 'The camera photo could not be prepared.',
       'error'
     );
-
   }
   finally {
 
     takePhotoButton.disabled =
       false;
 
-
     takePhotoButton.textContent =
       'Take Photo';
-
   }
-
 }
 
+
+/* ============================================================
+   EXISTING PHOTOS
+   ============================================================ */
 
 function showExistingPhotos() {
 
@@ -1882,24 +1717,17 @@ function showExistingPhotos() {
     uploadInProgress ||
     !validateCaptureSelections()
   ) {
-
     return;
-
   }
-
 
   stopCamera();
 
-
   hideMessage();
-
 
   existingUpload.style.display =
     'block';
 
-
   photosInput.click();
-
 }
 
 
@@ -1908,11 +1736,8 @@ async function handleExistingPhotos() {
   if (
     uploadInProgress
   ) {
-
     return;
-
   }
-
 
   if (
     !validateCaptureSelections()
@@ -1921,11 +1746,8 @@ async function handleExistingPhotos() {
     photosInput.value =
       '';
 
-
     return;
-
   }
-
 
   const files =
     Array.from(
@@ -1933,34 +1755,25 @@ async function handleExistingPhotos() {
       []
     );
 
-
   if (
     files.length === 0
   ) {
-
     return;
-
   }
 
-
   hideMessage();
-
 
   existingPhotosButton.disabled =
     true;
 
-
   existingPhotosButton.textContent =
     'Preparing Photos...';
-
 
   let added =
     0;
 
-
   const errors =
     [];
-
 
   for (
     const file
@@ -1974,16 +1787,13 @@ async function handleExistingPhotos() {
           file
         );
 
-
       addQueueItem(
         file,
         preparedFile,
         'existing'
       );
 
-
       added++;
-
     }
     catch (error) {
 
@@ -2002,23 +1812,17 @@ async function handleExistingPhotos() {
             : 'Could not prepare photo.'
         )
       );
-
     }
-
   }
-
 
   photosInput.value =
     '';
 
-
   existingPhotosButton.disabled =
     false;
 
-
   existingPhotosButton.textContent =
     '🖼️ Choose Existing Photos';
-
 
   if (
     added > 0
@@ -2037,9 +1841,7 @@ async function handleExistingPhotos() {
 
       ' added. Add more, or submit when finished.'
     );
-
   }
-
 
   if (
     errors.length > 0
@@ -2051,11 +1853,13 @@ async function handleExistingPhotos() {
       ),
       'warning'
     );
-
   }
-
 }
 
+
+/* ============================================================
+   QUEUE
+   ============================================================ */
 
 function addQueueItem(
   originalFile,
@@ -2108,12 +1912,9 @@ function addQueueItem(
 
     verification:
       ''
-
   });
 
-
   renderQueue();
-
 }
 
 
@@ -2124,11 +1925,8 @@ function removeQueueItem(
   if (
     uploadInProgress
   ) {
-
     return;
-
   }
-
 
   const index =
     photoQueue.findIndex(
@@ -2137,35 +1935,26 @@ function removeQueueItem(
         return (
           item.id === id
         );
-
       }
     );
-
 
   if (
     index < 0
   ) {
-
     return;
-
   }
-
 
   const item =
     photoQueue[
       index
     ];
 
-
   if (
     item.status ===
     'uploaded'
   ) {
-
     return;
-
   }
-
 
   if (
     item.previewUrl
@@ -2174,18 +1963,14 @@ function removeQueueItem(
     URL.revokeObjectURL(
       item.previewUrl
     );
-
   }
-
 
   photoQueue.splice(
     index,
     1
   );
 
-
   renderQueue();
-
 }
 
 
@@ -2194,7 +1979,6 @@ function renderQueue() {
   queueList.innerHTML =
     '';
 
-
   if (
     photoQueue.length === 0
   ) {
@@ -2202,23 +1986,17 @@ function renderQueue() {
     queueWrap.style.display =
       'none';
 
-
     endActions.style.display =
       'none';
-
 
     summaryBox.style.display =
       'none';
 
-
     return;
-
   }
-
 
   queueWrap.style.display =
     'block';
-
 
   queueCount.textContent =
     photoQueue.length +
@@ -2231,7 +2009,6 @@ function renderQueue() {
         : 's'
     );
 
-
   photoQueue.forEach(
     function(item) {
 
@@ -2240,48 +2017,38 @@ function renderQueue() {
           'div'
         );
 
-
       card.className =
         'queue-item';
-
 
       const img =
         document.createElement(
           'img'
         );
 
-
       img.className =
         'thumb';
-
 
       img.src =
         item.previewUrl;
 
-
       img.alt =
         'Queued vehicle photo';
-
 
       const main =
         document.createElement(
           'div'
         );
 
-
       main.className =
         'queue-main';
-
 
       const meta =
         document.createElement(
           'div'
         );
 
-
       meta.className =
         'queue-meta';
-
 
       meta.textContent =
         [
@@ -2296,16 +2063,13 @@ function renderQueue() {
             ' • '
           );
 
-
       const sub =
         document.createElement(
           'div'
         );
 
-
       sub.className =
         'queue-sub';
-
 
       sub.textContent =
         (
@@ -2329,38 +2093,31 @@ function renderQueue() {
 
         ' prepared';
 
-
       const status =
         document.createElement(
           'div'
         );
 
-
       status.className =
         'queue-status ' +
         item.status;
-
 
       status.textContent =
         statusLabel(
           item.status
         );
 
-
       main.appendChild(
         meta
       );
-
 
       main.appendChild(
         sub
       );
 
-
       main.appendChild(
         status
       );
-
 
       if (
         item.status ===
@@ -2373,21 +2130,16 @@ function renderQueue() {
             'div'
           );
 
-
         reason.className =
           'failure-reason';
-
 
         reason.textContent =
           item.error;
 
-
         main.appendChild(
           reason
         );
-
       }
-
 
       if (
         !uploadInProgress &&
@@ -2400,18 +2152,14 @@ function renderQueue() {
             'button'
           );
 
-
         remove.type =
           'button';
-
 
         remove.className =
           'remove-button';
 
-
         remove.textContent =
           'Remove';
-
 
         remove.addEventListener(
           'click',
@@ -2420,35 +2168,27 @@ function renderQueue() {
             removeQueueItem(
               item.id
             );
-
           }
         );
-
 
         main.appendChild(
           remove
         );
-
       }
-
 
       card.appendChild(
         img
       );
 
-
       card.appendChild(
         main
       );
 
-
       queueList.appendChild(
         card
       );
-
     }
   );
-
 
   const remaining =
     photoQueue.filter(
@@ -2458,35 +2198,32 @@ function renderQueue() {
           item.status !==
           'uploaded'
         );
-
       }
     ).length;
-
 
   submitButton.disabled =
     uploadInProgress ||
     remaining === 0;
-
 
   submitButton.textContent =
     remaining ===
     photoQueue.length
       ? 'Submit All Photos'
       : 'Submit Remaining Photos';
-
 }
 
+
+/* ============================================================
+   SUBMIT / RETRY
+   ============================================================ */
 
 async function submitQueue() {
 
   if (
     uploadInProgress
   ) {
-
     return;
-
   }
-
 
   const items =
     photoQueue.filter(
@@ -2498,10 +2235,8 @@ async function submitQueue() {
           item.status ===
           'failed'
         );
-
       }
     );
-
 
   if (
     items.length === 0
@@ -2512,16 +2247,12 @@ async function submitQueue() {
       'warning'
     );
 
-
     return;
-
   }
-
 
   await runBatch(
     items
   );
-
 }
 
 
@@ -2530,11 +2261,8 @@ async function retryRemainingPhotos() {
   if (
     uploadInProgress
   ) {
-
     return;
-
   }
-
 
   const items =
     photoQueue.filter(
@@ -2546,10 +2274,8 @@ async function retryRemainingPhotos() {
           item.status ===
           'ready'
         );
-
       }
     );
-
 
   if (
     items.length === 0
@@ -2560,11 +2286,8 @@ async function retryRemainingPhotos() {
       'warning'
     );
 
-
     return;
-
   }
-
 
   items.forEach(
     function(item) {
@@ -2572,27 +2295,25 @@ async function retryRemainingPhotos() {
       item.status =
         'ready';
 
-
       item.error =
         '';
 
-
       item.verification =
         '';
-
     }
   );
 
-
   renderQueue();
-
 
   await runBatch(
     items
   );
-
 }
 
+
+/* ============================================================
+   BATCH UPLOAD
+   ============================================================ */
 
 async function runBatch(
   items
@@ -2601,39 +2322,29 @@ async function runBatch(
   uploadInProgress =
     true;
 
-
   currentBatchItems =
     items.slice();
 
-
   hideMessage();
-
 
   summaryBox.style.display =
     'none';
 
-
   endActions.style.display =
     'none';
-
 
   progressBox.style.display =
     'block';
 
-
   lockForm();
 
-
   renderQueue();
-
 
   let successCount =
     0;
 
-
   let failureCount =
     0;
-
 
   for (
     let i = 0;
@@ -2645,7 +2356,6 @@ async function runBatch(
       items[
         i
       ];
-
 
     progressBox.textContent =
       'Uploading photo ' +
@@ -2660,17 +2370,13 @@ async function runBatch(
 
       '...';
 
-
     item.status =
       'uploading';
-
 
     item.error =
       '';
 
-
     renderQueue();
-
 
     try {
 
@@ -2681,18 +2387,14 @@ async function runBatch(
           items.length
         );
 
-
       item.status =
         'uploaded';
-
 
       item.error =
         '';
 
-
       item.lastResult =
         result;
-
 
       item.verification =
         result &&
@@ -2700,15 +2402,12 @@ async function runBatch(
           ? result.verification
           : '';
 
-
       successCount++;
-
 
       const count =
         extractPhotoCount(
           result
         );
-
 
       if (
         Number.isFinite(
@@ -2719,7 +2418,6 @@ async function runBatch(
 
         lastPhotoCount =
           count;
-
       }
       else {
 
@@ -2728,15 +2426,12 @@ async function runBatch(
             lastPhotoCount + 1,
             lastPhotoCount
           );
-
       }
-
     }
     catch (error) {
 
       item.status =
         'failed';
-
 
       item.error =
         error &&
@@ -2744,39 +2439,33 @@ async function runBatch(
           ? error.message
           : 'The photo could not be uploaded.';
 
-
       failureCount++;
-
     }
 
-
     renderQueue();
-
   }
-
 
   uploadInProgress =
     false;
 
-
   progressBox.style.display =
     'none';
 
-
   unlockForm();
 
-
   renderQueue();
-
 
   finishBatch(
     successCount,
     failureCount,
     items.length
   );
-
 }
 
+
+/* ============================================================
+   UPLOAD ONE PHOTO
+   ============================================================ */
 
 async function uploadAndVerifyItem(
   item,
@@ -2784,21 +2473,13 @@ async function uploadAndVerifyItem(
   total
 ) {
 
-  /*
-   * V5.1:
-   * Get a fresh photo count immediately before
-   * sending this specific photo.
-   */
-
   let startingCount =
     lastPhotoCount;
-
 
   try {
 
     const fresh =
       await getJobInfo();
-
 
     if (
       fresh &&
@@ -2811,7 +2492,6 @@ async function uploadAndVerifyItem(
           fresh.job.photoCount
         );
 
-
       if (
         Number.isFinite(
           n
@@ -2821,31 +2501,22 @@ async function uploadAndVerifyItem(
         startingCount =
           n;
 
-
         lastPhotoCount =
           n;
-
       }
-
     }
-
   }
   catch (error) {
-
     /*
-     * The known count is still usable.
-     * Do not stop the upload just because
-     * this preliminary lookup failed.
+     * We already have a known count.
+     * A failed preliminary lookup does not stop upload.
      */
-
   }
-
 
   const dataUrl =
     await fileToDataUrl(
       item.preparedFile
     );
-
 
   document
     .getElementById(
@@ -2854,14 +2525,12 @@ async function uploadAndVerifyItem(
     .value =
       jobId;
 
-
   document
     .getElementById(
       'formStage'
     )
     .value =
       item.stage;
-
 
   document
     .getElementById(
@@ -2870,14 +2539,12 @@ async function uploadAndVerifyItem(
     .value =
       item.category;
 
-
   document
     .getElementById(
       'formArea'
     )
     .value =
       item.area;
-
 
   document
     .getElementById(
@@ -2888,7 +2555,6 @@ async function uploadAndVerifyItem(
       item.originalFile.name ||
       'Photo.jpg';
 
-
   document
     .getElementById(
       'formMimeType'
@@ -2897,14 +2563,12 @@ async function uploadAndVerifyItem(
       item.preparedFile.type ||
       'image/jpeg';
 
-
   document
     .getElementById(
       'formFileData'
     )
     .value =
       dataUrl;
-
 
   document
     .getElementById(
@@ -2913,26 +2577,20 @@ async function uploadAndVerifyItem(
     .value =
       item.id;
 
-
   const form =
     document.getElementById(
       'uploadForm'
     );
 
-
   form.action =
     BACKEND;
 
-
   form.submit();
-
 
   item.status =
     'verifying';
 
-
   renderQueue();
-
 
   progressBox.textContent =
     'Confirming photo ' +
@@ -2945,26 +2603,21 @@ async function uploadAndVerifyItem(
 
     '...';
 
-
   return waitForUploadVerification(
     item.id,
     startingCount
   );
-
 }
 
 
-/*
- * VERSION 5.1 DUAL VERIFICATION
- *
- * Verification method 1:
- * exact upload ID status from Apps Script.
- *
- * Verification method 2:
- * actual job photo count in Drive.
- *
- * Either one can positively confirm the upload.
- */
+/* ============================================================
+   VERSION 5.1 DUAL VERIFICATION
+
+   1. Exact upload ID status from Apps Script
+   2. Actual photo count for the job in Drive
+
+   Either one can confirm a successful upload.
+   ============================================================ */
 
 function waitForUploadVerification(
   uploadId,
@@ -2975,7 +2628,6 @@ function waitForUploadVerification(
     Date.now() +
     STATUS_TIMEOUT_MS;
 
-
   return new Promise(
     function(
       resolve,
@@ -2985,7 +2637,6 @@ function waitForUploadVerification(
       let finished =
         false;
 
-
       function succeed(
         result,
         verification
@@ -2994,15 +2645,11 @@ function waitForUploadVerification(
         if (
           finished
         ) {
-
           return;
-
         }
-
 
         finished =
           true;
-
 
         const output =
           (
@@ -3018,15 +2665,12 @@ function waitForUploadVerification(
 
             : {};
 
-
         output.verification =
           verification;
-
 
         resolve(
           output
         );
-
       }
 
 
@@ -3037,20 +2681,15 @@ function waitForUploadVerification(
         if (
           finished
         ) {
-
           return;
-
         }
-
 
         finished =
           true;
 
-
         reject(
           error
         );
-
       }
 
 
@@ -3059,15 +2698,11 @@ function waitForUploadVerification(
         if (
           finished
         ) {
-
           return;
-
         }
-
 
         let completed =
           0;
-
 
         let explicitError =
           null;
@@ -3077,16 +2712,12 @@ function waitForUploadVerification(
 
           completed++;
 
-
           if (
             finished ||
             completed < 2
           ) {
-
             return;
-
           }
-
 
           if (
             explicitError
@@ -3096,11 +2727,8 @@ function waitForUploadVerification(
               explicitError
             );
 
-
             return;
-
           }
-
 
           if (
             Date.now() >=
@@ -3113,23 +2741,17 @@ function waitForUploadVerification(
               )
             );
 
-
             return;
-
           }
-
 
           window.setTimeout(
             check,
             STATUS_INTERVAL_MS
           );
-
         }
 
 
-        /*
-         * Exact upload-ID verification.
-         */
+        /* Exact upload-ID verification */
 
         getExactUploadStatus(
           uploadId
@@ -3142,7 +2764,6 @@ function waitForUploadVerification(
                 parseUploadStatus(
                   response
                 );
-
 
               if (
                 parsed.status ===
@@ -3163,12 +2784,10 @@ function waitForUploadVerification(
 
                     : {};
 
-
                 const count =
                   extractPhotoCount(
                     response
                   );
-
 
                 if (
                   Number.isFinite(
@@ -3178,20 +2797,15 @@ function waitForUploadVerification(
 
                   result.photoCount =
                     count;
-
                 }
-
 
                 succeed(
                   result,
                   'exact upload status'
                 );
 
-
                 return;
-
               }
-
 
               if (
                 parsed.status ===
@@ -3203,12 +2817,9 @@ function waitForUploadVerification(
                     parsed.message ||
                     'The backend reported an upload error.'
                   );
-
               }
 
-
               oneComplete();
-
             }
           )
 
@@ -3216,23 +2827,16 @@ function waitForUploadVerification(
             function() {
 
               /*
-               * Exact status check failed.
-               * Drive count can still verify success.
+               * Exact status failed.
+               * Drive count may still confirm success.
                */
 
               oneComplete();
-
             }
           );
 
 
-        /*
-         * Drive/job-count verification.
-         *
-         * If there are more files than before
-         * this exact photo was submitted,
-         * the photo reached Drive successfully.
-         */
+        /* Drive photo-count verification */
 
         getJobInfo()
 
@@ -3250,7 +2854,6 @@ function waitForUploadVerification(
                     response.job.photoCount ||
                     0
                   );
-
 
                 if (
                   Number.isFinite(
@@ -3274,16 +2877,11 @@ function waitForUploadVerification(
                     'Drive photo count'
                   );
 
-
                   return;
-
                 }
-
               }
 
-
               oneComplete();
-
             }
           )
 
@@ -3291,23 +2889,22 @@ function waitForUploadVerification(
             function() {
 
               oneComplete();
-
             }
           );
-
       }
-
 
       window.setTimeout(
         check,
         700
       );
-
     }
   );
-
 }
 
+
+/* ============================================================
+   UPLOAD STATUS
+   ============================================================ */
 
 function getExactUploadStatus(
   uploadId
@@ -3333,19 +2930,9 @@ function getExactUploadStatus(
     Date.now(),
 
     'genIIIUploadStatus'
-
   );
-
 }
 
-
-/*
- * Accept several possible response wrappers.
- *
- * This prevents the portal from falsely failing
- * just because Apps Script wraps the stored status
- * under a slightly different property.
- */
 
 function parseUploadStatus(
   response
@@ -3365,13 +2952,10 @@ function parseUploadStatus(
       result:
         null
     };
-
   }
-
 
   const candidates =
     [];
-
 
   function add(
     value
@@ -3389,46 +2973,36 @@ function parseUploadStatus(
       candidates.push(
         value
       );
-
     }
-
   }
-
 
   add(
     response
   );
 
-
   add(
     response.uploadStatus
   );
-
 
   add(
     response.upload
   );
 
-
   add(
     response.record
   );
-
 
   add(
     response.statusRecord
   );
 
-
   add(
     response.result
   );
 
-
   add(
     response.data
   );
-
 
   if (
     response.result &&
@@ -3440,27 +3014,21 @@ function parseUploadStatus(
       response.result.uploadStatus
     );
 
-
     add(
       response.result.upload
     );
-
 
     add(
       response.result.record
     );
 
-
     add(
       response.result.data
     );
-
   }
-
 
   let explicitError =
     '';
-
 
   for (
     const node
@@ -3476,7 +3044,6 @@ function parseUploadStatus(
         .trim()
         .toLowerCase();
 
-
     if (
       status ===
       'complete' ||
@@ -3490,9 +3057,7 @@ function parseUploadStatus(
 
       status =
         'success';
-
     }
-
 
     if (
       status ===
@@ -3503,9 +3068,7 @@ function parseUploadStatus(
 
       status =
         'error';
-
     }
-
 
     if (
       status ===
@@ -3523,11 +3086,8 @@ function parseUploadStatus(
 
         result:
           node
-
       };
-
     }
-
 
     if (
       status ===
@@ -3539,14 +3099,11 @@ function parseUploadStatus(
         node.error ||
         explicitError ||
         'The backend reported an upload error.';
-
     }
 
-
     /*
-     * Backward compatibility for successful
-     * stored records that do not carry
-     * a status property.
+     * Compatibility for older successful status records
+     * without an explicit status property.
      */
 
     if (
@@ -3574,11 +3131,8 @@ function parseUploadStatus(
 
         result:
           node
-
       };
-
     }
-
 
     if (
       !status &&
@@ -3593,11 +3147,8 @@ function parseUploadStatus(
       explicitError =
         node.message ||
         node.error;
-
     }
-
   }
-
 
   if (
     explicitError
@@ -3613,11 +3164,8 @@ function parseUploadStatus(
 
       result:
         response
-
     };
-
   }
-
 
   return {
 
@@ -3629,11 +3177,13 @@ function parseUploadStatus(
 
     result:
       response
-
   };
-
 }
 
+
+/* ============================================================
+   EXTRACT PHOTO COUNT
+   ============================================================ */
 
 function extractPhotoCount(
   result
@@ -3641,7 +3191,6 @@ function extractPhotoCount(
 
   const seen =
     new Set();
-
 
   function walk(
     value,
@@ -3659,14 +3208,11 @@ function extractPhotoCount(
     ) {
 
       return NaN;
-
     }
-
 
     seen.add(
       value
     );
-
 
     if (
       value.photoCount !==
@@ -3678,7 +3224,6 @@ function extractPhotoCount(
           value.photoCount
         );
 
-
       if (
         Number.isFinite(
           n
@@ -3686,11 +3231,8 @@ function extractPhotoCount(
       ) {
 
         return n;
-
       }
-
     }
-
 
     const keys = [
       'result',
@@ -3701,7 +3243,6 @@ function extractPhotoCount(
       'data',
       'job'
     ];
-
 
     for (
       const key
@@ -3716,7 +3257,6 @@ function extractPhotoCount(
           depth + 1
         );
 
-
       if (
         Number.isFinite(
           n
@@ -3724,24 +3264,22 @@ function extractPhotoCount(
       ) {
 
         return n;
-
       }
-
     }
 
-
     return NaN;
-
   }
-
 
   return walk(
     result,
     0
   );
-
 }
 
+
+/* ============================================================
+   BATCH RESULTS
+   ============================================================ */
 
 function finishBatch(
   successCount,
@@ -3762,7 +3300,6 @@ function finishBatch(
 
     ' currently on file.';
 
-
   const failedItems =
     photoQueue.filter(
       function(item) {
@@ -3771,10 +3308,8 @@ function finishBatch(
           item.status ===
           'failed'
         );
-
       }
     );
-
 
   const uploadedTotal =
     photoQueue.filter(
@@ -3784,10 +3319,8 @@ function finishBatch(
           item.status ===
           'uploaded'
         );
-
       }
     ).length;
-
 
   if (
     failureCount === 0
@@ -3819,7 +3352,6 @@ function finishBatch(
       ' are now on file for this job.',
       'success'
     );
-
   }
   else {
 
@@ -3837,9 +3369,7 @@ function finishBatch(
       ' failed and can be retried or downloaded for manual upload.',
       'warning'
     );
-
   }
-
 
   summaryBox.innerHTML =
     '<strong>Batch summary:</strong> ' +
@@ -3856,34 +3386,32 @@ function finishBatch(
 
     ' total on file for this job.';
 
-
   summaryBox.style.display =
     'block';
 
-
   endActions.style.display =
     'grid';
-
 
   retryButton.style.display =
     failedItems.length > 0
       ? 'block'
       : 'none';
 
-
   downloadFailedButton.style.display =
     failedItems.length > 0
       ? 'block'
       : 'none';
 
-
   downloadBatchButton.style.display =
     photoQueue.length > 0
       ? 'block'
       : 'none';
-
 }
 
+
+/* ============================================================
+   BACKUP DOWNLOADS
+   ============================================================ */
 
 async function downloadFailedPhotos() {
 
@@ -3895,10 +3423,8 @@ async function downloadFailedPhotos() {
           item.status ===
           'failed'
         );
-
       }
     );
-
 
   if (
     failed.length === 0
@@ -3909,18 +3435,14 @@ async function downloadFailedPhotos() {
       'warning'
     );
 
-
     return;
-
   }
-
 
   await downloadItemsAsZip(
     failed,
     jobId +
     '-Failed-Photos.zip'
   );
-
 }
 
 
@@ -3935,18 +3457,14 @@ async function downloadEntireBatch() {
       'warning'
     );
 
-
     return;
-
   }
-
 
   await downloadItemsAsZip(
     photoQueue,
     jobId +
     '-Photo-Batch-Backup.zip'
   );
-
 }
 
 
@@ -3960,34 +3478,27 @@ async function downloadItemsAsZip(
     downloadBatchButton
   ];
 
-
   buttons.forEach(
     function(button) {
 
       button.disabled =
         true;
-
     }
   );
-
 
   progressBox.style.display =
     'block';
 
-
   progressBox.textContent =
     'Building backup download...';
-
 
   try {
 
     const entries =
       [];
 
-
     const usedNames =
       new Set();
-
 
     for (
       let i = 0;
@@ -3999,7 +3510,6 @@ async function downloadItemsAsZip(
         items[
           i
         ];
-
 
       progressBox.textContent =
         'Preparing backup photo ' +
@@ -4014,8 +3524,7 @@ async function downloadItemsAsZip(
 
         '...';
 
-
-      let name =
+      const name =
         uniqueZipName(
           buildBackupFileName(
             item,
@@ -4024,11 +3533,9 @@ async function downloadItemsAsZip(
           usedNames
         );
 
-
       usedNames.add(
         name
       );
-
 
       entries.push({
 
@@ -4048,11 +3555,8 @@ async function downloadItemsAsZip(
               .lastModified ||
             Date.now()
           )
-
       });
-
     }
-
 
     triggerBlobDownload(
       buildStoredZip(
@@ -4060,7 +3564,6 @@ async function downloadItemsAsZip(
       ),
       zipName
     );
-
 
     showMessage(
       items.length +
@@ -4076,7 +3579,6 @@ async function downloadItemsAsZip(
       ' packaged for download.',
       'success'
     );
-
   }
   catch (error) {
 
@@ -4087,25 +3589,20 @@ async function downloadItemsAsZip(
         : 'The backup download could not be created.',
       'error'
     );
-
   }
   finally {
 
     progressBox.style.display =
       'none';
 
-
     buttons.forEach(
       function(button) {
 
         button.disabled =
           false;
-
       }
     );
-
   }
-
 }
 
 
@@ -4138,17 +3635,14 @@ function buildBackupFileName(
               ' '
             )
             .trim();
-
         }
       );
-
 
   const ext =
     fileExtension(
       item.originalFile.name
     ) ||
     'jpg';
-
 
   return (
     (
@@ -4173,7 +3667,6 @@ function buildBackupFileName(
 
     ext
   );
-
 }
 
 
@@ -4189,15 +3682,12 @@ function uniqueZipName(
   ) {
 
     return name;
-
   }
-
 
   const dot =
     name.lastIndexOf(
       '.'
     );
-
 
   const base =
     dot >= 0
@@ -4207,7 +3697,6 @@ function uniqueZipName(
         )
       : name;
 
-
   const ext =
     dot >= 0
       ? name.slice(
@@ -4215,10 +3704,8 @@ function uniqueZipName(
         )
       : '';
 
-
   let counter =
     2;
-
 
   let candidate =
     base +
@@ -4231,7 +3718,6 @@ function uniqueZipName(
 
     ext;
 
-
   while (
     usedNames.has(
       candidate
@@ -4239,7 +3725,6 @@ function uniqueZipName(
   ) {
 
     counter++;
-
 
     candidate =
       base +
@@ -4251,14 +3736,15 @@ function uniqueZipName(
       ')' +
 
       ext;
-
   }
 
-
   return candidate;
-
 }
 
+
+/* ============================================================
+   SIMPLE STORED ZIP BUILDER
+   ============================================================ */
 
 function buildStoredZip(
   entries
@@ -4267,14 +3753,11 @@ function buildStoredZip(
   const localParts =
     [];
 
-
   const centralParts =
     [];
 
-
   let offset =
     0;
-
 
   entries.forEach(
     function(entry) {
@@ -4285,16 +3768,13 @@ function buildStoredZip(
             entry.name
           );
 
-
       const data =
         entry.data;
-
 
       const crc =
         crc32(
           data
         );
-
 
       const dos =
         dateToDos(
@@ -4302,19 +3782,16 @@ function buildStoredZip(
           new Date()
         );
 
-
       const local =
         new Uint8Array(
           30 +
           nameBytes.length
         );
 
-
       const lv =
         new DataView(
           local.buffer
         );
-
 
       lv.setUint32(
         0,
@@ -4322,13 +3799,11 @@ function buildStoredZip(
         true
       );
 
-
       lv.setUint16(
         4,
         20,
         true
       );
-
 
       lv.setUint16(
         6,
@@ -4336,13 +3811,11 @@ function buildStoredZip(
         true
       );
 
-
       lv.setUint16(
         8,
         0,
         true
       );
-
 
       lv.setUint16(
         10,
@@ -4350,20 +3823,17 @@ function buildStoredZip(
         true
       );
 
-
       lv.setUint16(
         12,
         dos.date,
         true
       );
 
-
       lv.setUint32(
         14,
         crc,
         true
       );
-
 
       lv.setUint32(
         18,
@@ -4371,13 +3841,11 @@ function buildStoredZip(
         true
       );
 
-
       lv.setUint32(
         22,
         data.length,
         true
       );
-
 
       lv.setUint16(
         26,
@@ -4385,25 +3853,21 @@ function buildStoredZip(
         true
       );
 
-
       lv.setUint16(
         28,
         0,
         true
       );
 
-
       local.set(
         nameBytes,
         30
       );
 
-
       localParts.push(
         local,
         data
       );
-
 
       const central =
         new Uint8Array(
@@ -4411,12 +3875,10 @@ function buildStoredZip(
           nameBytes.length
         );
 
-
       const cv =
         new DataView(
           central.buffer
         );
-
 
       cv.setUint32(
         0,
@@ -4424,13 +3886,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint16(
         4,
         20,
         true
       );
-
 
       cv.setUint16(
         6,
@@ -4438,13 +3898,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint16(
         8,
         0x0800,
         true
       );
-
 
       cv.setUint16(
         10,
@@ -4452,13 +3910,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint16(
         12,
         dos.time,
         true
       );
-
 
       cv.setUint16(
         14,
@@ -4466,13 +3922,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint32(
         16,
         crc,
         true
       );
-
 
       cv.setUint32(
         20,
@@ -4480,13 +3934,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint32(
         24,
         data.length,
         true
       );
-
 
       cv.setUint16(
         28,
@@ -4494,13 +3946,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint16(
         30,
         0,
         true
       );
-
 
       cv.setUint16(
         32,
@@ -4508,13 +3958,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint16(
         34,
         0,
         true
       );
-
 
       cv.setUint16(
         36,
@@ -4522,13 +3970,11 @@ function buildStoredZip(
         true
       );
 
-
       cv.setUint32(
         38,
         0,
         true
       );
-
 
       cv.setUint32(
         42,
@@ -4536,25 +3982,20 @@ function buildStoredZip(
         true
       );
 
-
       central.set(
         nameBytes,
         46
       );
 
-
       centralParts.push(
         central
       );
 
-
       offset +=
         local.length +
         data.length;
-
     }
   );
-
 
   const centralSize =
     centralParts.reduce(
@@ -4567,23 +4008,19 @@ function buildStoredZip(
           sum +
           part.length
         );
-
       },
       0
     );
-
 
   const end =
     new Uint8Array(
       22
     );
 
-
   const ev =
     new DataView(
       end.buffer
     );
-
 
   ev.setUint32(
     0,
@@ -4591,13 +4028,11 @@ function buildStoredZip(
     true
   );
 
-
   ev.setUint16(
     4,
     0,
     true
   );
-
 
   ev.setUint16(
     6,
@@ -4605,13 +4040,11 @@ function buildStoredZip(
     true
   );
 
-
   ev.setUint16(
     8,
     entries.length,
     true
   );
-
 
   ev.setUint16(
     10,
@@ -4619,13 +4052,11 @@ function buildStoredZip(
     true
   );
 
-
   ev.setUint32(
     12,
     centralSize,
     true
   );
-
 
   ev.setUint32(
     16,
@@ -4633,13 +4064,11 @@ function buildStoredZip(
     true
   );
 
-
   ev.setUint16(
     20,
     0,
     true
   );
-
 
   return new Blob(
     localParts.concat(
@@ -4653,7 +4082,6 @@ function buildStoredZip(
         'application/zip'
     }
   );
-
 }
 
 
@@ -4674,7 +4102,6 @@ function crc32(
         256
       );
 
-
     for (
       let n = 0;
       n < 256;
@@ -4683,7 +4110,6 @@ function crc32(
 
       let c =
         n;
-
 
       for (
         let k = 0;
@@ -4709,24 +4135,18 @@ function crc32(
                 c >>>
                 1
               );
-
       }
-
 
       crcTable[
         n
       ] =
         c >>>
         0;
-
     }
-
   }
-
 
   let crc =
     0xffffffff;
-
 
   for (
     let i = 0;
@@ -4749,16 +4169,13 @@ function crc32(
         crc >>>
         8
       );
-
   }
-
 
   return (
     crc ^
     0xffffffff
   ) >>>
   0;
-
 }
 
 
@@ -4771,13 +4188,11 @@ function dateToDos(
       ? date
       : new Date();
 
-
   const year =
     Math.max(
       1980,
       safe.getFullYear()
     );
-
 
   return {
 
@@ -4815,9 +4230,7 @@ function dateToDos(
       ) |
 
       safe.getDate()
-
   };
-
 }
 
 
@@ -4831,35 +4244,27 @@ function triggerBlobDownload(
       blob
     );
 
-
   const link =
     document.createElement(
       'a'
     );
 
-
   link.href =
     url;
-
 
   link.download =
     fileName;
 
-
   link.style.display =
     'none';
-
 
   document.body.appendChild(
     link
   );
 
-
   link.click();
 
-
   link.remove();
-
 
   window.setTimeout(
     function() {
@@ -4867,13 +4272,15 @@ function triggerBlobDownload(
       URL.revokeObjectURL(
         url
       );
-
     },
     30000
   );
-
 }
 
+
+/* ============================================================
+   IMAGE PREPARATION / COMPRESSION
+   ============================================================ */
 
 async function compressImageFile(
   file
@@ -4886,9 +4293,7 @@ async function compressImageFile(
     throw new Error(
       'No photo was provided.'
     );
-
   }
-
 
   const lowerName =
     (
@@ -4897,14 +4302,12 @@ async function compressImageFile(
     )
       .toLowerCase();
 
-
   const type =
     (
       file.type ||
       ''
     )
       .toLowerCase();
-
 
   const likelyHeic =
     type.includes(
@@ -4923,7 +4326,6 @@ async function compressImageFile(
       '.heif'
     );
 
-
   if (
     likelyHeic
   ) {
@@ -4936,14 +4338,10 @@ async function compressImageFile(
       throw new Error(
         'HEIC/HEIF photo is larger than 8 MB and could not be compressed in this browser.'
       );
-
     }
 
-
     return file;
-
   }
-
 
   try {
 
@@ -4951,7 +4349,6 @@ async function compressImageFile(
       await loadImageFromFile(
         file
       );
-
 
     const scale =
       Math.min(
@@ -4963,7 +4360,6 @@ async function compressImageFile(
         )
       );
 
-
     const width =
       Math.max(
         1,
@@ -4972,7 +4368,6 @@ async function compressImageFile(
           scale
         )
       );
-
 
     const height =
       Math.max(
@@ -4983,20 +4378,16 @@ async function compressImageFile(
         )
       );
 
-
     const canvas =
       document.createElement(
         'canvas'
       );
 
-
     canvas.width =
       width;
 
-
     canvas.height =
       height;
-
 
     const context =
       canvas.getContext(
@@ -5007,10 +4398,8 @@ async function compressImageFile(
         }
       );
 
-
     context.fillStyle =
       '#ffffff';
-
 
     context.fillRect(
       0,
@@ -5018,7 +4407,6 @@ async function compressImageFile(
       width,
       height
     );
-
 
     context.drawImage(
       image,
@@ -5028,14 +4416,12 @@ async function compressImageFile(
       height
     );
 
-
     const blob =
       await canvasToBlob(
         canvas,
         'image/jpeg',
         UPLOAD_JPEG_QUALITY
       );
-
 
     if (
       blob.size >
@@ -5045,9 +4431,7 @@ async function compressImageFile(
       throw new Error(
         'Prepared photo is still larger than 8 MB.'
       );
-
     }
-
 
     return new File(
       [
@@ -5067,7 +4451,6 @@ async function compressImageFile(
           Date.now()
       }
     );
-
   }
   catch (error) {
 
@@ -5077,14 +4460,10 @@ async function compressImageFile(
     ) {
 
       return file;
-
     }
 
-
     throw error;
-
   }
-
 }
 
 
@@ -5103,10 +4482,8 @@ function loadImageFromFile(
           file
         );
 
-
       const image =
         new Image();
-
 
       image.onload =
         function() {
@@ -5115,13 +4492,10 @@ function loadImageFromFile(
             url
           );
 
-
           resolve(
             image
           );
-
         };
-
 
       image.onerror =
         function() {
@@ -5130,22 +4504,17 @@ function loadImageFromFile(
             url
           );
 
-
           reject(
             new Error(
               'This photo format could not be prepared.'
             )
           );
-
         };
-
 
       image.src =
         url;
-
     }
   );
-
 }
 
 
@@ -5171,7 +4540,6 @@ function canvasToBlob(
             resolve(
               blob
             );
-
           }
           else {
 
@@ -5180,17 +4548,13 @@ function canvasToBlob(
                 'The photo could not be converted for upload.'
               )
             );
-
           }
-
         },
         type,
         quality
       );
-
     }
   );
-
 }
 
 
@@ -5207,16 +4571,13 @@ function fileToDataUrl(
       const reader =
         new FileReader();
 
-
       reader.onload =
         function(event) {
 
           resolve(
             event.target.result
           );
-
         };
-
 
       reader.onerror =
         function() {
@@ -5226,19 +4587,19 @@ function fileToDataUrl(
               'The selected photo could not be read.'
             )
           );
-
         };
-
 
       reader.readAsDataURL(
         file
       );
-
     }
   );
-
 }
 
+
+/* ============================================================
+   JSONP
+   ============================================================ */
 
 function jsonpRequest(
   baseUrl,
@@ -5269,16 +4630,13 @@ function jsonpRequest(
             2
           );
 
-
       const script =
         document.createElement(
           'script'
         );
 
-
       let finished =
         false;
-
 
       const timer =
         window.setTimeout(
@@ -5286,13 +4644,11 @@ function jsonpRequest(
 
             cleanup();
 
-
             reject(
               new Error(
                 'The backend response timed out.'
               )
             );
-
           },
           timeoutMs
         );
@@ -5303,27 +4659,21 @@ function jsonpRequest(
         if (
           finished
         ) {
-
           return;
-
         }
-
 
         finished =
           true;
 
-
         window.clearTimeout(
           timer
         );
-
 
         try {
 
           delete window[
             callback
           ];
-
         }
         catch (error) {
 
@@ -5331,9 +4681,7 @@ function jsonpRequest(
             callback
           ] =
             undefined;
-
         }
-
 
         if (
           script.parentNode
@@ -5344,9 +4692,7 @@ function jsonpRequest(
             .removeChild(
               script
             );
-
         }
-
       }
 
 
@@ -5357,11 +4703,9 @@ function jsonpRequest(
 
           cleanup();
 
-
           resolve(
             result
           );
-
         };
 
 
@@ -5370,13 +4714,11 @@ function jsonpRequest(
 
           cleanup();
 
-
           reject(
             new Error(
               'Could not reach the photo portal backend.'
             )
           );
-
         };
 
 
@@ -5401,62 +4743,52 @@ function jsonpRequest(
       document.body.appendChild(
         script
       );
-
     }
   );
-
 }
 
+
+/* ============================================================
+   FORM LOCKING
+   ============================================================ */
 
 function lockForm() {
 
   stageInput.disabled =
     true;
 
-
   categoryInput.disabled =
     true;
-
 
   areaInput.disabled =
     true;
 
-
   openCameraButton.disabled =
     true;
-
 
   existingPhotosButton.disabled =
     true;
 
-
   photosInput.disabled =
     true;
-
 
   takePhotoButton.disabled =
     true;
 
-
   closeCameraButton.disabled =
     true;
-
 
   submitButton.disabled =
     true;
 
-
   retryButton.disabled =
     true;
-
 
   downloadFailedButton.disabled =
     true;
 
-
   downloadBatchButton.disabled =
     true;
-
 }
 
 
@@ -5465,47 +4797,40 @@ function unlockForm() {
   stageInput.disabled =
     false;
 
-
   categoryInput.disabled =
     false;
 
-
   updateAreaOptions();
-
 
   openCameraButton.disabled =
     false;
 
-
   existingPhotosButton.disabled =
     false;
-
 
   photosInput.disabled =
     false;
 
-
   takePhotoButton.disabled =
     false;
-
 
   closeCameraButton.disabled =
     false;
 
-
   retryButton.disabled =
     false;
-
 
   downloadFailedButton.disabled =
     false;
 
-
   downloadBatchButton.disabled =
     false;
-
 }
 
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
 
 function statusLabel(
   status
@@ -5530,7 +4855,6 @@ function statusLabel(
     status
   ] ||
   status;
-
 }
 
 
@@ -5545,9 +4869,7 @@ function makeUploadId() {
     return window
       .crypto
       .randomUUID();
-
   }
-
 
   return (
     Date.now()
@@ -5575,7 +4897,6 @@ function makeUploadId() {
         2
       )
   );
-
 }
 
 
@@ -5583,7 +4904,6 @@ function makeCameraOriginalName() {
 
   const now =
     new Date();
-
 
   const pad =
     function(value) {
@@ -5595,9 +4915,7 @@ function makeCameraOriginalName() {
           2,
           '0'
         );
-
     };
-
 
   return (
     'GENIII-Camera-' +
@@ -5640,7 +4958,6 @@ function makeCameraOriginalName() {
 
     '.jpg'
   );
-
 }
 
 
@@ -5661,7 +4978,6 @@ function replaceFileExtension(
     '.' +
 
     extension;
-
 }
 
 
@@ -5678,14 +4994,12 @@ function fileExtension(
         /\.([a-zA-Z0-9]+)$/
       );
 
-
   return match
     ? match[
         1
       ]
         .toLowerCase()
     : '';
-
 }
 
 
@@ -5699,7 +5013,6 @@ function formatBytes(
       0
     );
 
-
   if (
     value < 1024
   ) {
@@ -5708,9 +5021,7 @@ function formatBytes(
       value +
       ' B'
     );
-
   }
-
 
   if (
     value <
@@ -5727,9 +5038,7 @@ function formatBytes(
       ) +
 
       ' KB';
-
   }
-
 
   return (
     value /
@@ -5743,9 +5052,12 @@ function formatBytes(
     ) +
 
     ' MB';
-
 }
 
+
+/* ============================================================
+   MESSAGES
+   ============================================================ */
 
 function showSelectionMessage(
   text
@@ -5755,7 +5067,6 @@ function showSelectionMessage(
     text,
     'success'
   );
-
 }
 
 
@@ -5766,24 +5077,19 @@ function showFatalError(
   statusBox.textContent =
     'Unable to load job.';
 
-
   details.style.display =
     'none';
-
 
   backupNote.style.display =
     'none';
 
-
   formSection.style.display =
     'none';
-
 
   showMessage(
     text,
     'error'
   );
-
 }
 
 
@@ -5795,7 +5101,6 @@ function showMessage(
   messageBox.textContent =
     text;
 
-
   messageBox.className =
     'message ' +
     (
@@ -5803,10 +5108,8 @@ function showMessage(
       'error'
     );
 
-
   messageBox.style.display =
     'block';
-
 }
 
 
@@ -5814,9 +5117,12 @@ function hideMessage() {
 
   messageBox.style.display =
     'none';
-
 }
 
+
+/* ============================================================
+   EVENT LISTENERS
+   ============================================================ */
 
 categoryInput
   .addEventListener(
@@ -5824,13 +5130,11 @@ categoryInput
     updateAreaOptions
   );
 
-
 openCameraButton
   .addEventListener(
     'click',
     openCamera
   );
-
 
 existingPhotosButton
   .addEventListener(
@@ -5838,13 +5142,11 @@ existingPhotosButton
     showExistingPhotos
   );
 
-
 takePhotoButton
   .addEventListener(
     'click',
     takeCameraPhoto
   );
-
 
 closeCameraButton
   .addEventListener(
@@ -5852,13 +5154,11 @@ closeCameraButton
     stopCamera
   );
 
-
 photosInput
   .addEventListener(
     'change',
     handleExistingPhotos
   );
-
 
 submitButton
   .addEventListener(
@@ -5866,13 +5166,11 @@ submitButton
     submitQueue
   );
 
-
 retryButton
   .addEventListener(
     'click',
     retryRemainingPhotos
   );
-
 
 downloadFailedButton
   .addEventListener(
@@ -5880,19 +5178,16 @@ downloadFailedButton
     downloadFailedPhotos
   );
 
-
 downloadBatchButton
   .addEventListener(
     'click',
     downloadEntireBatch
   );
 
-
 window.addEventListener(
   'pagehide',
   stopCamera
 );
-
 
 window.addEventListener(
   'beforeunload',
@@ -5900,8 +5195,11 @@ window.addEventListener(
 );
 
 
-updateAreaOptions();
+/* ============================================================
+   START
+   ============================================================ */
 
+updateAreaOptions();
 
 loadJob();
 
